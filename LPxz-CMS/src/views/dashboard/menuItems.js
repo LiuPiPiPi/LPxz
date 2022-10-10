@@ -5,44 +5,23 @@ import {
     ListItemText,
     ListSubheader
 } from '@mui/material'
+
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import PeopleIcon from '@mui/icons-material/People'
-import BarChartIcon from '@mui/icons-material/BarChart'
-import LayersIcon from '@mui/icons-material/Layers'
+import PendingIcon from '@mui/icons-material/Pending';
+import LabelIcon from '@mui/icons-material/Label'
+import ClassIcon from '@mui/icons-material/Class'
 import AssignmentIcon from '@mui/icons-material/Assignment'
+import EditIcon from '@mui/icons-material/Edit'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import FaceIcon from '@mui/icons-material/Face'
 
 export const mainListItems = (
     <React.Fragment>
-        <ListItemButton>
+        <ListItemButton to="/">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Orders" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Customers" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Reports" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <LayersIcon />
-            </ListItemIcon>
-            <ListItemText primary="Integrations" />
         </ListItemButton>
     </React.Fragment>
 )
@@ -54,13 +33,13 @@ export const writeListItems = (
         </ListSubheader>
         <ListItemButton to="/article/create">
             <ListItemIcon>
-                <AssignmentIcon />
+                <EditIcon />
             </ListItemIcon>
             <ListItemText primary="写文章" />
         </ListItemButton>
         <ListItemButton to="/moment/create">
             <ListItemIcon>
-                <AssignmentIcon />
+                <EditIcon />
             </ListItemIcon>
             <ListItemText primary="写动态" />
         </ListItemButton>
@@ -72,25 +51,25 @@ export const writeListItems = (
         </ListItemButton>
         <ListItemButton to="/moment/manage">
             <ListItemIcon>
-                <AssignmentIcon />
+                <FaceIcon />
             </ListItemIcon>
             <ListItemText primary="动态管理" />
         </ListItemButton>
         <ListItemButton to="/category/manage">
             <ListItemIcon>
-                <AssignmentIcon />
+                <ClassIcon />
             </ListItemIcon>
             <ListItemText primary="分类管理" />
         </ListItemButton>
         <ListItemButton to="/tag/manage">
             <ListItemIcon>
-                <AssignmentIcon />
+                <LabelIcon />
             </ListItemIcon>
             <ListItemText primary="标签管理" />
         </ListItemButton>
         <ListItemButton to="/comment/manage">
             <ListItemIcon>
-                <AssignmentIcon />
+                <PendingIcon />
             </ListItemIcon>
             <ListItemText primary="评论管理" />
         </ListItemButton>
@@ -107,6 +86,21 @@ export const pageListItems = (
                 <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="站点设置" />
+        </ListItemButton>
+
+    </React.Fragment>
+)
+
+export const systemListItems = (
+    <React.Fragment>
+        <ListSubheader component="div" inset>
+            系统管理
+        </ListSubheader>
+        <ListItemButton to="/moment/manage">
+            <ListItemIcon>
+                <AccessTimeIcon />
+            </ListItemIcon>
+            <ListItemText primary="定时任务" />
         </ListItemButton>
 
     </React.Fragment>

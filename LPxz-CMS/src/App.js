@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 
@@ -19,9 +19,7 @@ function App() {
         //         {/* </NavigationScroll> */}
         //     </ThemeProvider>
         // </StyledEngineProvider>
-        <>
-            <Routes />
-        </>
+        <Routes />
     )
 }
 

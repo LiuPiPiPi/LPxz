@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import {
     Avatar,
@@ -25,6 +25,10 @@ const theme = createTheme()
 
 export default function SignIn() {
     const navigate = useNavigate()
+    const location = useLocation()
+
+    // 获取URL来路，/ or /protected
+    let from = location.state?.from?.pathname || '/'
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -34,27 +38,18 @@ export default function SignIn() {
             password: data.get('password'),
         })
         try {
-            // if (scriptedRef.current) {
-            //     setStatus({ success: true });
-            //     setSubmitting(true);
-            // }
             login(value).then((res) => {
                 if (res.code === 200) {
                     message.success({ content: res.msg })
                     window.localStorage.setItem('token', res.data.token)
                     window.localStorage.setItem('user', JSON.stringify(res.data.user))
-                    navigate('/')
+                    navigate(from, { replace: true })
                 } else {
                     message.error({ content: res.msg })
                 }
             })
         } catch (err) {
             console.error(err)
-            // if (scriptedRef.current) {
-            //     setStatus({ success: false })
-            //     setErrors({ submit: err.message })
-            //     setSubmitting(false)
-            // }
         }
     }
 

@@ -1,7 +1,7 @@
 import { useRoutes } from 'react-router-dom'
 
-import AuthRoutes from './AuthRoutes'
-import MainRoutes from './MainRoutes'
+import AuthRoutes from 'routes/AuthRoutes'
+import MainRoutes from 'routes/MainRoutes'
 import NotFound from 'views/NotFound'
 
 // ==============================|| ROUTING RENDER ||============================== //

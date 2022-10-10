@@ -78,10 +78,10 @@ const Article = () => {
     }
 
     const handleTopChanged = (row) => {
-        updateTop(row.id, isTop).then(res => {
+        updateTop(row.id, !isTop).then(res => {
             if (res.code === 200) {
                 message.success({ content: res.msg })
-                setIsTop(true)
+                setIsTop(!isTop)
             } else {
                 message.error({ content: res.msg })
             }
@@ -91,10 +91,10 @@ const Article = () => {
     }
 
     const handleRecommendChanged = (row) => {
-        updateRecommend(row.id, isRecommend).then(res => {
+        updateRecommend(row.id, !isRecommend).then(res => {
             if (res.code === 200) {
                 message.success({ content: res.msg })
-                setIsRecommend(true)
+                setIsRecommend(!isRecommend)
             } else {
                 message.error({ content: res.msg })
             }
