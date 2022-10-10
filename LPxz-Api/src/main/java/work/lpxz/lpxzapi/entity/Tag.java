@@ -1,10 +1,6 @@
 package work.lpxz.lpxzapi.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +12,8 @@ import java.util.List;
  */
 
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@AllArgsConstructor
+@Data
 public class Tag {
     private Long id;
 

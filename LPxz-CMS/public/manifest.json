@@ -1,0 +1,15 @@
+{
+  "short_name": "LPxz's Blog",
+  "name": "LPxz's Blog | 你也不用把我当作家",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/cms",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
