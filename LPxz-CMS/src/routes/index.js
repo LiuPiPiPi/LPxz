@@ -1,15 +1,19 @@
 import { useRoutes } from 'react-router-dom'
 
-import AuthRoutes from 'routes/AuthRoutes'
+import loadable from 'utils/loadable'
+
+// 公共模块
 import MainRoutes from 'routes/MainRoutes'
-import NotFound from 'views/NotFound'
+// 基础页面
+const View404 = loadable(() => import('views/others/404'))
+const View500 = loadable(() => import('views/others/500'))
 
-// ==============================|| ROUTING RENDER ||============================== //
-
-export default function ThemeRoutes() {
+const ThemeRoutes = () => {
     const NotFoundRoutes = {
         path: '*',
-        element: <NotFound />
+        element: <View404 />
     }
-    return useRoutes([MainRoutes, AuthRoutes, NotFoundRoutes])
+    return useRoutes([MainRoutes, NotFoundRoutes])
 }
+
+export default ThemeRoutes

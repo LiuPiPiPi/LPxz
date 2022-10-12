@@ -1,34 +1,46 @@
-import { lazy } from 'react'
+import loadable from 'utils/loadable'
+// import RequireAuth from 'utils/RequireAuth'
 
-import Loadable from 'component/Loadable'
-import RequireAuth from 'component/RequireAuth'
+// 公共模块
+const Dashboard = loadable(() => import('views/dashboard'))
 
-const Dashboard = Loadable(lazy(() => import('views/dashboard')))
-const Moment = Loadable(lazy(() => import('views/moment')))
-const Article = Loadable(lazy(() => import('views/article')))
-const Category = Loadable(lazy(() => import('views/category')))
-const Tag = Loadable(lazy(() => import('views/tag')))
+// 基础页面
+const Article = loadable(() => import('views/article'))
+const CreateArticle = loadable(() => import('views/article/create'))
+const Moment = loadable(() => import('views/moment'))
+const CreateMoment = loadable(() => import('views/moment/create'))
+// const Category = loadable(() => import('views/category'))
+// const Tag = loadable(() => import('views/tag'))
 
 const MainRoutes = {
     path: '/',
-    element: <RequireAuth><Dashboard /></RequireAuth>,
+    // element: <RequireAuth><Dashboard /></RequireAuth>,
+    element: <Dashboard />,
     children: [
         {
             path: 'moment/manage',
-            element: <RequireAuth><Moment /></RequireAuth>
+            element: <Moment />
+        },
+        {
+            path: 'moment/create',
+            element: <CreateMoment />
         },
         {
             path: 'article/manage',
-            element: <RequireAuth><Article /></RequireAuth>
+            element: <Article />
         },
         {
-            path: 'category/manage',
-            element: <RequireAuth><Category /></RequireAuth>
+            path: 'article/create',
+            element: <CreateArticle />
         },
-        {
-            path: 'tag/manage',
-            element: <RequireAuth><Tag /></RequireAuth>
-        },
+    //     {
+    //         path: 'category/manage',
+    //         element: <RequireAuth><Category /></RequireAuth>
+    //     },
+    //     {
+    //         path: 'tag/manage',
+    //         element: <RequireAuth><Tag /></RequireAuth>
+    //     },
     ]
 }
 

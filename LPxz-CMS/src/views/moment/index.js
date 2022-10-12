@@ -1,212 +1,141 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-// material-ui
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    Paper,
-    Switch,
-    Button,
-    Dialog,
-    DialogTitle,
-    DialogActions,
-    useMediaQuery
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Divider, Switch, Table, Button, message } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
-// project imports
-import MainCard from 'component/cards/MainCard';
-import { getMomentListByQuery, updatePublished, deleteMomentById } from 'api/moment';
-import message from 'utils/message';
-import formatTime from 'utils/format-time';
-
-function createData(name, published, calories, fat, carbs, protein) {
-    return { name, published, calories, fat, carbs, protein };
-}
+import { getMomentListByQuery, updatePublished, deleteMomentById } from 'api/moment'
+import formatTime from 'utils/format-time'
 
 const Moment = () => {
-    const navigate = useNavigate();
-    const theme = useTheme();
+    const navigate = useNavigate()
 
-    const [momentList, setMomentList] = useState([]);
-
+    const [momentList, setMomentList] = useState([])
     const getMomentList = () => {
         getMomentListByQuery({ pageNum: 1, pageSize: 50 })
             .then((res) => {
                 if (res.code === 200) {
-                    message.success({ content: res.msg });
-                    setMomentList(res.data.list);
+                    message.success(res.msg)
+                    setMomentList(res.data.list)
                 } else {
-                    message.error({ content: res.msg });
+                    message.error(res.msg)
                 }
             })
             .catch(() => {
-                message.error({ content: '请求失败' });
-            });
-    };
+                message.error('请求失败')
+            })
+    }
 
     useEffect(() => {
-        getMomentList();
-    }, []);
-
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - momentList.length) : 0;
-    const handleChangePage = (event, newPage) => {
-        console.log(newPage);
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+        getMomentList()
+    }, [])
 
     const handleEditPublished = (row) => {
-        updatePublished(row.id, row.published)
+        updatePublished(row.id, !row.published)
             .then((res) => {
                 if (res.code === 200) {
-                    message.success({ content: res.msg });
+                    getMomentList()
                 } else {
-                    message.error({ content: res.msg });
+                    message.error(res.msg)
                 }
             })
             .catch(() => {
-                message.error({ content: '请求失败' });
-            });
-    };
+                message.error('请求失败')
+            })
+    }
 
     const handleEditMoment = (id) => {
-        navigate(`/moment/edit/${id}`);
-    };
+        navigate(`/moment/edit/${id}`)
+    }
 
     const handleDeleteMoment = (id) => {
         deleteMomentById(id)
             .then((res) => {
                 if (res.code === 200) {
-                    message.success({ content: res.msg });
-                    getMomentList();
+                    message.success(res.msg)
+                    getMomentList()
                 } else {
-                    message.error({ content: res.msg });
+                    message.error(res.msg)
                 }
             })
             .catch(() => {
-                message.error({ content: '请求失败' });
-            });
-    };
+                message.error('请求失败')
+            })
+    }
 
-    const [openDialog, setOpenDialog] = useState(false);
-    const [momentId, setMomentId] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false)
+    const [momentId, setMomentId] = useState(null)
     const handleOpenDialog = (id) => {
-        setMomentId(id);
-        setOpenDialog(true);
-    };
+        setMomentId(id)
+        setOpenDialog(true)
+    }
     const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+        setOpenDialog(false)
+    }
+
+    const columns = [
+        {
+            title: '#',
+            key: 'index',
+            width: '60px',
+            align: 'center',
+            render: (_, __, index) => <span>{index + 1}</span>
+        },
+        {
+            title: '内容',
+            dataIndex: 'content',
+            key: 'content',
+            align: 'center'
+        },
+        {
+            title: '发布状态',
+            key: 'published',
+            width: '100px',
+            align: 'center',
+            render: (_, row) => (
+                <Switch
+                    checkedChildren={<CheckOutlined />}
+                    unCheckedChildren={<CloseOutlined />}
+                    checked={row.published}
+                    onChange={() => handleEditPublished(row)}
+                />
+            )
+        },
+        {
+            title: '点赞数',
+            dataIndex: 'likes',
+            key: 'likes',
+            align: 'center',
+            width: '100px',
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            align: 'center',
+            width: '180px',
+            render: text => (
+                <span>{formatTime(text)}</span>
+            )
+        },
+        {
+            title: '操作',
+            key: 'operate',
+            align: 'center',
+            width: '150px',
+            render: (_, row) => (
+                <span>
+                    <Button type='primary' size='small' onClick={() => handleEditMoment(row.id)}>编辑</Button>
+                    <Divider type='vertical' />
+                    <Button type='danger' size='small' onClick={() => handleDeleteMoment(row.id)}>删除</Button>
+                </span>
+            )
+        }
+    ]
 
     return (
-        <MainCard title="动态管理">
-            <Dialog
-                open={openDialog}
-                onClose={handleCloseDialog}
-                fullScreen={fullScreen}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{'确认删除这条动态吗?'}</DialogTitle>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog}>取消</Button>
-                    <Button
-                        onClick={() => {
-                            handleDeleteMoment(momentId);
-                            handleCloseDialog();
-                        }}
-                        color="error"
-                    >
-                        删除
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center" width={80}>
-                                序号
-                            </TableCell>
-                            <TableCell align="center">内容</TableCell>
-                            <TableCell align="center" width={100}>
-                                发布状态
-                            </TableCell>
-                            <TableCell align="center" width={100}>
-                                点赞数
-                            </TableCell>
-                            <TableCell align="center" width={150}>
-                                创建时间
-                            </TableCell>
-                            <TableCell align="center" width={200}>
-                                操作
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0 ? momentList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : momentList).map(
-                            (moment, index) => (
-                                <TableRow key={moment.id}>
-                                    <TableCell align="center" scope="row">
-                                        {index + 1}
-                                    </TableCell>
-                                    <TableCell align="center">{moment.content}</TableCell>
-                                    <TableCell align="center">
-                                        <Switch checked={moment.published} size="small" onChange={() => handleEditPublished(moment)} />
-                                    </TableCell>
-                                    <TableCell align="center">{moment.likes}</TableCell>
-                                    <TableCell align="center">{formatTime(moment.createTime)}</TableCell>
-                                    <TableCell align="center">
-                                        <Button variant="outlined" size="small" onClick={() => handleEditMoment(moment.id)}>
-                                            编辑
-                                        </Button>
-                                        &nbsp;&nbsp;
-                                        <Button variant="outlined" size="small" color="error" onClick={() => handleOpenDialog(moment.id)}>
-                                            删除
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        )}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[10, 25]}
-                                count={momentList.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                labelRowsPerPage="每页行数："
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-        </MainCard>
-    );
-};
+        <Table columns={columns} dataSource={momentList} />
+    )
+}
 
-export default Moment;
+export default Moment

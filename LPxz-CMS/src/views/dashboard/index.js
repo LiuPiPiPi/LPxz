@@ -1,221 +1,101 @@
-import * as React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import 'antd/dist/antd.css'
+import { Layout, Menu } from 'antd'
+// import { LineChartOutlined, SearchOutlined, HistoryOutlined, TeamOutlined } from '@ant-design/icons'
 
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
-import {
-    CssBaseline,
-    Box,
-    Toolbar,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    Typography,
-    Divider,
-    IconButton,
-    Badge,
-    Container,
-    Grid,
-    Paper,
-    Popover
-} from '@mui/material'
-import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import NotificationsIcon from '@mui/icons-material/Notifications'
+// import MainContent from 'components/MainContent'
+import logo from 'assets/img/logo.png'
+import avatar from 'assets/img/avatar.jpg'
+import './index.css'
 
-import { mainListItems, writeListItems, pageListItems, systemListItems } from './menuItems'
-import LOGO_IMG from 'assets/img/logo.png'
-
-import Copyright from 'component/Copyright'
-import message from 'utils/message'
-
-const drawerWidth = 240
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}))
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        '& .MuiDrawer-paper': {
-            position: 'relative',
-            whiteSpace: 'nowrap',
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            boxSizing: 'border-box',
-            ...(!open && {
-                overflowX: 'hidden',
-                transition: theme.transitions.create('width', {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.leavingScreen,
-                }),
-                width: theme.spacing(7),
-                [theme.breakpoints.up('sm')]: {
-                    width: theme.spacing(9),
-                },
-            }),
-        },
-    }),
-)
-
-const mdTheme = createTheme()
-
-function DashboardContent() {
-    const navigate = useNavigate()
-
-    const [open, setOpen] = React.useState(true)
-    const toggleDrawer = () => {
-        setOpen(!open)
-    }
-
-    const [anchorEl, setAnchorEl] = React.useState(null)
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
-
-    const popoverOpen = Boolean(anchorEl)
-    const id = open ? 'simple-popover' : undefined
-
-    const handleLogout = () => {
-        window.localStorage.clear()
-        navigate("login", { replace: true })
-        message.success({ content: '退出成功' })
-    }
-
-    return (
-        <ThemeProvider theme={mdTheme}>
-            <Popover
-                id={id}
-                open={popoverOpen}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <List>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={handleLogout}>
-                            <ListItemText primary="退出登录" />
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </Popover>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar position="absolute" open={open}>
-                    <Toolbar
-                        sx={{
-                            pr: '24px', // keep right padding when drawer closed
-                        }}
-                    >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={toggleDrawer}
-                            sx={{
-                                marginRight: '36px',
-                                ...(open && { display: 'none' }),
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{ flexGrow: 1 }}
-                        >
-                            后台管理面板
-                        </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon onClick={handleClick} />
-                            </Badge>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            px: [1]
-                        }}
-                    >
-
-                        <img src={LOGO_IMG} style={{ width: 60 }} alt="logo" />
-                        <strong>LPxz's Blog</strong>
-                        <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
-                    <List component="nav">
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {writeListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {pageListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {systemListItems}
-                    </List>
-                </Drawer>
-                <Box
-                    component="main"
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
-                    <Toolbar />
-                    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-                        <Outlet />
-                        <Copyright sx={{ pt: 4 }} />
-                    </Container>
-                </Box>
-            </Box>
-        </ThemeProvider >
-    )
-}
+const { Header, Content, Footer, Sider } = Layout
 
 export default function Dashboard() {
-    return <DashboardContent />
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+
+    })
+
+    const menuSelected = location.pathname
+
+    return (
+        <Layout>
+            <Header className="header">
+                {/* 普通函数是对象属性的简洁赋值方法。不可以直接定义，this由"调用"该函数的对象来决定，所以这里使用箭头函数 */}
+                <div className="logo" onClick={() => navigate('/')}>
+                    <img src={logo} alt="logo" />
+                </div>
+                <span className="title">LPxz's Blog 后台管理系统</span>
+                <div className="avatar" onClick={() => navigate('/userInfo')}>
+                    <img src={avatar} alt="avatar" />
+                </div>
+            </Header>
+            <Content style={{ padding: '0 50px' }}>
+                <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+                    <Sider className="site-layout-background" width={200}>
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={[menuSelected]}
+                            selectedKeys={[menuSelected]}
+                            // defaultOpenKeys={['sub1']}
+                            style={{ height: '100%' }}
+                        >
+                            {/* TODO 改为循环结构 menuItems.js */}
+                            <Menu.Item
+                                key="/article/create"
+                                // icon={<LineChartOutlined />}
+                                onClick={() => navigate('/article/create')}
+                            >
+                                写文章
+                            </Menu.Item>
+                            <Menu.Item
+                                key="/moment/create"
+                                // icon={<LineChartOutlined />}
+                                onClick={() => navigate('/moment/create')}
+                            >
+                                写动态
+                            </Menu.Item>
+                            <Menu.Item
+                                key="/article/manage"
+                                // icon={<SearchOutlined />}
+                                onClick={() => navigate('/article/manage')}
+                            >
+                                文章管理
+                            </Menu.Item>
+                            <Menu.Item
+                                key="/moment/manage"
+                                // icon={<HistoryOutlined />}
+                                onClick={() => navigate('/moment/manage')}
+                            >
+                                动态管理
+                            </Menu.Item>
+                            <Menu.Item
+                                key="/aboutUs"
+                                // icon={<TeamOutlined />}
+                                onClick={() => navigate('/aboutUs')}
+                            >
+                                关于我们
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <TransitionGroup style={{ width: '100%' }}>
+                        <CSSTransition
+                            classNames="fade"
+                            // key={location.pathname}
+                            timeout={500}
+                        >
+                            <Content style={{ padding: '50px 15px', backgroundColor: 'white' }}>
+                                <Outlet />
+                            </Content>
+                        </CSSTransition>
+                    </TransitionGroup>
+                </Layout>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}> Rainfall System © 2021 Created by NWPU DACHUANG Group. </Footer>
+        </Layout>
+    )
 }

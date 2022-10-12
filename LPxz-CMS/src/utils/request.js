@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import message from 'utils/message'
+import { message } from 'antd'
 
 const request = axios.create({
     baseURL: 'http://42.193.17.157:8090/admin/',
@@ -34,7 +34,7 @@ request.interceptors.response.use(
     },
     (error) => {
         if (error.message === '演示模式，不允许操作') {
-            message.error({ content: error })
+            message.error(error)
         }
     }
 )
