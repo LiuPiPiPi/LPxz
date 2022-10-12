@@ -2,18 +2,24 @@ import { useRoutes } from 'react-router-dom'
 
 import loadable from 'utils/loadable'
 
-// 公共模块
+// module
 import MainRoutes from 'routes/MainRoutes'
-// 基础页面
+// Page
+const AuthLogin = loadable(() => import('views/login'))
+// const AuthRegister = loadable(() => import('views/register'))
 const View404 = loadable(() => import('views/others/404'))
-const View500 = loadable(() => import('views/others/500'))
+// const View500 = loadable(() => import('views/others/500'))
 
 const ThemeRoutes = () => {
+    const AuthRoutes = {
+        path: '/login',
+        element: <AuthLogin />
+    }
     const NotFoundRoutes = {
         path: '*',
         element: <View404 />
     }
-    return useRoutes([MainRoutes, NotFoundRoutes])
+    return useRoutes([MainRoutes, AuthRoutes, NotFoundRoutes])
 }
 
 export default ThemeRoutes

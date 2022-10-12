@@ -1,46 +1,56 @@
 import loadable from 'utils/loadable'
-// import RequireAuth from 'utils/RequireAuth'
+import RequireAuth from 'components/RequireAuth'
 
 // 公共模块
 const Dashboard = loadable(() => import('views/dashboard'))
 
 // 基础页面
-const Article = loadable(() => import('views/article'))
-const CreateArticle = loadable(() => import('views/article/create'))
-const Moment = loadable(() => import('views/moment'))
-const CreateMoment = loadable(() => import('views/moment/create'))
-// const Category = loadable(() => import('views/category'))
-// const Tag = loadable(() => import('views/tag'))
+const Article = loadable(() => import('views/write/article'))
+const CreateArticle = loadable(() => import('views/write/article/create'))
+const Moment = loadable(() => import('views/write/moment'))
+const CreateMoment = loadable(() => import('views/write/moment/create'))
+const Category = loadable(() => import('views/write/category'))
+const Tag = loadable(() => import('views/write/tag'))
+const Comment = loadable(() => import('views/write/comment'))
+
+const ScheduleJobList = loadable(() => import('views/system/ScheduleJobList'))
 
 const MainRoutes = {
     path: '/',
-    // element: <RequireAuth><Dashboard /></RequireAuth>,
-    element: <Dashboard />,
+    element: <RequireAuth><Dashboard /></RequireAuth>,
     children: [
         {
             path: 'moment/manage',
-            element: <Moment />
+            element: <RequireAuth><Moment /></RequireAuth>
         },
         {
             path: 'moment/create',
-            element: <CreateMoment />
+            element: <RequireAuth><CreateMoment /></RequireAuth>
         },
         {
             path: 'article/manage',
-            element: <Article />
+            element: <RequireAuth><Article /></RequireAuth>
         },
         {
             path: 'article/create',
-            element: <CreateArticle />
+            element: <RequireAuth><CreateArticle /></RequireAuth>
         },
-    //     {
-    //         path: 'category/manage',
-    //         element: <RequireAuth><Category /></RequireAuth>
-    //     },
-    //     {
-    //         path: 'tag/manage',
-    //         element: <RequireAuth><Tag /></RequireAuth>
-    //     },
+        {
+            path: 'category/manage',
+            element: <RequireAuth><Category /></RequireAuth>
+        },
+        {
+            path: 'tag/manage',
+            element: <RequireAuth><Tag /></RequireAuth>
+        },
+        {
+            path: 'comment/manage',
+            element: <RequireAuth><Comment /></RequireAuth>
+        },
+        {
+            path: 'scheduleJob',
+            element: <RequireAuth><ScheduleJobList /></RequireAuth>
+        },
     ]
 }
 

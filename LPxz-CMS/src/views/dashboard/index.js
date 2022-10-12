@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import 'antd/dist/antd.css'
-import { Layout, Menu } from 'antd'
-// import { LineChartOutlined, SearchOutlined, HistoryOutlined, TeamOutlined } from '@ant-design/icons'
+import { Layout, Menu, Divider, Popover, message, Button } from 'antd'
+import { LineChartOutlined, SearchOutlined, HistoryOutlined, TeamOutlined } from '@ant-design/icons'
+import "antd/dist/antd.min.css"
 
-// import MainContent from 'components/MainContent'
 import logo from 'assets/img/logo.png'
 import avatar from 'assets/img/avatar.jpg'
 import './index.css'
+import menus from './menu'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -22,6 +22,12 @@ export default function Dashboard() {
 
     const menuSelected = location.pathname
 
+    const handleLogout = () => {
+        window.localStorage.clear()
+        navigate('/login')
+        message.success('退出成功')
+    }
+
     return (
         <Layout>
             <Header className="header">
@@ -30,9 +36,16 @@ export default function Dashboard() {
                     <img src={logo} alt="logo" />
                 </div>
                 <span className="title">LPxz's Blog 后台管理系统</span>
-                <div className="avatar" onClick={() => navigate('/userInfo')}>
-                    <img src={avatar} alt="avatar" />
-                </div>
+                <Popover placement='bottomRight' content={(
+                    <>
+                        <Button type="text" onClick={() => navigate('/userInfo')}>个人信息</Button><br />
+                        <Button type="text" danger onClick={handleLogout}>退出登录</Button>
+                    </>
+                )} trigger='click'>
+                    <div className="avatar">
+                        <img src={avatar} alt="avatar" />
+                    </div>
+                </Popover>
             </Header>
             <Content style={{ padding: '0 50px' }}>
                 <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
@@ -41,45 +54,19 @@ export default function Dashboard() {
                             mode="inline"
                             defaultSelectedKeys={[menuSelected]}
                             selectedKeys={[menuSelected]}
-                            // defaultOpenKeys={['sub1']}
                             style={{ height: '100%' }}
                         >
-                            {/* TODO 改为循环结构 menuItems.js */}
-                            <Menu.Item
-                                key="/article/create"
-                                // icon={<LineChartOutlined />}
-                                onClick={() => navigate('/article/create')}
-                            >
-                                写文章
-                            </Menu.Item>
-                            <Menu.Item
-                                key="/moment/create"
-                                // icon={<LineChartOutlined />}
-                                onClick={() => navigate('/moment/create')}
-                            >
-                                写动态
-                            </Menu.Item>
-                            <Menu.Item
-                                key="/article/manage"
-                                // icon={<SearchOutlined />}
-                                onClick={() => navigate('/article/manage')}
-                            >
-                                文章管理
-                            </Menu.Item>
-                            <Menu.Item
-                                key="/moment/manage"
-                                // icon={<HistoryOutlined />}
-                                onClick={() => navigate('/moment/manage')}
-                            >
-                                动态管理
-                            </Menu.Item>
-                            <Menu.Item
-                                key="/aboutUs"
-                                // icon={<TeamOutlined />}
-                                onClick={() => navigate('/aboutUs')}
-                            >
-                                关于我们
-                            </Menu.Item>
+                            {menus.map((menu) => {
+                                return (
+                                    <Menu.Item
+                                        key={menu.key}
+                                        icon={menu.icon}
+                                        onClick={() => navigate(`${menu.key}`)}
+                                    >
+                                        {menu.label}
+                                    </Menu.Item>
+                                )
+                            })}
                         </Menu>
                     </Sider>
                     <TransitionGroup style={{ width: '100%' }}>
@@ -95,7 +82,13 @@ export default function Dashboard() {
                     </TransitionGroup>
                 </Layout>
             </Content>
-            <Footer style={{ textAlign: 'center' }}> Rainfall System © 2021 Created by NWPU DACHUANG Group. </Footer>
-        </Layout>
+            <Footer style={{ textAlign: 'center', color: 'grey' }}>
+                {'Copyright © ' + new Date().getFullYear() + ' '}<a href="http://lpxz.work">LPxz's Blog</a>
+                <Divider type='vertical' />
+                {'Powered by '}<a type='link' href="https://reactjs.org">React</a>
+                <Divider type='vertical' />
+                {'Theme by '}<a type='link' href="https://ant.design/index-cn">Ant Design</a>
+            </Footer>
+        </Layout >
     )
 }

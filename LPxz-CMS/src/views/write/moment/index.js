@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Divider, Switch, Table, Button, message } from 'antd'
+import { Divider, Switch, Table, Button, message, Popconfirm } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 import { getMomentListByQuery, updatePublished, deleteMomentById } from 'api/moment'
@@ -49,18 +49,18 @@ const Moment = () => {
     }
 
     const handleDeleteMoment = (id) => {
-        deleteMomentById(id)
-            .then((res) => {
-                if (res.code === 200) {
-                    message.success(res.msg)
-                    getMomentList()
-                } else {
-                    message.error(res.msg)
-                }
-            })
-            .catch(() => {
-                message.error('请求失败')
-            })
+        // deleteMomentById(id)
+        //     .then((res) => {
+        //         if (res.code === 200) {
+        //             message.success(res.msg)
+        //             getMomentList()
+        //         } else {
+        //             message.error(res.msg)
+        //         }
+        //     })
+        //     .catch(() => {
+        //         message.error('请求失败')
+        //     })
     }
 
     const [openDialog, setOpenDialog] = useState(false)
@@ -127,7 +127,16 @@ const Moment = () => {
                 <span>
                     <Button type='primary' size='small' onClick={() => handleEditMoment(row.id)}>编辑</Button>
                     <Divider type='vertical' />
-                    <Button type='danger' size='small' onClick={() => handleDeleteMoment(row.id)}>删除</Button>
+                    <Popconfirm
+                        placement="topRight"
+                        title="确认删除吗？"
+                        onConfirm={() => handleDeleteMoment(row.id)}
+                        okText="删除"
+                        okType="danger"
+                        cancelText="取消"
+                    >
+                        <Button danger size='small'>删除</Button>
+                    </Popconfirm>
                 </span>
             )
         }

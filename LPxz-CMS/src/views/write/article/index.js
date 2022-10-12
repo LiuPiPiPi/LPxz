@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Divider, Switch, Table, Button, message } from 'antd'
+import { Divider, Switch, Table, Button, message, Popconfirm } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 // project imports
@@ -63,18 +63,18 @@ const Article = () => {
     }
 
     const handleDeleteArticle = (id) => {
-        // deleteMomentById(id)
-        //     .then((res) => {
-        //         if (res.code === 200) {
-        //             message.success(res.msg })
-        //             getArticleList()
-        //         } else {
-        //             message.error(res.msg })
-        //         }
-        //     })
-        //     .catch(() => {
-        //         message.error('请求失败' })
-        //     })
+        deleteById(id)
+            .then((res) => {
+                if (res.code === 200) {
+                    message.success(res.msg)
+                    getArticleList()
+                } else {
+                    message.error(res.msg)
+                }
+            })
+            .catch(() => {
+                message.error('请求失败')
+            })
     }
 
 
@@ -179,7 +179,17 @@ const Article = () => {
                 <span>
                     <Button type='primary' size='small' onClick={() => handleEditArticle(row.id)}>编辑</Button>
                     <Divider type='vertical' />
-                    <Button type='danger' size='small' onClick={() => handleDeleteArticle(row.id)}>删除</Button>
+                    <Popconfirm
+                        placement="topRight"
+                        title="确认删除吗？"
+                        onConfirm={() => handleDeleteArticle(row.id)}
+                        okText="删除"
+                        okType="danger"
+                        cancelText="取消"
+                    >
+                        <Button danger size='small'>删除</Button>
+                    </Popconfirm>
+
                 </span>
             )
         }
