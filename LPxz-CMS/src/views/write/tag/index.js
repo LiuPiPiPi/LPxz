@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
 
-import { Divider, Table, Button, message, Popconfirm } from 'antd'
+import { Divider, Table, Button, message, Popconfirm, Modal, Form, Input, Select, Row, Col } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 // project imports
 import { getData, addTag, editTag, deleteTagById } from 'api/tag'
 
 const Tag = () => {
     const [tagList, setTagList] = useState([])
+    const [form] = Form.useForm()
 
     const getTagList = () => {
         getData({ pageNum: 1, pageSize: 10 })
             .then((res) => {
                 if (res.code === 200) {
-                    message.success(res.msg)
+                    // message.success(res.msg)
                     setTagList(res.data.list)
                 } else {
                     message.error(res.msg)
@@ -26,10 +28,6 @@ const Tag = () => {
     useEffect(() => {
         getTagList()
     }, [])
-
-    const handleEditTag = (id) => {
-        // navigate(`/tag/edit/${id}`)
-    }
 
     const handleDeleteTag = (id) => {
         deleteTagById(id)
@@ -47,13 +45,59 @@ const Tag = () => {
     }
 
     const [openDialog, setOpenDialog] = useState(false)
-    const [momentId, setMomentId] = useState(null)
-    const handleOpenDialog = (id) => {
-        setMomentId(id)
+    const [dialogType, setDialogType] = useState('add')
+    const [tagId, setTagId] = useState(null)
+
+    const handleOpenDialog = (row) => {
+        if (row === null) {
+            // 添加
+            setDialogType('add')
+            setTagId(null)
+            form.resetFields()
+        } else {
+            // 修改
+            setDialogType('edit')
+            setTagId(row.id)
+            form.setFieldsValue(row)
+        }
         setOpenDialog(true)
     }
+
     const handleCloseDialog = () => {
         setOpenDialog(false)
+    }
+
+    const handleDialogSubmit = () => {
+        form.validateFields().then((values) => {
+            if (dialogType === 'add') {
+                addTag(values).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        handleCloseDialog()
+                        getTagList()
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error("请求失败")
+                })
+            } else {
+                Object.assign(values, { id: tagId })
+                editTag(values).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        handleCloseDialog()
+                        getTagList()
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error("请求失败")
+                })
+            }
+        }).catch(err => {
+            console.log('Error: ', err)
+        })
     }
 
     const columns = [
@@ -72,10 +116,14 @@ const Tag = () => {
         },
         {
             title: '颜色',
-            dataIndex: 'color',
             key: 'color',
             align: 'center',
-            width: '100px',
+            render: (_, row) => (
+                <Row>
+                    <Col span={4} offset={6}>{row.color}</Col>
+                    <Col span={8} style={{ backgroundColor: `${row.color}` }} />
+                </Row>
+            )
         },
         {
             title: '操作',
@@ -84,7 +132,7 @@ const Tag = () => {
             width: '200px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleEditTag(row.id)}>编辑</Button>
+                    <Button type='primary' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -101,8 +149,62 @@ const Tag = () => {
         }
     ]
 
+    const colors = [
+        { label: '红色', value: 'red' },
+        { label: '橘黄', value: 'orange' },
+        { label: '黄色', value: 'yellow' },
+        { label: '橄榄绿', value: 'olive' },
+        { label: '纯绿', value: 'green' },
+        { label: '水鸭蓝', value: 'teal' },
+        { label: '纯蓝', value: 'blue' },
+        { label: '紫罗兰', value: 'violet' },
+        { label: '紫色', value: 'purple' },
+        { label: '粉红', value: 'pink' },
+        { label: '棕色', value: 'brown' },
+        { label: '灰色', value: 'grey' },
+        { label: '黑色', value: 'black' }
+    ]
+
     return (
-        <Table columns={columns} dataSource={tagList} />
+        <>
+            <>
+                <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加标签</Button>
+            </>
+            <Divider type='horizontal' />
+            <Modal
+                title={`${dialogType === 'add' ? '添加' : '编辑'}标签`}
+                open={openDialog}
+                width="50%"
+                okText="确定"
+                cancelText="取消"
+                onOk={handleDialogSubmit}
+                onCancel={handleCloseDialog}
+            >
+                <Form
+                    name="edit_tag"
+                    form={form}
+                    layout="horizontal"
+                    labelCol={{ span: 3 }}
+                >
+                    <Form.Item name="name" label="标签名称" required>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="color" label="标签颜色">
+                        <Select>
+                            {colors.map(color => (
+                                <Select.Option key={color.value} value={color.value}>
+                                    <Row>
+                                        <Col span={4}>{color.label}</Col>
+                                        <Col span={8} style={{ backgroundColor: `${color.value}` }} />
+                                    </Row>
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <Table columns={columns} dataSource={tagList} rowKey={row => row.id} />
+        </>
     )
 }
 

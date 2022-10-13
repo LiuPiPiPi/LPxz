@@ -15,7 +15,7 @@ const Moment = () => {
         getMomentListByQuery({ pageNum: 1, pageSize: 50 })
             .then((res) => {
                 if (res.code === 200) {
-                    message.success(res.msg)
+                    // message.success(res.msg)
                     setMomentList(res.data.list)
                 } else {
                     message.error(res.msg)
@@ -45,32 +45,22 @@ const Moment = () => {
     }
 
     const handleEditMoment = (id) => {
-        navigate(`/moment/edit/${id}`)
+        navigate(`/moment/create/${id}`)
     }
 
     const handleDeleteMoment = (id) => {
-        // deleteMomentById(id)
-        //     .then((res) => {
-        //         if (res.code === 200) {
-        //             message.success(res.msg)
-        //             getMomentList()
-        //         } else {
-        //             message.error(res.msg)
-        //         }
-        //     })
-        //     .catch(() => {
-        //         message.error('请求失败')
-        //     })
-    }
-
-    const [openDialog, setOpenDialog] = useState(false)
-    const [momentId, setMomentId] = useState(null)
-    const handleOpenDialog = (id) => {
-        setMomentId(id)
-        setOpenDialog(true)
-    }
-    const handleCloseDialog = () => {
-        setOpenDialog(false)
+        deleteMomentById(id)
+            .then((res) => {
+                if (res.code === 200) {
+                    message.success(res.msg)
+                    getMomentList()
+                } else {
+                    message.error(res.msg)
+                }
+            })
+            .catch(() => {
+                message.error('请求失败')
+            })
     }
 
     const columns = [
@@ -143,7 +133,7 @@ const Moment = () => {
     ]
 
     return (
-        <Table columns={columns} dataSource={momentList} />
+        <Table columns={columns} dataSource={momentList} rowKey={row => row.id} />
     )
 }
 

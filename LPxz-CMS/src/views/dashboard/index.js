@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Layout, Menu, Divider, Popover, message, Button } from 'antd'
-import { LineChartOutlined, SearchOutlined, HistoryOutlined, TeamOutlined } from '@ant-design/icons'
 import "antd/dist/antd.min.css"
 
 import logo from 'assets/img/logo.png'
@@ -19,8 +18,6 @@ export default function Dashboard() {
     useEffect(() => {
 
     })
-
-    const menuSelected = location.pathname
 
     const handleLogout = () => {
         window.localStorage.clear()
@@ -52,21 +49,11 @@ export default function Dashboard() {
                     <Sider className="site-layout-background" width={200}>
                         <Menu
                             mode="inline"
-                            defaultSelectedKeys={[menuSelected]}
-                            selectedKeys={[menuSelected]}
+                            selectedKeys={[location.pathname]}
+                            items={menus}
+                            onClick={event => navigate(event.key)}
                             style={{ height: '100%' }}
                         >
-                            {menus.map((menu) => {
-                                return (
-                                    <Menu.Item
-                                        key={menu.key}
-                                        icon={menu.icon}
-                                        onClick={() => navigate(`${menu.key}`)}
-                                    >
-                                        {menu.label}
-                                    </Menu.Item>
-                                )
-                            })}
                         </Menu>
                     </Sider>
                     <TransitionGroup style={{ width: '100%' }}>

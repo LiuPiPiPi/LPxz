@@ -1,30 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Divider, Switch, Table, Button, message, Popconfirm } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { Divider, Switch, Table, Button, message, Popconfirm, Form, Input, Select } from 'antd'
+import { EditOutlined, CheckOutlined, CloseOutlined, SearchOutlined } from '@ant-design/icons'
 
 // project imports
 import { getDataByQuery, deleteById, updateTop, updateRecommend, updateVisibility } from 'api/article'
 import formatTime from 'utils/format-time'
+import DialogVisibleModal from 'components/DialogVisibleModal'
 
 const Article = () => {
     const navigate = useNavigate()
+    // TODO
+    const [searchForm, modalForm] = Form.useForm()
 
     const [articleList, setArticleList] = useState([])
     const [categoryList, setCategoryList] = useState([])
+    const [formData, setFormData] = useState({ title: '', categoryId: null, pageNum: 1, pageSize: 50 })
+    const [modalOpen, setModalOpen] = useState(false)
 
-    useEffect(() => {
-        getArticleList()
-    }, [])
-
-    const getArticleList = () => {
-        getDataByQuery({ title: '', categoryId: null, pageNum: 1, pageSize: 50 })
+    const getArticleList = useCallback(() => {
+        getDataByQuery(formData)
             .then((res) => {
                 if (res.code === 200) {
-                    message.success(res.msg)
+                    // message.success(res.msg)
                     setArticleList(res.data.blogs.list)
-                    setCategoryList(res.data.categories.list)
+                    setCategoryList(res.data.categories)
                 } else {
                     message.error(res.msg)
                 }
@@ -32,7 +33,11 @@ const Article = () => {
             .catch(() => {
                 message.error('请求失败')
             })
-    }
+    }, [formData])
+
+    useEffect(() => {
+        getArticleList()
+    }, [getArticleList])
 
     const handleTopChanged = (row) => {
         updateTop(row.id, !row.top).then(res => {
@@ -59,7 +64,7 @@ const Article = () => {
     }
 
     const handleEditArticle = (id) => {
-        navigate(`/article/edit/${id}`)
+        navigate(`/article/create/${id}`)
     }
 
     const handleDeleteArticle = (id) => {
@@ -75,19 +80,6 @@ const Article = () => {
             .catch(() => {
                 message.error('请求失败')
             })
-    }
-
-
-    const [openDialog, setOpenDialog] = useState(false)
-    const [momentId, setMomentId] = useState(null)
-
-    const handleOpenDialog = (id) => {
-        setMomentId(id)
-        setOpenDialog(true)
-    }
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false)
     }
 
     const columns = [
@@ -144,10 +136,12 @@ const Article = () => {
         {
             title: '可见性',
             key: 'published',
-            width: '80px',
+            width: '120px',
             align: 'center',
             render: (_, row) => (
-                <span>{row.published ? (row.password !== '' ? '密码保护' : '公开') : '私密'}</span>
+                <Button type='link' onClick={() => { setModalOpen(true) }}>
+                    <EditOutlined />&nbsp;{row.published ? (row.password !== '' ? '密码保护' : '公开') : '私密'}
+                </Button>
             )
         },
         {
@@ -196,7 +190,40 @@ const Article = () => {
     ]
 
     return (
-        <Table columns={columns} dataSource={articleList} />
+        <>
+            <Form
+                name="search_article"
+                form={searchForm}
+                layout="inline"
+                onFinish={() => {
+                    searchForm.validateFields().then(values => {
+                        setFormData({ ...formData, ...values })
+                    })
+                }}
+            >
+                <Form.Item name="title">
+                    <Input placeholder="文章标题" allowClear />
+                </Form.Item>
+                <Form.Item name="categoryId">
+                    <Select
+                        options={categoryList.map(ele => {
+                            return {
+                                label: ele.name,
+                                value: ele.id
+                            }
+                        })}
+                        placeholder="文章分类"
+                        allowClear
+                    />
+                </Form.Item>
+                <Form.Item shouldUpdate>
+                    <Button type="primary" htmlType="submit"><SearchOutlined /></Button>
+                </Form.Item>
+            </Form>
+            <br />
+            <Table columns={columns} dataSource={articleList} rowKey={row => row.id} />
+            <DialogVisibleModal open={modalOpen} />
+        </>
     )
 }
 

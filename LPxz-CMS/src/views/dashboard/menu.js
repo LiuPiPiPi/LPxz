@@ -1,10 +1,19 @@
 import React from 'react'
-import { LineChartOutlined, SearchOutlined, HistoryOutlined, TeamOutlined } from '@ant-design/icons'
+import {
+    EditOutlined,
+    FileMarkdownOutlined,
+    MessageOutlined,
+    ClusterOutlined,
+    TagsOutlined,
+    HistoryOutlined,
+    CommentOutlined,
+    FieldTimeOutlined
+} from '@ant-design/icons'
 
 const menus = [
     {
         key: '/article/create',
-        icon: <LineChartOutlined />,
+        icon: <EditOutlined />,
         label: '写文章',
         // children: new Array(4).fill(null).map((_, j) => {
         //     const subKey = index * 4 + j + 1
@@ -16,37 +25,37 @@ const menus = [
     },
     {
         key: '/moment/create',
-        icon: <LineChartOutlined />,
+        icon: <EditOutlined />,
         label: '写动态'
     },
     {
         key: '/article/manage',
-        icon: <SearchOutlined />,
+        icon: <FileMarkdownOutlined />,
         label: '文章管理'
     },
     {
         key: '/moment/manage',
-        icon: <HistoryOutlined />,
+        icon: <MessageOutlined />,
         label: '动态管理'
     },
     {
         key: '/category/manage',
-        icon: <HistoryOutlined />,
+        icon: <ClusterOutlined />,
         label: '分类管理'
     },
     {
         key: '/tag/manage',
-        icon: <HistoryOutlined />,
+        icon: <TagsOutlined />,
         label: '标签管理'
     },
-    {
-        key: '/comment/manage',
-        icon: <HistoryOutlined />,
-        label: '评论管理'
-    },
+    // {
+    //     key: '/comment/manage',
+    //     icon: <CommentOutlined />,
+    //     label: '评论管理'
+    // },
     {
         key: '/scheduleJob',
-        icon: <TeamOutlined />,
+        icon: <FieldTimeOutlined />,
         label: '定时任务'
     },
 ]

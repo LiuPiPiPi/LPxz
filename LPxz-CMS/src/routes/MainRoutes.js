@@ -28,11 +28,19 @@ const MainRoutes = {
             element: <RequireAuth><CreateMoment /></RequireAuth>
         },
         {
+            path: 'moment/create/:id',
+            element: <RequireAuth><CreateMoment /></RequireAuth>
+        },
+        {
             path: 'article/manage',
             element: <RequireAuth><Article /></RequireAuth>
         },
         {
             path: 'article/create',
+            element: <RequireAuth><CreateArticle /></RequireAuth>
+        },
+        {
+            path: 'article/create/:id',
             element: <RequireAuth><CreateArticle /></RequireAuth>
         },
         {

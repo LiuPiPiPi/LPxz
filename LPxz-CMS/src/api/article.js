@@ -69,7 +69,7 @@ export function updateVisibility(id, form) {
     });
 }
 
-export function getById(id) {
+export function getArticleById(id) {
     return axios({
         url: 'blog',
         method: 'GET',
@@ -79,7 +79,7 @@ export function getById(id) {
     });
 }
 
-export function update(blog) {
+export function updateArticle(blog) {
     return axios({
         url: 'blog',
         method: 'PUT',

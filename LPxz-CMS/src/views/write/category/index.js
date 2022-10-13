@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { Divider, Switch, Table, Button, message, Popconfirm } from 'antd'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { Divider, Table, Button, message, Popconfirm, Modal, Form, Input } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 // project imports
 import { getData, addCategory, editCategory, deleteCategoryById } from 'api/category'
 
 const Category = () => {
     const [categoryList, setCategoryList] = useState([])
+    const [form] = Form.useForm()
 
     useEffect(() => {
         getCategoryList()
@@ -18,7 +18,7 @@ const Category = () => {
         getData({ pageNum: 1, pageSize: 10 })
             .then((res) => {
                 if (res.code === 200) {
-                    message.success(res.msg)
+                    // message.success(res.msg)
                     setCategoryList(res.data.list)
                 } else {
                     message.error(res.msg)
@@ -27,10 +27,6 @@ const Category = () => {
             .catch(() => {
                 message.error('请求失败')
             })
-    }
-
-    const handleEditCategory = (id) => {
-        // navigate(`/category/edit/${id}`)
     }
 
     const handleDeleteCategory = (id) => {
@@ -49,13 +45,59 @@ const Category = () => {
     }
 
     const [openDialog, setOpenDialog] = useState(false)
-    const [momentId, setMomentId] = useState(null)
-    const handleOpenDialog = (id) => {
-        setMomentId(id)
+    const [dialogType, setDialogType] = useState('add')
+    const [categoryId, setCategoryId] = useState(null)
+
+    const handleOpenDialog = (row) => {
+        if (row === null) {
+            // 添加
+            setDialogType('add')
+            setCategoryId(null)
+            form.resetFields()
+        } else {
+            // 修改
+            setDialogType('edit')
+            setCategoryId(row.id)
+            form.setFieldsValue(row)
+        }
         setOpenDialog(true)
     }
+
     const handleCloseDialog = () => {
         setOpenDialog(false)
+    }
+
+    const handleDialogSubmit = () => {
+        form.validateFields().then((values) => {
+            if (dialogType === 'add') {
+                addCategory(values).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        handleCloseDialog()
+                        getCategoryList()
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error("请求失败")
+                })
+            } else {
+                Object.assign(values, { id: categoryId })
+                editCategory(values).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        handleCloseDialog()
+                        getCategoryList()
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error("请求失败")
+                })
+            }
+        }).catch(err => {
+            console.log('Error: ', err)
+        })
     }
 
     const columns = [
@@ -79,7 +121,7 @@ const Category = () => {
             width: '200px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleEditCategory(row.id)}>编辑</Button>
+                    <Button type='primary' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -97,7 +139,33 @@ const Category = () => {
     ]
 
     return (
-        <Table columns={columns} dataSource={categoryList} />
+        <>
+            <>
+                <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加分类</Button>
+            </>
+            <Divider type='horizontal' />
+            <Modal
+                title={`${dialogType === 'add' ? '添加' : '编辑'}分类`}
+                open={openDialog}
+                width="50%"
+                okText="确定"
+                cancelText="取消"
+                onOk={handleDialogSubmit}
+                onCancel={handleCloseDialog}
+            >
+                <Form
+                    name="edit_category"
+                    form={form}
+                    layout="horizontal"
+                    labelCol={{ span: 3 }}
+                >
+                    <Form.Item name="name" label="分类名称" required>
+                        <Input />
+                    </Form.Item>
+                </Form>
+            </Modal>
+            <Table columns={columns} dataSource={categoryList} rowKey={row => row.id} />
+        </>
     )
 }
 
