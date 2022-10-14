@@ -1,7 +1,7 @@
 // import react-markdown-editor-lite, and a markdown parser you like
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Form, DatePicker, Row, Col, Button, message, Input } from 'antd'
+import { Form, DatePicker, Row, Col, Button, message, Input, Select } from 'antd'
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
@@ -21,15 +21,27 @@ const CreateArticle = () => {
 
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
-    const [modalOpen, setModalOpen] = useState(false)
+    const [article, setArticle] = useState({})
+    const [categoryList, setCategoryList] = useState([])
+    const [tagList, setTagList] = useState([])
 
-    const getMoment = useCallback(() => {
+    const modalRef = useRef()
+
+    const getArticle = useCallback(() => {
         if (id) {
             getArticleById(id).then((res) => {
                 if (res.code === 200) {
+                    setArticle(res.data)
                     setDescription(res.data.description)
                     setContent(res.data.content)
-                    form.setFieldsValue({ ...res.data, createTime: momentJS(res.data.createTime) })
+                    form.setFieldsValue({
+                        ...res.data,
+                        ...{
+                            cate: res.data.category.id,
+                            tagList: res.data.tags.map(ele => { return ele.id }),
+                            createTime: momentJS(res.data.createTime)
+                        }
+                    })
                 } else {
                     message.error(res.msg)
                 }
@@ -40,47 +52,48 @@ const CreateArticle = () => {
     }, [id, form])
 
     useEffect(() => {
-        getMoment()
-    }, [getMoment])
-
-    const handleOpenModal = () => {
-
-    }
-
-    const handleSubmit = () => {
-        form.validateFields().then((values) => {
-            console.log(values)
-            const obj = {
-                ...values, ...{
-                    id,
-                    content,
-                    appreciation: false
-                }
+        getCategoryAndTag().then(res => {
+            if (res.code === 200) {
+                setCategoryList(res.data.categories)
+                setTagList(res.data.tags)
+            } else {
+                message.error(res.msg)
             }
+        }).catch(() => {
+            message.error('请求失败')
+        })
+        getArticle()
+    }, [getArticle])
 
-            // if (id) {
-            //     updateArticle(obj).then(res => {
-            //         if (res.code === 200) {
-            //             message.success(res.msg)
-            //             navigate('/article/manage')
-            //         } else {
-            //             message.error(res.msg)
-            //         }
-            //     }).catch(() => {
-            //         message.error('请求失败')
-            //     })
-            // } else {
-            //     saveArticle(obj).then(res => {
-            //         if (res.code === 200) {
-            //             message.success(res.msg)
-            //             navigate('/article/manage')
-            //         } else {
-            //             message.error(res.msg)
-            //         }
-            //     }).catch(() => {
-            //         message.error('请求失败')
-            //     })
-            // }
+    const handleSubmit = (article, values) => {
+        form.validateFields().then(vals => {
+            const formData = { ...article, ...values, ...vals, ...{ description, content } }
+            console.log(formData)
+            if ('id' in article) {
+                // update
+                updateArticle(formData).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        navigate('/article/manage')
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error('请求失败')
+                })
+            } else {
+                // create
+                saveArticle(formData).then(res => {
+                    if (res.code === 200) {
+                        message.success(res.msg)
+                        navigate('/article/manage')
+                    } else {
+                        message.error(res.msg)
+                    }
+                }).catch(() => {
+                    message.error('请求失败')
+                })
+            }
         })
     }
 
@@ -116,49 +129,67 @@ const CreateArticle = () => {
                 name="create_article"
                 form={form}
                 layout="vertical"
+                initialValues={{
+                    views: 0
+                }}
             >
                 <Row>
                     <Col span={6}>
                         <Form.Item name="cate" label="分类" required>
-                            <Input />
+                            <Select
+                                options={categoryList.map(ele => {
+                                    return { label: ele.name, value: ele.id }
+                                })}
+                                placeholder="选择分类"
+                                allowClear
+                            />
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
-                        <Form.Item name="tag" label="标签" required>
-                            <Input />
+                        <Form.Item name="tagList" label="标签" required>
+                            <Select
+                                mode="multiple"
+                                showArrow
+                                options={tagList.map(ele => {
+                                    return { label: ele.name, value: ele.id }
+                                })}
+                                placeholder="选择标签"
+                                allowClear
+                            />
                         </Form.Item>
                     </Col>
                     {/* TODO 等待后端接口实现 */}
-                    {/* <Col span={6} offset={2}>
-                        <Form.Item name="url" label="创建时间" required>
-                            <Input />
+                    <Col span={6} offset={2}>
+                        <Form.Item name="createTime" label="创建时间">
+                            <DatePicker showTime />
                         </Form.Item>
-                    </Col> */}
+                    </Col>
                 </Row>
                 <Row>
                     <Col span={6}>
                         <Form.Item name="words" label="字数" required>
-                            <Input />
+                            <Input type='number' placeholder='请输入文章字数（自动计算阅读时长）'
+                                onChange={() => form.setFieldValue('readTime', Math.round(form.getFieldValue('words') / 200))} />
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
                         <Form.Item name="readTime" label="阅读时长（分钟）">
-                            <Input />
+                            <Input type='number' placeholder='请输入阅读时长（可选）默认 Math.round(字数 / 200)' />
                         </Form.Item>
                     </Col>
                     <Col span={6} offset={2}>
                         <Form.Item name="views" label="浏览次数">
-                            <Input />
+                            <Input type='number' placeholder='请输入浏览次数（可选）默认为 0' />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Form.Item>
-                    <Button htmlType="submit" type="primary" onClick={() => { setModalOpen(true) }}>
+                    <Button htmlType="submit" type="primary" onClick={() => modalRef.current.handleOpen()}>
                         保存
                     </Button>
                 </Form.Item>
             </Form>
-            <DialogVisibleModal open={modalOpen} />
+            <DialogVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmit} />
         </>
     )
 }

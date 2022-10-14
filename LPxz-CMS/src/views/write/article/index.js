@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Divider, Switch, Table, Button, message, Popconfirm, Form, Input, Select } from 'antd'
@@ -11,13 +11,14 @@ import DialogVisibleModal from 'components/DialogVisibleModal'
 
 const Article = () => {
     const navigate = useNavigate()
-    // TODO
-    const [searchForm, modalForm] = Form.useForm()
+    const [searchForm] = Form.useForm()
 
     const [articleList, setArticleList] = useState([])
     const [categoryList, setCategoryList] = useState([])
     const [formData, setFormData] = useState({ title: '', categoryId: null, pageNum: 1, pageSize: 50 })
-    const [modalOpen, setModalOpen] = useState(false)
+    const [article, setArticle] = useState(null)
+
+    const modalRef = useRef()
 
     const getArticleList = useCallback(() => {
         getDataByQuery(formData)
@@ -52,7 +53,7 @@ const Article = () => {
     }
 
     const handleRecommendChanged = (row) => {
-        updateRecommend(row.id, !row.recommended).then(res => {
+        updateRecommend(row.id, !row.recommend).then(res => {
             if (res.code === 200) {
                 getArticleList()
             } else {
@@ -80,6 +81,19 @@ const Article = () => {
             .catch(() => {
                 message.error('请求失败')
             })
+    }
+
+    const handleSubmitVisible = (article, values) => {
+        updateVisibility(article.id, values).then(res => {
+            if (res.code === 200) {
+                message.success(res.msg)
+                getArticleList()
+            } else {
+                message.error(res.msg)
+            }
+        }).catch(() => {
+            message.error("请求失败")
+        })
     }
 
     const columns = [
@@ -139,7 +153,10 @@ const Article = () => {
             width: '120px',
             align: 'center',
             render: (_, row) => (
-                <Button type='link' onClick={() => { setModalOpen(true) }}>
+                <Button type='link' onClick={() => {
+                    setArticle(row)
+                    modalRef.current.handleOpen()
+                }}>
                     <EditOutlined />&nbsp;{row.published ? (row.password !== '' ? '密码保护' : '公开') : '私密'}
                 </Button>
             )
@@ -183,7 +200,6 @@ const Article = () => {
                     >
                         <Button danger size='small'>删除</Button>
                     </Popconfirm>
-
                 </span>
             )
         }
@@ -222,7 +238,7 @@ const Article = () => {
             </Form>
             <br />
             <Table columns={columns} dataSource={articleList} rowKey={row => row.id} />
-            <DialogVisibleModal open={modalOpen} />
+            <DialogVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmitVisible} />
         </>
     )
 }

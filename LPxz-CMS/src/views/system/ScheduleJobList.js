@@ -215,8 +215,7 @@ const ScheduleJobList = () => {
                         title="确认要立即执行一次该任务吗？"
                         onConfirm={() => handleRunOnce(row.jobId)}
                         onCancel={() => { message.info('已取消执行') }}
-                        okText="确定"
-                        cancelText="取消"
+                        okType="danger"
                     >
                         <Button size='small'>执行一次</Button>
                     </Popconfirm>
@@ -229,7 +228,6 @@ const ScheduleJobList = () => {
                         onConfirm={() => handleDeleteScheduleJob(row.jobId)}
                         okText="删除"
                         okType="danger"
-                        cancelText="取消"
                     >
                         <Button danger size='small'>删除</Button>
                     </Popconfirm>
@@ -254,6 +252,8 @@ const ScheduleJobList = () => {
                 cancelText="取消"
                 onOk={handleDialogSubmit}
                 onCancel={handleCloseDialog}
+                forceRender
+                destroyOnClose
             >
                 <Form
                     name="edit_schedule_job"

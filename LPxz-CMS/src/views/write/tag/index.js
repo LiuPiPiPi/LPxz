@@ -179,6 +179,8 @@ const Tag = () => {
                 cancelText="取消"
                 onOk={handleDialogSubmit}
                 onCancel={handleCloseDialog}
+                forceRender
+                destroyOnClose
             >
                 <Form
                     name="edit_tag"
