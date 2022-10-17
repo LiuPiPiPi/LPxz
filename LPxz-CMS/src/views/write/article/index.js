@@ -113,7 +113,7 @@ const Article = () => {
         {
             title: '分类',
             key: 'category',
-            width: '150px',
+            width: '100px',
             align: 'center',
             render: (_, row) => (
                 <span>{row.category.name}</span>
@@ -150,7 +150,7 @@ const Article = () => {
         {
             title: '可见性',
             key: 'published',
-            width: '120px',
+            width: '100px',
             align: 'center',
             render: (_, row) => (
                 <Button type='link' onClick={() => {

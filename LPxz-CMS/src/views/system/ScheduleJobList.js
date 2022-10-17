@@ -133,41 +133,41 @@ const ScheduleJobList = () => {
         {
             title: '#',
             key: 'index',
-            width: '60px',
+            width: '40px',
             align: 'center',
             render: (_, __, index) => <span>{index + 1}</span>
         },
         {
             title: 'Bean',
-            dataIndex: 'beanName',
             key: 'beanName',
-            align: 'center'
+            dataIndex: 'beanName',
+            align: 'center',
+            ellipsis: true
         },
         {
             title: '方法名',
             dataIndex: 'methodName',
             key: 'methodName',
-            align: 'center'
+            align: 'center',
+            ellipsis: true
         },
         {
             title: '参数',
             dataIndex: 'params',
             key: 'params',
-            align: 'center',
-            width: '100px'
+            align: 'center'
         },
         {
             title: 'cron',
             dataIndex: 'cron',
             key: 'cron',
-            align: 'center',
-            width: '100px'
+            align: 'center'
         },
         {
             title: '状态',
             key: 'status',
             align: 'center',
-            width: '80px',
+            width: '60px',
             render: (_, row) => (
                 <Popconfirm
                     placement="topRight"
@@ -181,17 +181,17 @@ const ScheduleJobList = () => {
                         checkedChildren={<CheckOutlined />}
                         unCheckedChildren={<CloseOutlined />}
                         checked={row.status}
-                        onChange={() => { }}
+                        size='small'
                     />
                 </Popconfirm>
-
             )
         },
         {
             title: '备注',
             dataIndex: 'remark',
             key: 'remark',
-            align: 'center'
+            align: 'center',
+            ellipsis: true
         },
         {
             title: '创建时间',
@@ -241,7 +241,7 @@ const ScheduleJobList = () => {
             <>
                 <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加</Button>
                 <Divider type='vertical' />
-                <Button icon={<FileDoneOutlined />} onClick={() => {navigate('logs/scheduleJob')}}>日志</Button>
+                <Button icon={<FileDoneOutlined />} onClick={() => { navigate('logs/scheduleJob') }}>日志</Button>
             </>
             <Divider type='horizontal' />
             <Modal

@@ -22,7 +22,7 @@ const DialogVisibleModal = memo(forwardRef((props, ref) => {
             let published = article.published ? (article.password !== '' ? 3 : 1) : 2
             form.setFieldsValue({ ...article, published })
         } else {
-            form.resetFields()
+            form.setFieldsValue({ published: 1 })
         }
     }, [article, form])
 

@@ -40,15 +40,8 @@ const CreateMoment = () => {
     }, [getMoment])
 
     const handleSubmit = (published) => {
-        form.validateFields().then((values) => {
-            const obj = {
-                ...values, ...{
-                    id,
-                    content,
-                    createTime: values.createTime.toDate(),
-                    published
-                }
-            }
+        form.validateFields().then(values => {
+            const obj = { ...values, ...{ id, content, published } }
             if (id) {
                 updateMoment(obj).then(res => {
                     if (res.code === 200) {

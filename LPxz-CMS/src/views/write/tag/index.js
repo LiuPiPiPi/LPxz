@@ -117,11 +117,12 @@ const Tag = () => {
         {
             title: '颜色',
             key: 'color',
+            width: '300px',
             align: 'center',
             render: (_, row) => (
-                <Row>
-                    <Col span={4} offset={6}>{row.color}</Col>
-                    <Col span={8} style={{ backgroundColor: `${row.color}` }} />
+                <Row gutter={{ xs: 8, sm: 16, md: 24 }} justify='center' wrap>
+                    <Col span={8}>{row.color}</Col>
+                    <Col span={16} style={{ backgroundColor: `${row.color}` }} />
                 </Row>
             )
         },

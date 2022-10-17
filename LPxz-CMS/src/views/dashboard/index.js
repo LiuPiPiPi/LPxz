@@ -26,7 +26,7 @@ export default function Dashboard() {
     }
 
     return (
-        <Layout>
+        <Layout style={{ minWidth: '1000px' }}>
             <Header className="header">
                 {/* 普通函数是对象属性的简洁赋值方法。不可以直接定义，this由"调用"该函数的对象来决定，所以这里使用箭头函数 */}
                 <div className="logo" onClick={() => navigate('/')}>
@@ -46,7 +46,7 @@ export default function Dashboard() {
             </Header>
             <Content style={{ padding: '0 50px' }}>
                 <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-                    <Sider className="site-layout-background" width={200}>
+                    <Sider className="site-layout-background" width={200} breakpoint='lg' collapsedWidth={0}>
                         <Menu
                             mode="inline"
                             selectedKeys={[location.pathname]}

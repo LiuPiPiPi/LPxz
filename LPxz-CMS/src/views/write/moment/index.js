@@ -96,14 +96,14 @@ const Moment = () => {
             dataIndex: 'likes',
             key: 'likes',
             align: 'center',
-            width: '100px',
+            width: '80px',
         },
         {
             title: '创建时间',
             dataIndex: 'createTime',
             key: 'createTime',
             align: 'center',
-            width: '180px',
+            width: '120px',
             render: text => (
                 <span>{formatTime(text)}</span>
             )
@@ -112,7 +112,7 @@ const Moment = () => {
             title: '操作',
             key: 'operate',
             align: 'center',
-            width: '150px',
+            width: '180px',
             render: (_, row) => (
                 <span>
                     <Button type='primary' size='small' onClick={() => handleEditMoment(row.id)}>编辑</Button>
