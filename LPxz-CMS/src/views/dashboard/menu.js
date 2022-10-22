@@ -1,21 +1,31 @@
 import React from 'react'
 import {
+    DashboardOutlined,
+    SendOutlined,
     EditOutlined,
     FileMarkdownOutlined,
     MessageOutlined,
     ClusterOutlined,
     TagsOutlined,
-    HistoryOutlined,
     CommentOutlined,
+    SettingOutlined,
+    TeamOutlined,
+    SmileOutlined,
     FieldTimeOutlined,
     FundProjectionScreenOutlined,
     LoginOutlined,
     ProfileOutlined,
     AlertOutlined,
-    LaptopOutlined
+    LaptopOutlined,
+    UserOutlined
 } from '@ant-design/icons'
 
 const menus = [
+    {
+        key: '/',
+        icon: <DashboardOutlined />,
+        label: '仪表盘'
+    },
     {
         key: 'writeManage',
         label: '写作管理',
@@ -58,6 +68,28 @@ const menus = [
             // },
         ]
     },
+    // {
+    //     key: 'pageManage',
+    //     label: '页面管理',
+    //     type: 'group',
+    //     children: [
+    //         {
+    //             key: '/log/scheduleJobLog',
+    //             icon: <SettingOutlined />,
+    //             label: '站点设置'
+    //         },
+    //         {
+    //             key: '/log/loginLog',
+    //             icon: <TeamOutlined />,
+    //             label: '友链管理'
+    //         },
+    //         {
+    //             key: '/log/operationLog',
+    //             icon: <SmileOutlined />,
+    //             label: '关于我'
+    //         }
+    //     ]
+    // },
     {
         key: 'systemManage',
         label: '系统管理',
@@ -99,6 +131,21 @@ const menus = [
                 label: '访问日志'
             }
         ]
+    },
+    {
+        key: 'statistics',
+        label: '数据统计',
+        type: 'group',
+        children: [{
+            key: '/visitor',
+            icon: <UserOutlined />,
+            label: '访客统计'
+        }]
+    },
+    {
+        key: 'lpxz-site',
+        icon: <SendOutlined />,
+        label: '站点跳转'
     }
 ]
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Divider, Switch, Table, Button, message, Popconfirm, Form, Input, Select } from 'antd'
@@ -15,18 +15,19 @@ const Article = () => {
 
     const [articleList, setArticleList] = useState([])
     const [categoryList, setCategoryList] = useState([])
-    const [formData, setFormData] = useState({ title: '', categoryId: null, pageNum: 1, pageSize: 50 })
+    const [formData, setFormData] = useState({ title: '', categoryId: null, pageNum: 1, pageSize: 10 })
+    const [total, setTotal] = useState(0)
     const [article, setArticle] = useState(null)
 
     const modalRef = useRef()
 
-    const getArticleList = useCallback(() => {
-        getDataByQuery(formData)
+    const getArticleList = query => {
+        getDataByQuery(query)
             .then((res) => {
                 if (res.code === 200) {
-                    // message.success(res.msg)
                     setArticleList(res.data.blogs.list)
                     setCategoryList(res.data.categories)
+                    setTotal(res.data.total)
                 } else {
                     message.error(res.msg)
                 }
@@ -34,16 +35,16 @@ const Article = () => {
             .catch(() => {
                 message.error('请求失败')
             })
-    }, [formData])
+    }
 
     useEffect(() => {
-        getArticleList()
-    }, [getArticleList])
+        getArticleList(formData)
+    }, [formData])
 
     const handleTopChanged = (row) => {
         updateTop(row.id, !row.top).then(res => {
             if (res.code === 200) {
-                getArticleList()
+                getArticleList(formData)
             } else {
                 message.error(res.msg)
             }
@@ -55,7 +56,7 @@ const Article = () => {
     const handleRecommendChanged = (row) => {
         updateRecommend(row.id, !row.recommend).then(res => {
             if (res.code === 200) {
-                getArticleList()
+                getArticleList(formData)
             } else {
                 message.error(res.msg)
             }
@@ -73,7 +74,7 @@ const Article = () => {
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getArticleList()
+                    getArticleList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -87,7 +88,7 @@ const Article = () => {
         updateVisibility(article.id, values).then(res => {
             if (res.code === 200) {
                 message.success(res.msg)
-                getArticleList()
+                getArticleList(formData)
             } else {
                 message.error(res.msg)
             }
@@ -237,7 +238,14 @@ const Article = () => {
                 </Form.Item>
             </Form>
             <br />
-            <Table columns={columns} dataSource={articleList} rowKey={row => row.id} />
+            <Table columns={columns} dataSource={articleList} rowKey={row => row.id}
+                pagination={{
+                    defaultCurrent: 1,
+                    total: total,
+                    onChange: (pageNum, pageSize) => {
+                        setFormData({ ...formData, ...{ pageNum, pageSize } })
+                    }
+                }} />
             <ArticleVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmitVisible} />
         </>
     )

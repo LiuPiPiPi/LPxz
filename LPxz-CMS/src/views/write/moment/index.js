@@ -11,12 +11,15 @@ const Moment = () => {
     const navigate = useNavigate()
 
     const [momentList, setMomentList] = useState([])
-    const getMomentList = () => {
-        getMomentListByQuery({ pageNum: 1, pageSize: 50 })
+    const [formData, setFormData] = useState({ pageNum: 1, pageSize: 10 })
+    const [total, setTotal] = useState(0)
+
+    const getMomentList = (query) => {
+        getMomentListByQuery(query)
             .then((res) => {
                 if (res.code === 200) {
-                    // message.success(res.msg)
                     setMomentList(res.data.list)
+                    setTotal(res.data.total)
                 } else {
                     message.error(res.msg)
                 }
@@ -27,14 +30,14 @@ const Moment = () => {
     }
 
     useEffect(() => {
-        getMomentList()
-    }, [])
+        getMomentList(formData)
+    }, [formData])
 
     const handleEditPublished = (row) => {
         updatePublished(row.id, !row.published)
             .then((res) => {
                 if (res.code === 200) {
-                    getMomentList()
+                    getMomentList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -53,7 +56,7 @@ const Moment = () => {
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getMomentList()
+                    getMomentList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -133,7 +136,14 @@ const Moment = () => {
     ]
 
     return (
-        <Table columns={columns} dataSource={momentList} rowKey={row => row.id} />
+        <Table columns={columns} dataSource={momentList} rowKey={row => row.id}
+            pagination={{
+                defaultCurrent: 1,
+                total: total,
+                onChange: (pageNum, pageSize) => {
+                    setFormData({ ...formData, ...{ pageNum, pageSize } })
+                }
+            }} />
     )
 }
 

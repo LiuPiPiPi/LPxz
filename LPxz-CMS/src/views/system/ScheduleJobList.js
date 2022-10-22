@@ -11,16 +11,19 @@ import formatTime from 'utils/format-time'
 const { TextArea } = Input
 
 const ScheduleJobList = () => {
-    const [scheduleJobList, setScheduleJobList] = useState([])
     const [form] = Form.useForm()
     const navigate = useNavigate()
 
-    const getScheduleJobList = () => {
-        getJobList({ pageNum: 1, pageSize: 10 })
+    const [scheduleJobList, setScheduleJobList] = useState([])
+    const [formData, setFormData] = useState({ pageNum: 1, pageSize: 10 })
+    const [total, setTotal] = useState(0)
+
+    const getScheduleJobList = (query) => {
+        getJobList(query)
             .then((res) => {
                 if (res.code === 200) {
-                    // message.success(res.msg)
                     setScheduleJobList(res.data.list)
+                    setTotal(res.data.total)
                 } else {
                     message.error(res.msg)
                 }
@@ -31,13 +34,13 @@ const ScheduleJobList = () => {
     }
 
     useEffect(() => {
-        getScheduleJobList()
-    }, [])
+        getScheduleJobList(formData)
+    }, [formData])
 
     const handleStatusChanged = (row) => {
         updateJobStatus(row.jobId, !row.status).then(res => {
             if (res.code === 200) {
-                getScheduleJobList()
+                getScheduleJobList(formData)
             } else {
                 message.error(res.msg)
             }
@@ -51,7 +54,7 @@ const ScheduleJobList = () => {
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getScheduleJobList()
+                    getScheduleJobList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -91,7 +94,7 @@ const ScheduleJobList = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getScheduleJobList()
+                        getScheduleJobList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -104,7 +107,7 @@ const ScheduleJobList = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getScheduleJobList()
+                        getScheduleJobList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -277,7 +280,14 @@ const ScheduleJobList = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={scheduleJobList} rowKey={row => row.jobId} />
+            <Table columns={columns} dataSource={scheduleJobList} rowKey={row => row.jobId}
+                pagination={{
+                    defaultCurrent: 1,
+                    total: total,
+                    onChange: (pageNum, pageSize) => {
+                        setFormData({ ...formData, ...{ pageNum, pageSize } })
+                    }
+                }} />
         </>
     )
 }

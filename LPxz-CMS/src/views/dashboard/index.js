@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Layout, Menu, Divider, Popover, message, Button } from 'antd'
@@ -51,7 +51,9 @@ export default function Dashboard() {
                             mode="inline"
                             selectedKeys={[location.pathname]}
                             items={menus}
-                            onClick={event => navigate(event.key)}
+                            onClick={event => {
+                                event.key === 'lpxz-site' ? window.open('http://lpxz.work:8083') : navigate(event.key)
+                            }}
                             style={{ height: '100%' }}
                         >
                         </Menu>

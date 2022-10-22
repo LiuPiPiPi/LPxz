@@ -7,15 +7,17 @@ import { PlusOutlined } from '@ant-design/icons'
 import { getData, addTag, editTag, deleteTagById } from 'api/tag'
 
 const Tag = () => {
-    const [tagList, setTagList] = useState([])
     const [form] = Form.useForm()
+    const [tagList, setTagList] = useState([])
+    const [formData, setFormData] = useState({ pageNum: 1, pageSize: 10 })
+    const [total, setTotal] = useState(0)
 
-    const getTagList = () => {
-        getData({ pageNum: 1, pageSize: 10 })
+    const getTagList = (query) => {
+        getData(query)
             .then((res) => {
                 if (res.code === 200) {
-                    // message.success(res.msg)
                     setTagList(res.data.list)
+                    setTotal(res.data.total)
                 } else {
                     message.error(res.msg)
                 }
@@ -26,15 +28,15 @@ const Tag = () => {
     }
 
     useEffect(() => {
-        getTagList()
-    }, [])
+        getTagList(formData)
+    }, [formData])
 
     const handleDeleteTag = (id) => {
         deleteTagById(id)
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getTagList()
+                    getTagList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -74,7 +76,7 @@ const Tag = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getTagList()
+                        getTagList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -87,7 +89,7 @@ const Tag = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getTagList()
+                        getTagList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -206,7 +208,14 @@ const Tag = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={tagList} rowKey={row => row.id} />
+            <Table columns={columns} dataSource={tagList} rowKey={row => row.id}
+                pagination={{
+                    defaultCurrent: 1,
+                    total: total,
+                    onChange: (pageNum, pageSize) => {
+                        setFormData({ ...formData, ...{ pageNum, pageSize } })
+                    }
+                }} />
         </>
     )
 }

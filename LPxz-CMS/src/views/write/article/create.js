@@ -68,7 +68,6 @@ const CreateArticle = () => {
     const handleSubmit = (article, values) => {
         form.validateFields().then(vals => {
             const formData = { ...article, ...values, ...vals, ...{ description, content } }
-            console.log(formData)
             if ('id' in article) {
                 // update
                 updateArticle(formData).then(res => {

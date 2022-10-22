@@ -7,19 +7,17 @@ import { PlusOutlined } from '@ant-design/icons'
 import { getData, addCategory, editCategory, deleteCategoryById } from 'api/category'
 
 const Category = () => {
-    const [categoryList, setCategoryList] = useState([])
     const [form] = Form.useForm()
+    const [categoryList, setCategoryList] = useState([])
+    const [formData, setFormData] = useState({ pageNum: 1, pageSize: 10 })
+    const [total, setTotal] = useState(0)
 
-    useEffect(() => {
-        getCategoryList()
-    }, [])
-
-    const getCategoryList = () => {
-        getData({ pageNum: 1, pageSize: 10 })
+    const getCategoryList = (query) => {
+        getData(query)
             .then((res) => {
                 if (res.code === 200) {
-                    // message.success(res.msg)
                     setCategoryList(res.data.list)
+                    setTotal(res.data.total)
                 } else {
                     message.error(res.msg)
                 }
@@ -29,12 +27,16 @@ const Category = () => {
             })
     }
 
+    useEffect(() => {
+        getCategoryList(formData)
+    }, [formData])
+
     const handleDeleteCategory = (id) => {
         deleteCategoryById(id)
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getCategoryList()
+                    getCategoryList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -74,7 +76,7 @@ const Category = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getCategoryList()
+                        getCategoryList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -87,7 +89,7 @@ const Category = () => {
                     if (res.code === 200) {
                         message.success(res.msg)
                         handleCloseDialog()
-                        getCategoryList()
+                        getCategoryList(formData)
                     } else {
                         message.error(res.msg)
                     }
@@ -166,7 +168,14 @@ const Category = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={categoryList} rowKey={row => row.id} />
+            <Table columns={columns} dataSource={categoryList} rowKey={row => row.id}
+                pagination={{
+                    defaultCurrent: 1,
+                    total: total,
+                    onChange: (pageNum, pageSize) => {
+                        setFormData({ ...formData, ...{ pageNum, pageSize } })
+                    }
+                }} />
         </>
     )
 }

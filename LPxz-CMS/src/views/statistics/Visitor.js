@@ -1,29 +1,25 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Divider, Table, Button, message, Popconfirm, Form, DatePicker, Input } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { Divider, Table, Button, message, Popconfirm, Form, DatePicker, Tooltip } from 'antd'
+import { SearchOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import moment from 'moment'
 
 // project imports
-import { getVisitLogList, deleteVisitLogById } from "api/visitLog"
+import { getVisitorList, deleteVisitor } from "api/visitor"
 import formatTime from 'utils/format-time'
 
 const { RangePicker } = DatePicker
 
-const VisitLog = () => {
-    const { uuid } = useParams()
+const Visitor = () => {
     const [logList, setLogList] = useState([])
     const [searchForm] = Form.useForm()
     const [formData, setFormData] = useState({ pageNum: 1, pageSize: 10 })
     const [total, setTotal] = useState(0)
+    const navigate = useNavigate()
 
-    const getLogList = useCallback((query) => {
-        if (uuid) {
-            query = { query, uuid }
-            searchForm.setFieldValue('uuid', uuid)
-        }
-        getVisitLogList(query)
+    const init = (query) => {
+        getVisitorList(query)
             .then((res) => {
                 if (res.code === 200) {
                     setLogList(res.data.list)
@@ -35,18 +31,18 @@ const VisitLog = () => {
             .catch(() => {
                 message.error('请求失败')
             })
-    }, [uuid, searchForm])
+    }
 
     useEffect(() => {
-        getLogList(formData)
-    }, [formData, getLogList])
+        init(formData)
+    }, [formData])
 
-    const handleDeleteLog = (id) => {
-        deleteVisitLogById(id)
+    const handleDeleteVisitor = (row) => {
+        deleteVisitor(row.id, row.uuid)
             .then((res) => {
                 if (res.code === 200) {
                     message.success(res.msg)
-                    getLogList(formData)
+                    getVisitorList(formData)
                 } else {
                     message.error(res.msg)
                 }
@@ -58,11 +54,11 @@ const VisitLog = () => {
 
     const handleSearch = () => {
         searchForm.validateFields().then(values => {
-            let { uuid, date } = values
+            let { date } = values
             if (date && date.length === 2) {
                 date = formatTime(date[0]) + ',' + formatTime(date[1])
             }
-            setFormData({ formData, uuid, date })
+            setFormData({ formData, date })
         })
     }
 
@@ -76,67 +72,35 @@ const VisitLog = () => {
         },
         {
             title: '访客标识',
-            key: 'uuid',
             dataIndex: 'uuid',
             align: 'center',
-            ellipsis: true,
-            render: text => (
-                <Button type='link' onClick={() => {
-                    searchForm.setFieldValue('uuid', text)
-                    handleSearch()
-                }}>
-                    {text}
-                </Button>
-            )
-        },
-        {
-            title: '请求方式',
-            key: 'method',
-            dataIndex: 'method',
-            align: 'center'
-        },
-        {
-            title: '访问行为',
-            key: 'behavior',
-            dataIndex: 'behavior',
-            align: 'center'
-        },
-        {
-            title: '访问内容',
-            key: 'content',
-            dataIndex: 'content',
-            align: 'center'
+            ellipsis: true
         },
         {
             title: 'IP',
-            key: 'ip',
             dataIndex: 'ip',
             align: 'center'
         },
         {
             title: 'IP 来源',
             dataIndex: 'ipSource',
-            key: 'ipSource',
             align: 'center',
             ellipsis: true
         },
         {
             title: '操作系统',
-            key: 'os',
             dataIndex: 'os',
             align: 'center'
         },
         {
             title: '浏览器',
             dataIndex: 'browser',
-            key: 'browser',
             align: 'center',
             ellipsis: true
         },
         {
-            title: '操作时间',
+            title: '首次访问',
             dataIndex: 'createTime',
-            key: 'createTime',
             align: 'center',
             width: '120px',
             render: text => (
@@ -144,16 +108,33 @@ const VisitLog = () => {
             )
         },
         {
+            title: () => (<>最后访问 <Tooltip title="每日凌晨自动更新"><QuestionCircleOutlined /></Tooltip></>),
+            dataIndex: 'lastTime',
+            align: 'center',
+            width: '120px',
+            render: text => (
+                <span>{formatTime(text)}</span>
+            )
+        },
+        {
+            title: () => (<>PV <Tooltip title="访客总浏览量，每日凌晨自动更新"><QuestionCircleOutlined /></Tooltip></>),
+            dataIndex: 'pv',
+            align: 'center'
+        },
+        {
             title: '操作',
             key: 'operate',
             align: 'center',
-            width: '80px',
+            width: '180px',
             render: (_, row) => (
                 <>
+                    <Button type='primary' size='small' onClick={() => { navigate(`/log/visitLog/${row.uuid}`) }}>
+                        查看记录</Button>
+                    <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
                         title="确认删除吗？"
-                        onConfirm={() => handleDeleteLog(row.id)}
+                        onConfirm={() => handleDeleteVisitor(row)}
                         okText="删除"
                         okType="danger"
                     >
@@ -172,10 +153,7 @@ const VisitLog = () => {
                 layout="inline"
                 onFinish={handleSearch}
             >
-                <Form.Item label="访客标识" name="uuid" style={{ width: '35%' }} >
-                    <Input placeholder='请输入访客标识码' allowClear />
-                </Form.Item>
-                <Form.Item label="访问时间" name="date">
+                <Form.Item label="操作时间" name="date">
                     <RangePicker
                         ranges={{
                             '今天': [moment().startOf('day'), moment().endOf('day')],
@@ -190,16 +168,6 @@ const VisitLog = () => {
             </Form>
             <Divider type="horizontal" />
             <Table columns={columns} dataSource={logList} rowKey={row => row.id}
-                expandable={{
-                    expandedRowRender: record => (
-                        <>
-                            <p>访客标识：{record.uuid}</p>
-                            <p>请求接口：{record.uri}</p>
-                            <p>请求参数：{record.param}</p>
-                            <p>备注：{record.remark}</p>
-                        </>
-                    )
-                }}
                 pagination={{
                     defaultCurrent: 1,
                     total: total,
@@ -211,4 +179,4 @@ const VisitLog = () => {
     )
 }
 
-export default VisitLog
+export default Visitor

@@ -22,6 +22,8 @@ const OperationLog = loadable(() => import('views/log/OperationLog'))
 const ExceptionLog = loadable(() => import('views/log/ExceptionLog'))
 const VisitLog = loadable(() => import('views/log/VisitLog'))
 
+const Visitor = loadable(() => import('views/statistics/Visitor'))
+
 const MainRoutes = {
     path: '/',
     element: <RequireAuth><Dashboard /></RequireAuth>,
@@ -93,6 +95,15 @@ const MainRoutes = {
             path: 'log/visitLog',
             element: <RequireAuth><VisitLog /></RequireAuth>
         },
+        {
+            path: 'log/visitLog/:uuid',
+            element: <RequireAuth><VisitLog /></RequireAuth>
+        },
+        // ============ log manage ============ //
+        {
+            path: 'visitor',
+            element: <RequireAuth><Visitor /></RequireAuth>
+        }
     ]
 }
 
