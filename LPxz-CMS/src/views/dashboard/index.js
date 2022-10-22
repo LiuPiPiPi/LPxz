@@ -6,7 +6,7 @@ import "antd/dist/antd.min.css"
 
 import logo from 'assets/img/logo.png'
 import avatar from 'assets/img/avatar.jpg'
-import './index.css'
+import 'styles/dashboard.css'
 import menus from './menu'
 
 const { Header, Content, Footer, Sider } = Layout

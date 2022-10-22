@@ -7,7 +7,7 @@ import { EditOutlined, CheckOutlined, CloseOutlined, SearchOutlined } from '@ant
 // project imports
 import { getDataByQuery, deleteById, updateTop, updateRecommend, updateVisibility } from 'api/article'
 import formatTime from 'utils/format-time'
-import DialogVisibleModal from 'components/DialogVisibleModal'
+import ArticleVisibleModal from 'components/ArticleVisibleModal'
 
 const Article = () => {
     const navigate = useNavigate()
@@ -238,7 +238,7 @@ const Article = () => {
             </Form>
             <br />
             <Table columns={columns} dataSource={articleList} rowKey={row => row.id} />
-            <DialogVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmitVisible} />
+            <ArticleVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmitVisible} />
         </>
     )
 }

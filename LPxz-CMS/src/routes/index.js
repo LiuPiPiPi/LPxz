@@ -6,20 +6,18 @@ import loadable from 'utils/loadable'
 import MainRoutes from 'routes/MainRoutes'
 // Page
 const AuthLogin = loadable(() => import('views/login'))
-// const AuthRegister = loadable(() => import('views/register'))
-const View404 = loadable(() => import('views/others/404'))
-// const View500 = loadable(() => import('views/others/500'))
+const Error404 = loadable(() => import('views/error/404'))
 
 const ThemeRoutes = () => {
     const AuthRoutes = {
         path: '/login',
         element: <AuthLogin />
     }
-    const NotFoundRoutes = {
+    const ErrorRoutes = {
         path: '*',
-        element: <View404 />
+        element: <Error404 />
     }
-    return useRoutes([MainRoutes, AuthRoutes, NotFoundRoutes])
+    return useRoutes([MainRoutes, AuthRoutes, ErrorRoutes])
 }
 
 export default ThemeRoutes

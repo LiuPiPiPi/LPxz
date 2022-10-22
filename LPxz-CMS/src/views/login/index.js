@@ -5,7 +5,7 @@ import "antd/dist/antd.min.css"
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 import { login } from 'api/login'
-import './index.css'
+import 'styles/login.css'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ const Login = () => {
     }, [])
 
     const onFinish = (values) => {
-        console.log('Success:', values)
+        setLoading(true)
         let loginForm = {
             username: values.username,
             password: values.password
@@ -41,23 +41,14 @@ const Login = () => {
         }).catch(() => {
             message.error("请求失败")
         })
-        // 这里可以做权限校验 模拟接口返回用户权限标识
-        // switch (values.username) {
-        //     case 'admin':
-        //         values.auth = 0
-        //         break
-        //     default:
-        //         values.auth = 1
-        // }
     }
 
     return (
         <div className='layout_style'>
             <div className='login_card'>
-                <span className='title'>管理面板后台</span>
+                <span className='login_title'>LP 学长博客系统管理面板后台</span>
                 <Form
                     name="normal_login"
-                    className="login-form"
                     initialValues={{
                         remember: true,
                     }}
@@ -72,7 +63,7 @@ const Login = () => {
                             }
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
+                        <Input prefix={<UserOutlined />} placeholder="用户名" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -84,7 +75,7 @@ const Login = () => {
                         ]}
                     >
                         <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            prefix={<LockOutlined />}
                             type="password"
                             placeholder="密码"
                         />
@@ -96,7 +87,7 @@ const Login = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-button" loading={loading}>
+                        <Button type="primary" htmlType="submit" className="login_button" loading={loading}>
                             登录
                         </Button>
                     </Form.Item>

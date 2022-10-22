@@ -1,7 +1,7 @@
 import { memo, useEffect, useState, useImperativeHandle, forwardRef } from 'react'
 import { Modal, Form, Radio, Input, Switch, Row, message } from 'antd'
 
-const DialogVisibleModal = memo(forwardRef((props, ref) => {
+const ArticleVisibleModal = memo(forwardRef((props, ref) => {
     const [form] = Form.useForm()
     const { article } = props
 
@@ -98,4 +98,4 @@ const DialogVisibleModal = memo(forwardRef((props, ref) => {
     )
 }))
 
-export default DialogVisibleModal
+export default ArticleVisibleModal

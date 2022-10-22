@@ -9,7 +9,7 @@ import 'react-markdown-editor-lite/lib/index.css'
 import momentJS from 'moment'
 
 import { getCategoryAndTag, saveArticle, getArticleById, updateArticle } from 'api/article'
-import DialogVisibleModal from 'components/DialogVisibleModal'
+import ArticleVisibleModal from 'components/ArticleVisibleModal'
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */)
@@ -189,7 +189,7 @@ const CreateArticle = () => {
                     </Button>
                 </Form.Item>
             </Form>
-            <DialogVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmit} />
+            <ArticleVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmit} />
         </>
     )
 }

@@ -133,7 +133,7 @@ const ScheduleJobList = () => {
         {
             title: '#',
             key: 'index',
-            width: '40px',
+            width: '60px',
             align: 'center',
             render: (_, __, index) => <span>{index + 1}</span>
         },
@@ -167,7 +167,7 @@ const ScheduleJobList = () => {
             title: '状态',
             key: 'status',
             align: 'center',
-            width: '60px',
+            width: '80px',
             render: (_, row) => (
                 <Popconfirm
                     placement="topRight"
@@ -181,7 +181,6 @@ const ScheduleJobList = () => {
                         checkedChildren={<CheckOutlined />}
                         unCheckedChildren={<CloseOutlined />}
                         checked={row.status}
-                        size='small'
                     />
                 </Popconfirm>
             )

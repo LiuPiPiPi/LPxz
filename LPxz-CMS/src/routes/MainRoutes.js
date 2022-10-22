@@ -3,6 +3,7 @@ import RequireAuth from 'components/RequireAuth'
 
 // 公共模块
 const Dashboard = loadable(() => import('views/dashboard'))
+const Welcome = loadable(() => import('views/dashboard/Welcome'))
 
 // 基础页面
 const Article = loadable(() => import('views/write/article'))
@@ -15,10 +16,21 @@ const Comment = loadable(() => import('views/write/comment'))
 
 const ScheduleJobList = loadable(() => import('views/system/ScheduleJobList'))
 
+const ScheduleJobLog = loadable(() => import('views/log/ScheduleJobLog'))
+const LoginLog = loadable(() => import('views/log/LoginLog'))
+const OperationLog = loadable(() => import('views/log/OperationLog'))
+const ExceptionLog = loadable(() => import('views/log/ExceptionLog'))
+const VisitLog = loadable(() => import('views/log/VisitLog'))
+
 const MainRoutes = {
     path: '/',
     element: <RequireAuth><Dashboard /></RequireAuth>,
     children: [
+        {
+            path: '/',
+            element: <RequireAuth><Welcome /></RequireAuth>
+        },
+        // ============ write manage ============ //
         {
             path: 'moment/manage',
             element: <RequireAuth><Moment /></RequireAuth>
@@ -55,9 +67,31 @@ const MainRoutes = {
             path: 'comment/manage',
             element: <RequireAuth><Comment /></RequireAuth>
         },
+        // ============ system manage ============ //
         {
-            path: 'scheduleJob',
+            path: 'system/scheduleJob',
             element: <RequireAuth><ScheduleJobList /></RequireAuth>
+        },
+        // ============ log manage ============ //
+        {
+            path: 'log/scheduleJobLog',
+            element: <RequireAuth><ScheduleJobLog /></RequireAuth>
+        },
+        {
+            path: 'log/loginLog',
+            element: <RequireAuth><LoginLog /></RequireAuth>
+        },
+        {
+            path: 'log/operationLog',
+            element: <RequireAuth><OperationLog /></RequireAuth>
+        },
+        {
+            path: 'log/exceptionLog',
+            element: <RequireAuth><ExceptionLog /></RequireAuth>
+        },
+        {
+            path: 'log/visitLog',
+            element: <RequireAuth><VisitLog /></RequireAuth>
         },
     ]
 }
