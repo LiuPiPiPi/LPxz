@@ -68,28 +68,28 @@ const menus = [
             // },
         ]
     },
-    // {
-    //     key: 'pageManage',
-    //     label: '页面管理',
-    //     type: 'group',
-    //     children: [
-    //         {
-    //             key: '/log/scheduleJobLog',
-    //             icon: <SettingOutlined />,
-    //             label: '站点设置'
-    //         },
-    //         {
-    //             key: '/log/loginLog',
-    //             icon: <TeamOutlined />,
-    //             label: '友链管理'
-    //         },
-    //         {
-    //             key: '/log/operationLog',
-    //             icon: <SmileOutlined />,
-    //             label: '关于我'
-    //         }
-    //     ]
-    // },
+    {
+        key: 'pageManage',
+        label: '页面管理',
+        type: 'group',
+        children: [
+            // {
+            //     key: '/siteSetting',
+            //     icon: <SettingOutlined />,
+            //     label: '站点设置'
+            // },
+            {
+                key: '/friends',
+                icon: <TeamOutlined />,
+                label: '友链管理'
+            },
+            {
+                key: '/about',
+                icon: <SmileOutlined />,
+                label: '关于我'
+            }
+        ]
+    },
     {
         key: 'systemManage',
         label: '系统管理',

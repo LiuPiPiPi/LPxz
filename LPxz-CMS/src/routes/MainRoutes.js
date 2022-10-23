@@ -24,6 +24,10 @@ const VisitLog = loadable(() => import('views/log/VisitLog'))
 
 const Visitor = loadable(() => import('views/statistics/Visitor'))
 
+const SiteSetting = loadable(() => import('views/page/SiteSetting'))
+const Friends = loadable(() => import('views/page/Friends'))
+const About = loadable(() => import('views/page/About'))
+
 const MainRoutes = {
     path: '/',
     element: <RequireAuth><Dashboard /></RequireAuth>,
@@ -68,6 +72,19 @@ const MainRoutes = {
         {
             path: 'comment/manage',
             element: <RequireAuth><Comment /></RequireAuth>
+        },
+        // ============ page manage ============ //
+        {
+            path: 'siteSetting',
+            element: <RequireAuth><SiteSetting /></RequireAuth>
+        },
+        {
+            path: 'friends',
+            element: <RequireAuth><Friends /></RequireAuth>
+        },
+        {
+            path: 'about',
+            element: <RequireAuth><About /></RequireAuth>
         },
         // ============ system manage ============ //
         {

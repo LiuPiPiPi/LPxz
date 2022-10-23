@@ -1,12 +1,12 @@
-// import react-markdown-editor-lite, and a markdown parser you like
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import { Form, DatePicker, Row, Col, Button, message, Input, Select } from 'antd'
+import momentJS from 'moment'
+// import react-markdown-editor-lite, and a markdown parser you like
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
-// import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-import momentJS from 'moment'
 
 import { getCategoryAndTag, saveArticle, getArticleById, updateArticle } from 'api/article'
 import ArticleVisibleModal from 'components/ArticleVisibleModal'
@@ -19,8 +19,6 @@ const CreateArticle = () => {
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const [description, setDescription] = useState('')
-    const [content, setContent] = useState('')
     const [article, setArticle] = useState({})
     const [categoryList, setCategoryList] = useState([])
     const [tagList, setTagList] = useState([])
@@ -32,8 +30,6 @@ const CreateArticle = () => {
             getArticleById(id).then((res) => {
                 if (res.code === 200) {
                     setArticle(res.data)
-                    setDescription(res.data.description)
-                    setContent(res.data.content)
                     form.setFieldsValue({
                         ...res.data,
                         ...{
@@ -67,7 +63,7 @@ const CreateArticle = () => {
 
     const handleSubmit = (article, values) => {
         form.validateFields().then(vals => {
-            const formData = { ...article, ...values, ...vals, ...{ description, content } }
+            const formData = { ...article, ...values, ...vals }
             if ('id' in article) {
                 // update
                 updateArticle(formData).then(res => {
@@ -102,6 +98,9 @@ const CreateArticle = () => {
                 name="create_article"
                 form={form}
                 layout="vertical"
+                initialValues={{
+                    views: 0
+                }}
             >
                 <Row>
                     <Col span={9}>
@@ -115,23 +114,14 @@ const CreateArticle = () => {
                         </Form.Item>
                     </Col>
                 </Row>
-            </Form>
-            {/* 摘要描述 */}
-            <MdEditor style={{ height: '200px' }} value={description} renderHTML={text => mdParser.render(text)}
-                onChange={({ html, text }) => { setDescription(text) }} />
-            <br />
-            {/* 文章正文 */}
-            <MdEditor style={{ height: '500px' }} value={content} renderHTML={text => mdParser.render(text)}
-                onChange={({ html, text }) => { setContent(text) }} />
-            <br />
-            <Form
-                name="create_article"
-                form={form}
-                layout="vertical"
-                initialValues={{
-                    views: 0
-                }}
-            >
+                <Form.Item name="description" label="文章描述">
+                    <MdEditor style={{ height: '200px' }} renderHTML={text => mdParser.render(text)}
+                        onChange={({ html, text }) => form.setFieldValue('description', text)} />
+                </Form.Item>
+                <Form.Item name="content" label="文章正文">
+                    <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)}
+                        onChange={({ html, text }) => form.setFieldValue('content', text)} />
+                </Form.Item>
                 <Row>
                     <Col span={6}>
                         <Form.Item name="cate" label="分类" required>

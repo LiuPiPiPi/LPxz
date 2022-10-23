@@ -1,12 +1,12 @@
-// import react-markdown-editor-lite, and a markdown parser you like
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import { Form, DatePicker, Row, Col, Button, message, InputNumber } from 'antd'
+import momentJS from 'moment'
+// import react-markdown-editor-lite, and a markdown parser you like
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
-// import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-import momentJS from 'moment'
 
 import { getMomentById, saveMoment, updateMoment } from "api/moment"
 
@@ -18,13 +18,10 @@ const CreateMoment = () => {
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const [content, setContent] = useState('')
-
     const getMoment = useCallback(() => {
         if (id) {
             getMomentById(id).then((res) => {
                 if (res.code === 200) {
-                    setContent(res.data.content)
                     form.setFieldsValue({ ...res.data, createTime: momentJS(res.data.createTime) })
                 } else {
                     message.error(res.msg)
@@ -41,7 +38,7 @@ const CreateMoment = () => {
 
     const handleSubmit = (published) => {
         form.validateFields().then(values => {
-            const obj = { ...values, ...{ id, content, published } }
+            const obj = { ...values, ...{ id, published } }
             if (id) {
                 updateMoment(obj).then(res => {
                     if (res.code === 200) {
@@ -70,9 +67,6 @@ const CreateMoment = () => {
 
     return (
         <>
-            <MdEditor style={{ height: '300px' }} value={content} renderHTML={text => mdParser.render(text)}
-                onChange={({ html, text }) => { setContent(text) }} />
-            <br />
             <Form
                 name="create_moment"
                 form={form}
@@ -82,6 +76,10 @@ const CreateMoment = () => {
                 }}
                 onFinish={() => handleSubmit(true)}
             >
+                <Form.Item name="content" label="动态内容">
+                    <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)}
+                        onChange={({ html, text }) => form.setFieldValue('content', text)} />
+                </Form.Item>
                 <Row>
                     <Col span={9}>
                         <Form.Item name="likes" label="点赞数" required>
