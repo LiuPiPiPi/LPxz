@@ -195,7 +195,7 @@ const Tag = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item name="color" label="标签颜色">
-                        <Select>
+                        <Select allowClear>
                             {colors.map(color => (
                                 <Select.Option key={color.value} value={color.value}>
                                     <Row>

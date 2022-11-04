@@ -32,7 +32,7 @@ export default function Dashboard() {
                 <div className="logo" onClick={() => navigate('/')}>
                     <img src={logo} alt="logo" />
                 </div>
-                <span className="title">LPxz's Blog 后台管理系统</span>
+                <span className="title">LPxz 后台管理系统</span>
                 <Popover placement='bottomRight' content={(
                     <>
                         <Button type="text" onClick={() => navigate('/userInfo')}>个人信息</Button><br />
@@ -72,7 +72,7 @@ export default function Dashboard() {
                 </Layout>
             </Content>
             <Footer style={{ textAlign: 'center', color: 'grey' }}>
-                {'Copyright © ' + new Date().getFullYear() + ' '}<a href="http://lpxz.work">LPxz's Blog</a>
+                {'Copyright © ' + new Date().getFullYear() + ' '}<a href="http://lpxz.work">LPxz</a>
                 <Divider type='vertical' />
                 {'Powered by '}<a type='link' href="https://reactjs.org">React</a>
                 <Divider type='vertical' />

@@ -10,7 +10,7 @@ export function getCommentListByQuery(queryInfo) {
     });
 }
 
-export function getBlogList() {
+export function getArticleList() {
     return axios({
         url: 'blogIdAndTitle',
         method: 'GET'

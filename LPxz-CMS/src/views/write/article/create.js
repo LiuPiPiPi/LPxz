@@ -137,12 +137,12 @@ const CreateArticle = () => {
                     <Col span={6} offset={2}>
                         <Form.Item name="tagList" label="标签" required>
                             <Select
-                                mode="multiple"
+                                mode="tags"
                                 showArrow
                                 options={tagList.map(ele => {
-                                    return { label: ele.name, value: ele.id }
+                                    return { label: ele.name, value: ele.id + '' }
                                 })}
-                                placeholder="选择标签"
+                                placeholder="选择标签（输入可添加新标签）"
                                 allowClear
                             />
                         </Form.Item>
