@@ -94,7 +94,7 @@ const ArticleVisibleModal = memo(forwardRef((props, ref) => {
                     </Form.Item>
                 </Row>
             </Form>
-        </Modal >
+        </Modal>
     )
 }))
 
