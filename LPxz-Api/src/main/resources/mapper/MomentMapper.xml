@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.lpxz.mapper.MomentMapper">
+
+    <resultMap id="moment" type="work.lpxz.entity.Moment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="likes" column="likes"/>
+        <result property="published" column="is_published"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <!--查询动态List-->
+    <select id="getMomentList" resultMap="moment">
+        select id, content, likes, is_published, gmt_create, gmt_modified from moment
+    </select>
+
+    <!--给动态点赞-->
+    <update id="addLikeByMomentId">
+        update moment set likes=likes+1 where id=#{momentId}
+    </update>
+
+    <!--更新动态发布状态-->
+    <update id="updateMomentPublishedById">
+        update moment set is_published=#{published} where id=#{momentId}
+    </update>
+
+    <!--根据id查询动态-->
+    <select id="getMomentById" resultMap="moment">
+        select id, content, likes, is_published, gmt_create, gmt_modified from moment where id=#{id}
+    </select>
+
+    <!--按id删除动态-->
+    <delete id="deleteMomentById">
+        delete from moment where id=#{id}
+    </delete>
+
+    <!--添加动态-->
+    <insert id="saveMoment" parameterType="work.lpxz.entity.Moment" useGeneratedKeys="true" keyProperty="id">
+        insert into moment (content, gmt_create, likes, is_published) values (#{content}, #{gmtCreate}, #{likes}, #{published})
+    </insert>
+
+    <!--更新动态-->
+    <update id="updateMoment">
+        update moment set content=#{content}, gmt_create=#{gmtCreate}, likes=#{likes}, is_published=#{published} where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.lpxz.mapper.ArticleMapper">
+
+    <resultMap id="article" type="work.lpxz.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="cover" column="cover"/>
+        <result property="content" column="content"/>
+        <result property="description" column="description"/>
+        <result property="published" column="is_published"/>
+        <result property="recommend" column="is_recommend"/>
+        <result property="appreciation" column="is_appreciation"/>
+        <result property="commentEnabled" column="is_comment_enabled"/>
+        <result property="top" column="is_top"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="password" column="password"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <association property="user" javaType="work.lpxz.entity.User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="username"/>
+            <result property="nickname" column="nickname"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="gmtCreate" column="gmt_create"/>
+            <result property="gmtModified" column="gmt_modified"/>
+            <result property="role" column="role"/>
+        </association>
+        <association property="category" javaType="work.lpxz.entity.Category">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="work.lpxz.entity.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="name" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="articleInfo" type="work.lpxz.model.vo.ArticleInfo">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="top" column="is_top"/>
+        <result property="password" column="password"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <association property="category" javaType="work.lpxz.entity.Category">
+            <result property="name" column="category_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="articleDetail" type="work.lpxz.model.vo.ArticleDetail">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="appreciation" column="is_appreciation"/>
+        <result property="commentEnabled" column="is_comment_enabled"/>
+        <result property="top" column="is_top"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <result property="password" column="password"/>
+        <association property="category" javaType="work.lpxz.entity.Category">
+            <result property="name" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="work.lpxz.entity.Tag">
+            <result property="name" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="searchArticle" type="work.lpxz.model.vo.SearchArticle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <resultMap id="archiveArticle" type="work.lpxz.model.vo.ArchiveArticle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="day" column="create_day"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <resultMap id="categoryArticleCount" type="work.lpxz.model.vo.CategoryArticleCount">
+        <id property="id" column="category_id"/>
+        <result property="value" column="article_count"/>
+    </resultMap>
+
+    <resultMap id="articleIdAndTitle" type="work.lpxz.model.vo.ArticleIdAndTitle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <!--按id查询文章-->
+    <select id="getArticleById" resultMap="article">
+        select a.id, a.title, a.cover, a.content, a.description, a.is_recommend, a.is_published, a.is_appreciation,
+               a.is_comment_enabled, a.is_top, a.gmt_create, a.gmt_modified, a.views, a.words, a.read_time, a.password,
+               c.id as category_id, c.category_name,
+               at.tag_id as tag_id, t.tag_name as tag_name, t.color
+        from (((article as a left join category as c on a.category_id=c.id) left join article_tag as at on a.id=at.article_id) left join tag as t on at.tag_id=t.id)
+        where a.id=#{id}
+    </select>
+
+    <!--按id查询文章标题-->
+    <select id="getTitleByArticleId" resultType="java.lang.String">
+        select title from article where id=#{id}
+    </select>
+
+    <!--按id查询公开文章-->
+    <select id="getArticleByIdAndIsPublished" resultMap="articleDetail">
+        select a.id, a.title, a.content, a.is_appreciation, a.is_comment_enabled, a.is_top,
+               a.gmt_create, a.gmt_modified, a.views, a.words, a.read_time, a.password,
+               c.category_name,
+               t.tag_name as tag_name, t.color
+        from (((article as a left join category as c on a.category_id=c.id) left join article_tag as at on a.id=at.article_id) left join tag as t on at.tag_id=t.id)
+        where a.id=#{id} and a.is_published=true
+    </select>
+
+    <!--查询受密码保护文章密码-->
+    <select id="getArticlePassword" resultType="java.lang.String">
+        select password from article where id=#{articleId}
+    </select>
+
+    <!--查询所有文章id和title-->
+    <select id="getIdAndTitleList" resultMap="articleIdAndTitle">
+        select id, title from article order by gmt_create desc
+    </select>
+
+    <!--按标题和分类查询文章List-->
+    <select id="getListByTitleAndCategoryId" resultMap="article">
+        <bind name="titlePattern" value="'%' + title + '%'"/>
+        select a.id, a.title, a.cover, a.gmt_create, a.gmt_modified, a.is_published, a.is_recommend, a.is_appreciation,
+        a.is_comment_enabled, a.is_top, a.password,
+        c.id as category_id, c.category_name
+        from article as a left join category as c on a.category_id=c.id
+        <where>
+            <if test="title!=null and title!=''">
+                a.title like #{titlePattern}
+            </if>
+            <if test="categoryId!=null">
+                and a.category_id=#{categoryId}
+            </if>
+        </where>
+    </select>
+
+    <!--按关键字根据文章内容搜索公开且无密码保护的文章-->
+    <select id="getSearchArticleListByQueryAndIsPublished" resultMap="searchArticle">
+        <bind name="queryPattern" value="'%' + query + '%'"/>
+        select id, title, content
+        from article
+        where is_published=true and password='' and content like #{queryPattern}
+    </select>
+
+    <!--查询公开文章的简要信息-->
+    <select id="getArticleInfoListByIsPublished" resultMap="articleInfo">
+        select a.id, a.title, a.description, a.is_top, a.views, a.words, a.read_time, a.password, c.category_name, a.gmt_create, a.gmt_modified
+        from article as a left join category as c on a.category_id=c.id
+        where a.is_published=true
+    </select>
+
+    <!--根据分类name查询公开文章List-->
+    <select id="getArticleInfoListByCategoryNameAndIsPublished" resultMap="articleInfo">
+        select b.id, b.title, b.description, b.is_top, b.gmt_create, b.views, b.words, b.read_time, b.password, c.category_name
+        from category as c left join article as b on b.category_id=c.id
+        where c.category_name=#{categoryName} and b.is_published=true
+    </select>
+
+    <!--根据标签name查询公开文章List-->
+    <select id="getArticleInfoListByTagNameAndIsPublished" resultMap="articleInfo">
+        select b.id, b.title, b.description, b.is_top, b.gmt_create, b.views, b.words, b.read_time, b.password, c.category_name
+        from (((tag as t left join article_tag as bt on t.id=bt.tag_id) left join article as b on bt.article_id=b.id) left join category as c on b.category_id=c.id)
+        where t.tag_name=#{tagName} and b.is_published=true
+    </select>
+
+    <!--按年月查询公开文章简要信息List-->
+    <select id="getArchiveArticleListByYearMonthAndIsPublished" resultMap="archiveArticle">
+        select id, title, password, date_format(gmt_create, "%d日") as create_day
+        from article
+        where date_format(gmt_create, "%Y年%m月")=#{yearMonth} and is_published=true
+        order by gmt_create desc
+    </select>
+
+    <!--查询所有文章的浏览量-->
+    <select id="getArticleViewsList" resultType="work.lpxz.model.dto.ArticleView">
+        select id, views from article
+    </select>
+
+    <!--查询每个分类的文章数量-->
+    <select id="getCategoryArticleCountList" resultMap="categoryArticleCount">
+        select category_id, count(category_id) as article_count from article group by category_id
+    </select>
+
+    <!--查询公开文章年月List-->
+    <select id="getGroupYearMonthByIsPublished" resultType="java.lang.String">
+        select date_format(gmt_create, "%Y年%m月")
+        from article
+        where is_published=true
+        group by date_format(gmt_create, "%Y年%m月")
+        order by date_format(gmt_create, "%Y年%m月") desc
+    </select>
+
+    <!--查询文章是否启用评论-->
+    <select id="getCommentEnabledByArticleId" resultType="java.lang.Boolean">
+        select is_comment_enabled from article where id=#{articleId}
+    </select>
+
+    <!--查询文章是否公开-->
+    <select id="getPublishedByArticleId" resultType="java.lang.Boolean">
+        select is_published from article where id=#{articleId}
+    </select>
+
+    <!--添加文章-->
+    <insert id="saveArticle" parameterType="work.lpxz.model.dto.ArticleDTO" useGeneratedKeys="true" keyProperty="id">
+        insert into article (title, cover, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,
+                          is_top, gmt_create, gmt_modified, views, words, read_time, category_id, password)
+        values (#{title}, #{cover}, #{content}, #{description}, #{published}, #{recommend}, #{appreciation}, #{commentEnabled},
+                #{top}, #{gmtCreate}, #{gmtModified}, #{views}, #{words}, #{readTime}, #{category.id}, #{password})
+    </insert>
+
+    <!--维护 article_tag 表(添加)-->
+    <insert id="saveArticleTag">
+        insert into article_tag (article_id, tag_id) values (#{articleId}, #{tagId})
+    </insert>
+
+    <!--更新文章-->
+    <update id="updateArticle">
+        update article set title=#{title}, cover=#{cover}, content=#{content}, description=#{description},
+                        is_recommend=#{recommend}, is_published=#{published}, is_appreciation=#{appreciation}, is_comment_enabled=#{commentEnabled},
+                        is_top=#{top}, gmt_create=#{gmtCreate}, gmt_modified=#{gmtModified}, views=#{views},
+                        words=#{words}, read_time=#{readTime}, category_id=#{category.id}, password=#{password}
+        where id=#{id}
+    </update>
+    
+    <!--更新文章推荐状态-->
+    <update id="updateArticleRecommendById">
+        update article set is_recommend=#{recommend} where id=#{articleId}
+    </update>
+
+    <!--更新文章置顶状态-->
+    <update id="updateArticleTopById">
+        update article set is_top=#{top} where id=#{articleId}
+    </update>
+
+    <!--更新文章可见性状态-->
+    <update id="updateArticleVisibilityById">
+        update article set is_appreciation=#{visibility.appreciation}, is_recommend=#{visibility.recommend}, is_comment_enabled=#{visibility.commentEnabled},
+                        is_top=#{visibility.top}, is_published=#{visibility.published}, password=#{visibility.password}
+        where id=#{articleId}
+    </update>
+    
+    <!--更新文章阅读次数-->
+    <update id="updateViews">
+        update article set views=#{views} where id=#{articleId}
+    </update>
+
+    <!--按id删除文章-->
+    <delete id="deleteArticleById">
+        delete from article where id=#{id}
+    </delete>
+
+    <!--维护 article_tag 表(删除)-->
+    <delete id="deleteArticleTagByArticleId">
+        delete from article_tag where article_id=#{articleId}
+    </delete>
+
+    <!--查询文章总数-->
+    <select id="countArticle" resultType="java.lang.Integer">
+        select count(*) from article
+    </select>
+
+    <!--按分类id查询文章数量-->
+    <select id="countArticleByCategoryId" resultType="java.lang.Integer">
+        select count(*) from article where category_id=#{categoryId}
+    </select>
+
+    <!--按标签id查询文章数量-->
+    <select id="countArticleByTagId" resultType="java.lang.Integer">
+        select count(*) from article_tag where tag_id=#{tagId}
+    </select>
+
+    <!--查询公开文章总数-->
+    <select id="countArticleByIsPublished" resultType="java.lang.Integer">
+        select count(*) from article where is_published=true
+    </select>
+
+</mapper>

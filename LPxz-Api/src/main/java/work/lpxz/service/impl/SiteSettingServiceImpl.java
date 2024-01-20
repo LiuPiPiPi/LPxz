@@ -1,0 +1,110 @@
+package work.lpxz.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import work.lpxz.config.RedisKeyConfig;
+import work.lpxz.entity.SiteSetting;
+import work.lpxz.mapper.SiteSettingMapper;
+import work.lpxz.model.bean.Badge;
+import work.lpxz.model.bean.Copyright;
+import work.lpxz.model.bean.Favorite;
+import work.lpxz.model.bean.Introduction;
+import work.lpxz.service.RedisService;
+import work.lpxz.service.SiteSettingService;
+import work.lpxz.util.JacksonUtils;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author LPxz
+ * @date 2024/1/17
+ */
+@Service
+public class SiteSettingServiceImpl implements SiteSettingService {
+
+    @Autowired
+    SiteSettingMapper siteSettingMapper;
+
+    @Autowired
+    RedisService redisService;
+
+    private static final Pattern PATTERN = Pattern.compile("\"(.*?)\"");
+
+    @Override
+    public Map<String, List<SiteSetting>> getList() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getSiteInfo() {
+        String redisKey = RedisKeyConfig.SITE_INFO_MAP;
+        Map<String, Object> siteInfoMapFromRedis = redisService.getMapByValue(redisKey);
+        if (siteInfoMapFromRedis != null) {
+            return siteInfoMapFromRedis;
+        }
+        List<SiteSetting> siteSettings = siteSettingMapper.getList();
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> siteInfo = new HashMap<>();
+        List<Badge> badges = new ArrayList<>();
+        Introduction introduction = new Introduction();
+        List<Favorite> favorites = new ArrayList<>();
+        List<String> rollTexts = new ArrayList<>();
+        for (SiteSetting s : siteSettings) {
+            if (s.getType() == 1) {
+                if ("copyright".equals(s.getNameEn())) {
+                    Copyright copyright = JacksonUtils.readValue(s.getValue(), Copyright.class);
+                    siteInfo.put(s.getNameEn(), copyright);
+                } else {
+                    siteInfo.put(s.getNameEn(), s.getValue());
+                }
+            } else if (s.getType() == 2) {
+                Badge badge = JacksonUtils.readValue(s.getValue(), Badge.class);
+                badges.add(badge);
+            } else if (s.getType() == 3) {
+                if ("avatar".equals(s.getNameEn())) {
+                    introduction.setAvatar(s.getValue());
+                } else if ("name".equals(s.getNameEn())) {
+                    introduction.setName(s.getValue());
+                } else if ("github".equals(s.getNameEn())) {
+                    introduction.setGithub(s.getValue());
+                } else if ("qq".equals(s.getNameEn())) {
+                    introduction.setQq(s.getValue());
+                } else if ("bilibili".equals(s.getNameEn())) {
+                    introduction.setBilibili(s.getValue());
+                } else if ("netease".equals(s.getNameEn())) {
+                    introduction.setNetease(s.getValue());
+                } else if ("email".equals(s.getNameEn())) {
+                    introduction.setEmail(s.getValue());
+                } else if ("favorite".equals(s.getNameEn())) {
+                    Favorite favorite = JacksonUtils.readValue(s.getValue(), Favorite.class);
+                    favorites.add(favorite);
+                } else if ("rollText".equals(s.getNameEn())) {
+                    Matcher m = PATTERN.matcher(s.getValue());
+                    while (m.find()) {
+                        rollTexts.add(m.group(1));
+                    }
+                }
+            }
+        }
+        introduction.setFavorites(favorites);
+        introduction.setRollText(rollTexts);
+        map.put("introduction", introduction);
+        map.put("siteInfo", siteInfo);
+        map.put("badges", badges);
+        redisService.saveMapToValue(redisKey, map);
+        return map;
+    }
+
+    @Override
+    public String getWebTitleSuffix() {
+        return null;
+    }
+
+    @Override
+    public void updateSiteSetting(List<LinkedHashMap> siteSettings, List<Integer> deleteIds) {
+
+    }
+
+}
