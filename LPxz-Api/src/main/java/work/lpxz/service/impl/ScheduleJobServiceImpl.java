@@ -40,7 +40,7 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
         List<ScheduleJob> scheduleJobList = getJobList();
         for (ScheduleJob scheduleJob : scheduleJobList) {
             CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
-            //如果不存在，则创建
+            // 如果不存在，则创建
             if (cronTrigger == null) {
                 ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
             } else {

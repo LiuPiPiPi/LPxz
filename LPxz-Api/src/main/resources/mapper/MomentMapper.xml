@@ -8,12 +8,11 @@
         <result property="likes" column="likes"/>
         <result property="published" column="is_published"/>
         <result property="gmtCreate" column="gmt_create"/>
-        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
     <!--查询动态List-->
     <select id="getMomentList" resultMap="moment">
-        select id, content, likes, is_published, gmt_create, gmt_modified from moment
+        select id, content, likes, is_published, gmt_create from moment
     </select>
 
     <!--给动态点赞-->
@@ -28,7 +27,7 @@
 
     <!--根据id查询动态-->
     <select id="getMomentById" resultMap="moment">
-        select id, content, likes, is_published, gmt_create, gmt_modified from moment where id=#{id}
+        select id, content, likes, is_published, gmt_create from moment where id=#{id}
     </select>
 
     <!--按id删除动态-->

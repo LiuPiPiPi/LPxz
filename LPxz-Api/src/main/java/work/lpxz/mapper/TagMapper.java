@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.Tag;
 import work.lpxz.model.vo.TagArticleCount;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @date 2024/1/13
  */
 @Mapper
+@Repository
 public interface TagMapper {
 
     List<Tag> getTagList();

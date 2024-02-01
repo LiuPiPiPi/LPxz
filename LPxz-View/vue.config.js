@@ -14,7 +14,7 @@ module.exports = {
 //   [Vue warn]: Failed to resolve component: meting-js
 // If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement.
 //     at <MyAPlayer>
-// at <BlogIndex onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > >
+// at <ArticleIndex onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > >
 //     at <RouterView>
 //     at <App render=fn<render> >
   chainWebpack: config => {

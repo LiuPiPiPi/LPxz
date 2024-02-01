@@ -62,7 +62,7 @@ const About = () => {
                         onChange={({ html, text }) => form.setFieldValue('content', text)} />
                 </Form.Item>
                 <Form.Item>
-                    <Button htmlType='submit' type='primary' size='large'>保存</Button>
+                    <Button htmlType='submit' type='primary'>保存</Button>
                 </Form.Item>
             </Form>
         </>

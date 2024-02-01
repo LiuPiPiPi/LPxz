@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.LoginLog;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date 2024/1/13
  */
 @Mapper
+@Repository
 public interface LoginLogMapper {
 
     List<LoginLog> getLoginLogListByDate(String startDate, String endDate);

@@ -1,0 +1,719 @@
+2024-01-20 23:41:08.230  INFO 18712 --- [main] work.lpxz.LPxzApiApplication             : Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 18712 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-20 23:41:08.232 DEBUG 18712 --- [main] work.lpxz.LPxzApiApplication             : Running with Spring Boot v2.7.3, Spring v5.3.22
+2024-01-20 23:41:08.232  INFO 18712 --- [main] work.lpxz.LPxzApiApplication             : The following 1 profile is active: "dev"
+2024-01-20 23:41:08.689  INFO 18712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-20 23:41:08.694  INFO 18712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-20 23:41:08.723  INFO 18712 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2024-01-20 23:41:09.095  INFO 18712 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8090 (http)
+2024-01-20 23:41:09.100  INFO 18712 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-20 23:41:09.100  INFO 18712 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-01-20 23:41:09.161  INFO 18712 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-20 23:41:09.162  INFO 18712 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 906 ms
+2024-01-20 23:41:09.835  INFO 18712 --- [main] n.b.p.u.AbstractUserAgentAnalyzerDirect  : - Loaded 90 files in  324 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-20 23:41:09.836  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : 
+2024-01-20 23:41:09.836  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : /-----------------------------------------------------------\
+2024-01-20 23:41:09.836  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-20 23:41:09.836  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : +-----------------------------------------------------------+
+2024-01-20 23:41:09.838  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : | For more information: https://yauaa.basjes.nl             |
+2024-01-20 23:41:09.838  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-20 23:41:09.838  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : \-----------------------------------------------------------/
+2024-01-20 23:41:09.838  INFO 18712 --- [main] n.b.parse.useragent.utils.YauaaVersion   : 
+2024-01-20 23:41:09.839  INFO 18712 --- [main] n.b.p.u.AbstractUserAgentAnalyzerDirect  : Building all needed matchers for the requested 11 fields.
+2024-01-20 23:41:10.552  INFO 18712 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2024-01-20 23:41:10.557  INFO 18712 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-20 23:41:10.558  INFO 18712 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.2 created.
+2024-01-20 23:41:10.558  INFO 18712 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2024-01-20 23:41:10.559  INFO 18712 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-20 23:41:10.559  INFO 18712 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-20 23:41:10.559  INFO 18712 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.2
+2024-01-20 23:41:10.559  INFO 18712 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2a7b4b19
+2024-01-20 23:41:10.569  INFO 18712 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-20 23:41:11.237  INFO 18712 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-20 23:41:11.243 DEBUG 18712 --- [main] w.l.mapper.ScheduleJobMapper.getJobList  : ==>  Preparing: select job_id, bean_name, method_name, params, cron, status, remark, gmt_create from schedule_job
+2024-01-20 23:41:11.270 DEBUG 18712 --- [main] w.l.mapper.ScheduleJobMapper.getJobList  : ==> Parameters: 
+2024-01-20 23:41:11.431 DEBUG 18712 --- [main] w.l.mapper.ScheduleJobMapper.getJobList  : <==      Total: 2
+2024-01-20 23:41:11.741  INFO 18712 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@54610a47, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7669fc90, org.springframework.security.web.context.SecurityContextPersistenceFilter@62f30cea, org.springframework.security.web.header.HeaderWriterFilter@5cc12274, org.springframework.web.filter.CorsFilter@a538180, org.springframework.security.web.authentication.logout.LogoutFilter@2bbc6496, work.lpxz.config.JwtLoginFilter@21b4a7d, work.lpxz.config.JwtFilter@5e744b4b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3a792bf9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3128be29, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6740b169, org.springframework.security.web.session.SessionManagementFilter@3c304c7a, org.springframework.security.web.access.ExceptionTranslationFilter@8004b2d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3c2e7a83]
+2024-01-20 23:41:11.768  INFO 18712 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8090 (http) with context path ''
+2024-01-20 23:41:11.769  INFO 18712 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2024-01-20 23:41:11.769  INFO 18712 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-20 23:41:11.776  INFO 18712 --- [main] work.lpxz.LPxzApiApplication             : Started LPxzApiApplication in 3.819 seconds (JVM running for 4.349)
+2024-01-20 23:41:18.433  INFO 18712 --- [http-nio-8090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-20 23:41:18.435  INFO 18712 --- [http-nio-8090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-20 23:41:18.436  INFO 18712 --- [http-nio-8090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-20 23:41:18.592 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate_COUNT  : ==>  Preparing: SELECT count(0) FROM exception_log
+2024-01-20 23:41:18.592 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate_COUNT  : ==> Parameters: 
+2024-01-20 23:41:18.676 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate_COUNT  : <==      Total: 1
+2024-01-20 23:41:18.680 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate        : ==>  Preparing: SELECT id, uri, method, param, description, error, ip, ip_source, os, browser, gmt_create FROM exception_log order by gmt_create desc LIMIT ?
+2024-01-20 23:41:18.682 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate        : ==> Parameters: 10(Integer)
+2024-01-20 23:41:18.995 DEBUG 18712 --- [http-nio-8090-exec-1] w.l.m.E.getExceptionLogListByDate        : <==      Total: 10
+2024-01-20 23:42:07.051 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate_COUNT        : ==>  Preparing: SELECT count(0) FROM schedule_job_log
+2024-01-20 23:42:07.053 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate_COUNT        : ==> Parameters: 
+2024-01-20 23:42:07.140 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate_COUNT        : <==      Total: 1
+2024-01-20 23:42:07.144 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate              : ==>  Preparing: SELECT log_id, job_id, bean_name, method_name, params, status, error, times, gmt_create FROM schedule_job_log order by gmt_create desc LIMIT ?
+2024-01-20 23:42:07.144 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate              : ==> Parameters: 10(Integer)
+2024-01-20 23:42:07.177 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.S.getJobLogListByDate              : <==      Total: 10
+2024-01-20 23:42:36.369 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate_COUNT  : ==>  Preparing: SELECT count(0) FROM exception_log
+2024-01-20 23:42:36.370 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate_COUNT  : ==> Parameters: 
+2024-01-20 23:42:36.454 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate_COUNT  : <==      Total: 1
+2024-01-20 23:42:36.463 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate        : ==>  Preparing: SELECT id, uri, method, param, description, error, ip, ip_source, os, browser, gmt_create FROM exception_log order by gmt_create desc LIMIT ?
+2024-01-20 23:42:36.464 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate        : ==> Parameters: 10(Integer)
+2024-01-20 23:42:36.701 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.E.getExceptionLogListByDate        : <==      Total: 10
+2024-01-20 23:43:51.931 DEBUG 18712 --- [http-nio-8090-exec-1] w.lpxz.mapper.SiteSettingMapper.getList  : ==>  Preparing: select * from site_setting
+2024-01-20 23:43:51.932 DEBUG 18712 --- [http-nio-8090-exec-1] w.lpxz.mapper.SiteSettingMapper.getList  : ==> Parameters: 
+2024-01-20 23:43:51.953 DEBUG 18712 --- [http-nio-8090-exec-10] .A.getArticleInfoListByIsPublished_COUNT : ==>  Preparing: SELECT count(0) FROM article AS a LEFT JOIN category AS c ON a.category_id = c.id WHERE a.is_published = true
+2024-01-20 23:43:51.953 DEBUG 18712 --- [http-nio-8090-exec-10] .A.getArticleInfoListByIsPublished_COUNT : ==> Parameters: 
+2024-01-20 23:43:51.965 DEBUG 18712 --- [http-nio-8090-exec-1] w.lpxz.mapper.SiteSettingMapper.getList  : <==      Total: 26
+2024-01-20 23:43:51.988 DEBUG 18712 --- [http-nio-8090-exec-10] .A.getArticleInfoListByIsPublished_COUNT : <==      Total: 1
+2024-01-20 23:43:51.991 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleInfoListByIsPublished  : ==>  Preparing: SELECT a.id, a.title, a.description, a.is_top, a.views, a.words, a.read_time, a.password, c.category_name, a.gmt_create, a.gmt_modified FROM article AS a LEFT JOIN category AS c ON a.category_id = c.id WHERE a.is_published = true order by is_top desc, gmt_create desc LIMIT ?
+2024-01-20 23:43:51.992 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleInfoListByIsPublished  : ==> Parameters: 10(Integer)
+2024-01-20 23:43:52.050 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleInfoListByIsPublished  : <==      Total: 10
+2024-01-20 23:43:52.077 ERROR 18712 --- [http-nio-8090-exec-1] w.l.handler.ControllerExceptionHandler   : Request URL : http://localhost:8090/site, Exception :
+
+org.springframework.data.redis.RedisSystemException: Error in execution; nested exception is io.lettuce.core.RedisReadOnlyException: READONLY You can't write against a read only replica.
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:54)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:52)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:44)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:42)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:278)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1086)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$4(LettuceConnection.java:939)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:673)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:589)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.set(LettuceStringCommands.java:123)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.set(DefaultedRedisConnection.java:314)
+	at org.springframework.data.redis.core.DefaultValueOperations$7.inRedis(DefaultValueOperations.java:309)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:224)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:191)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.set(DefaultValueOperations.java:305)
+	at work.lpxz.service.impl.RedisServiceImpl.saveMapToValue(RedisServiceImpl.java:88)
+	at work.lpxz.service.impl.SiteSettingServiceImpl.getSiteInfo(SiteSettingServiceImpl.java:96)
+	at work.lpxz.controller.IndexController.site(IndexController.java:44)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at work.lpxz.config.JwtFilter.doFilter(JwtFilter.java:37)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: io.lettuce.core.RedisReadOnlyException: READONLY You can't write against a read only replica.
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:144)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:747)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:682)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:599)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+
+2024-01-20 23:43:52.121 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.121 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 4(Long)
+2024-01-20 23:43:52.144 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.152 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.152 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 15(Long)
+2024-01-20 23:43:52.176 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.176 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.176 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 14(Long)
+2024-01-20 23:43:52.200 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.200 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.200 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 8(Long)
+2024-01-20 23:43:52.222 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.230 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.231 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 10(Long)
+2024-01-20 23:43:52.255 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.255 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.255 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 7(Long)
+2024-01-20 23:43:52.286 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.288 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.288 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 11(Long)
+2024-01-20 23:43:52.310 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 2
+2024-01-20 23:43:52.310 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.310 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 9(Long)
+2024-01-20 23:43:52.331 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.342 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.342 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 12(Long)
+2024-01-20 23:43:52.365 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:43:52.365 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:43:52.365 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 13(Long)
+2024-01-20 23:43:52.387 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 2
+2024-01-20 23:43:52.720 ERROR 18712 --- [http-nio-8090-exec-10] w.l.handler.ControllerExceptionHandler   : Request URL : http://localhost:8090/articles, Exception :
+
+org.springframework.data.redis.RedisSystemException: Error in execution; nested exception is io.lettuce.core.RedisReadOnlyException: READONLY You can't write against a read only replica.
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:54)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:52)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:44)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:42)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:278)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1086)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$4(LettuceConnection.java:939)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:665)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:125)
+	at org.springframework.data.redis.connection.lettuce.LettuceHashCommands.hSet(LettuceHashCommands.java:61)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.hSet(DefaultedRedisConnection.java:1332)
+	at org.springframework.data.redis.core.DefaultHashOperations.lambda$put$14(DefaultHashOperations.java:254)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:224)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:191)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultHashOperations.put(DefaultHashOperations.java:253)
+	at work.lpxz.service.impl.RedisServiceImpl.saveKVToHash(RedisServiceImpl.java:38)
+	at work.lpxz.service.impl.ArticleServiceImpl.getArticleInfoListByIsPublished(ArticleServiceImpl.java:159)
+	at work.lpxz.service.impl.ArticleServiceImpl$$FastClassBySpringCGLIB$$721f8869.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
+	at work.lpxz.service.impl.ArticleServiceImpl$$EnhancerBySpringCGLIB$$c61e199.getArticleInfoListByIsPublished(<generated>)
+	at work.lpxz.controller.ArticleController.articles(ArticleController.java:38)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at work.lpxz.config.JwtFilter.doFilter(JwtFilter.java:37)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: io.lettuce.core.RedisReadOnlyException: READONLY You can't write against a read only replica.
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:144)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:747)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:682)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:599)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+
+2024-01-20 23:44:24.013 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate_COUNT  : ==>  Preparing: SELECT count(0) FROM exception_log
+2024-01-20 23:44:24.013 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate_COUNT  : ==> Parameters: 
+2024-01-20 23:44:24.097 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate_COUNT  : <==      Total: 1
+2024-01-20 23:44:24.100 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate        : ==>  Preparing: SELECT id, uri, method, param, description, error, ip, ip_source, os, browser, gmt_create FROM exception_log order by gmt_create desc LIMIT ?
+2024-01-20 23:44:24.100 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate        : ==> Parameters: 10(Integer)
+2024-01-20 23:44:24.332 DEBUG 18712 --- [http-nio-8090-exec-2] w.l.m.E.getExceptionLogListByDate        : <==      Total: 10
+2024-01-20 23:44:56.738 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.SiteSettingMapper.getList  : ==>  Preparing: select * from site_setting
+2024-01-20 23:44:56.739 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.SiteSettingMapper.getList  : ==> Parameters: 
+2024-01-20 23:44:56.745 DEBUG 18712 --- [http-nio-8090-exec-8] .A.getArticleInfoListByIsPublished_COUNT : ==>  Preparing: SELECT count(0) FROM article AS a LEFT JOIN category AS c ON a.category_id = c.id WHERE a.is_published = true
+2024-01-20 23:44:56.746 DEBUG 18712 --- [http-nio-8090-exec-8] .A.getArticleInfoListByIsPublished_COUNT : ==> Parameters: 
+2024-01-20 23:44:56.770 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.SiteSettingMapper.getList  : <==      Total: 26
+2024-01-20 23:44:56.770 DEBUG 18712 --- [http-nio-8090-exec-8] .A.getArticleInfoListByIsPublished_COUNT : <==      Total: 1
+2024-01-20 23:44:56.773 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.A.getArticleInfoListByIsPublished  : ==>  Preparing: SELECT a.id, a.title, a.description, a.is_top, a.views, a.words, a.read_time, a.password, c.category_name, a.gmt_create, a.gmt_modified FROM article AS a LEFT JOIN category AS c ON a.category_id = c.id WHERE a.is_published = true order by is_top desc, gmt_create desc LIMIT ?
+2024-01-20 23:44:56.774 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.A.getArticleInfoListByIsPublished  : ==> Parameters: 10(Integer)
+2024-01-20 23:44:56.796 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.CategoryMapper.getCategoryList     : ==>  Preparing: select id, category_name from category order by id desc
+2024-01-20 23:44:56.796 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.CategoryMapper.getCategoryList     : ==> Parameters: 
+2024-01-20 23:44:56.799 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.A.getArticleInfoListByIsPublished  : <==      Total: 10
+2024-01-20 23:44:56.800 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:56.800 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 4(Long)
+2024-01-20 23:44:56.831 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.CategoryMapper.getCategoryList     : <==      Total: 15
+2024-01-20 23:44:56.832 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:56.833 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:56.833 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 18(Long)
+2024-01-20 23:44:56.834 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:56.835 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 15(Long)
+2024-01-20 23:44:56.890 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:56.891 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:56.893 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:56.893 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:56.894 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 14(Long)
+2024-01-20 23:44:56.894 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 17(Long)
+2024-01-20 23:44:56.951 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:56.952 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:56.953 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 8(Long)
+2024-01-20 23:44:56.959 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:56.960 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:56.960 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 16(Long)
+2024-01-20 23:44:56.991 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:56.991 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:56.992 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:56.992 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:56.992 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 10(Long)
+2024-01-20 23:44:56.992 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 15(Long)
+2024-01-20 23:44:57.016 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:57.017 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:57.017 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 7(Long)
+2024-01-20 23:44:57.019 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.019 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.019 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 14(Long)
+2024-01-20 23:44:57.041 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:57.042 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:57.043 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 11(Long)
+2024-01-20 23:44:57.045 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.049 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.049 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 13(Long)
+2024-01-20 23:44:57.066 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 2
+2024-01-20 23:44:57.067 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:57.068 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 9(Long)
+2024-01-20 23:44:57.076 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.077 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.077 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 12(Long)
+2024-01-20 23:44:57.094 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:57.096 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:57.097 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 12(Long)
+2024-01-20 23:44:57.105 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.105 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.106 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 11(Long)
+2024-01-20 23:44:57.119 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 1
+2024-01-20 23:44:57.120 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==>  Preparing: select t.tag_name, t.color from article_tag as at left join tag as t on at.tag_id=t.id where at.article_id=?
+2024-01-20 23:44:57.120 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : ==> Parameters: 13(Long)
+2024-01-20 23:44:57.131 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.131 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.131 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 10(Long)
+2024-01-20 23:44:57.143 DEBUG 18712 --- [http-nio-8090-exec-8] w.l.m.TagMapper.getTagListByArticleId    : <==      Total: 2
+2024-01-20 23:44:57.158 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.159 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.159 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 9(Long)
+2024-01-20 23:44:57.186 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.186 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.186 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 8(Long)
+2024-01-20 23:44:57.213 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.214 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.214 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 7(Long)
+2024-01-20 23:44:57.242 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.242 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.242 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 6(Long)
+2024-01-20 23:44:57.270 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.270 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.271 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 5(Long)
+2024-01-20 23:44:57.296 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.297 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==>  Preparing: select count(*) from article where category_id=?
+2024-01-20 23:44:57.297 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : ==> Parameters: 1(Long)
+2024-01-20 23:44:57.325 DEBUG 18712 --- [http-nio-8090-exec-3] w.l.m.A.countArticleByCategoryId         : <==      Total: 1
+2024-01-20 23:44:57.347 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.TagMapper.getTagListNotId  : ==>  Preparing: select tag_name, color from tag order by id desc
+2024-01-20 23:44:57.347 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.TagMapper.getTagListNotId  : ==> Parameters: 
+2024-01-20 23:44:57.374 DEBUG 18712 --- [http-nio-8090-exec-3] w.lpxz.mapper.TagMapper.getTagListNotId  : <==      Total: 10
+2024-01-20 23:45:20.944 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleByIdAndIsPublished     : ==>  Preparing: select a.id, a.title, a.content, a.is_appreciation, a.is_comment_enabled, a.is_top, a.gmt_create, a.gmt_modified, a.views, a.words, a.read_time, a.password, c.category_name, t.tag_name as tag_name, t.color from (((article as a left join category as c on a.category_id=c.id) left join article_tag as at on a.id=at.article_id) left join tag as t on at.tag_id=t.id) where a.id=? and a.is_published=true
+2024-01-20 23:45:20.945 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleByIdAndIsPublished     : ==> Parameters: 14(Long)
+2024-01-20 23:45:21.000 DEBUG 18712 --- [http-nio-8090-exec-10] w.l.m.A.getArticleByIdAndIsPublished     : <==      Total: 1
+2024-01-20 23:45:21.052 ERROR 18712 --- [http-nio-8090-exec-10] w.l.handler.ControllerExceptionHandler   : Request URL : http://localhost:8090/article, Exception :
+
+java.lang.NullPointerException: null
+	at work.lpxz.service.impl.ArticleServiceImpl.getArticleByIdAndIsPublished(ArticleServiceImpl.java:106)
+	at work.lpxz.service.impl.ArticleServiceImpl$$FastClassBySpringCGLIB$$721f8869.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
+	at work.lpxz.service.impl.ArticleServiceImpl$$EnhancerBySpringCGLIB$$c61e199.getArticleByIdAndIsPublished(<generated>)
+	at work.lpxz.controller.ArticleController.getArticle(ArticleController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at work.lpxz.config.JwtFilter.doFilter(JwtFilter.java:37)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+2024-01-20 23:45:30.371 DEBUG 18712 --- [http-nio-8090-exec-6] w.l.m.A.getArticleByIdAndIsPublished     : ==>  Preparing: select a.id, a.title, a.content, a.is_appreciation, a.is_comment_enabled, a.is_top, a.gmt_create, a.gmt_modified, a.views, a.words, a.read_time, a.password, c.category_name, t.tag_name as tag_name, t.color from (((article as a left join category as c on a.category_id=c.id) left join article_tag as at on a.id=at.article_id) left join tag as t on at.tag_id=t.id) where a.id=? and a.is_published=true
+2024-01-20 23:45:30.371 DEBUG 18712 --- [http-nio-8090-exec-6] w.l.m.A.getArticleByIdAndIsPublished     : ==> Parameters: 8(Long)
+2024-01-20 23:45:30.450 DEBUG 18712 --- [http-nio-8090-exec-6] w.l.m.A.getArticleByIdAndIsPublished     : <==      Total: 1
+2024-01-20 23:45:30.505 ERROR 18712 --- [http-nio-8090-exec-6] w.l.handler.ControllerExceptionHandler   : Request URL : http://localhost:8090/article, Exception :
+
+java.lang.NullPointerException: null
+	at work.lpxz.service.impl.ArticleServiceImpl.getArticleByIdAndIsPublished(ArticleServiceImpl.java:106)
+	at work.lpxz.service.impl.ArticleServiceImpl$$FastClassBySpringCGLIB$$721f8869.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
+	at work.lpxz.service.impl.ArticleServiceImpl$$EnhancerBySpringCGLIB$$c61e199.getArticleByIdAndIsPublished(<generated>)
+	at work.lpxz.controller.ArticleController.getArticle(ArticleController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at work.lpxz.config.JwtFilter.doFilter(JwtFilter.java:37)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+

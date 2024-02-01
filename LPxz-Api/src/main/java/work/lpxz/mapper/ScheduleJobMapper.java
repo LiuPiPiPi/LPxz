@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.ScheduleJob;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date 2024/1/19
  */
 @Mapper
+@Repository
 public interface ScheduleJobMapper {
 
     List<ScheduleJob> getJobList();

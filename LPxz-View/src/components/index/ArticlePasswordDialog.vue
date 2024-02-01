@@ -20,7 +20,7 @@
 
 <script>
 	import {mapState} from "vuex";
-	import {SET_BLOG_PASSWORD_DIALOG_VISIBLE} from "../../store/mutations-types";
+	import {SET_ARTICLE_PASSWORD_DIALOG_VISIBLE} from "../../store/mutations-types";
 	import {checkArticlePassword} from "@/api/article";
 
 	export default {
@@ -38,7 +38,7 @@
 		methods: {
 			articlePasswordDialogClosed() {
 				this.$refs.formRef.resetFields()
-				this.$store.commit(SET_BLOG_PASSWORD_DIALOG_VISIBLE, false)
+				this.$store.commit(SET_ARTICLE_PASSWORD_DIALOG_VISIBLE, false)
 			},
 			submitArticlePassword() {
 				this.$refs.formRef.validate(valid => {

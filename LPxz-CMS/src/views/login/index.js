@@ -68,7 +68,7 @@ const Login = () => {
     return (
         <div className='layout_style'>
             <div className='login_card'>
-                <span className='login_title'>LP 学长博客系统管理面板后台</span>
+                <span className='login_title'>White Stone 后台管理系统</span>
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="账号密码" key="1">
                         <Form

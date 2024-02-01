@@ -12,14 +12,6 @@
 					</div>
 				</div>
 
-				<div class="six wide column">
-					<h4 class="ui inverted header m-text-thin m-text-spaced">最新文章</h4>
-					<div class="ui inverted link list">
-						<a href="javascript:;" @click.prevent="toArticle(item)" v-for="item in newArticleList"
-							:key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
-					</div>
-				</div>
-
 				<div class="seven wide column">
 					<p id="hitokotoText" class="m-text-thin m-text-spaced m-opacity-mini">{{ hitokoto.hitokoto }}</p>
 					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right"
@@ -60,10 +52,6 @@ export default {
 			required: true
 		},
 		badges: {
-			type: Array,
-			required: true
-		},
-		newArticleList: {
 			type: Array,
 			required: true
 		},

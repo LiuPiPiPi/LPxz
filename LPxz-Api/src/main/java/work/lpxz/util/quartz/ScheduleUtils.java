@@ -87,7 +87,7 @@ public class ScheduleUtils {
      */
     public static void run(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
-            //参数
+            // 参数
             JobDataMap dataMap = new JobDataMap();
             dataMap.put(ScheduleJob.JOB_PARAM_KEY, scheduleJob);
             scheduler.triggerJob(getJobKey(scheduleJob.getJobId()), dataMap);

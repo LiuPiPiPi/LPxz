@@ -29,6 +29,14 @@ const Moment = () => {
             })
     }
 
+    const textStyle = {
+        'overflow': 'hidden',
+        'text-overflow': 'ellipsis',
+        'display': '-webkit-box',
+        '-webkit-line-clamp': '3',
+        '-webkit-box-orient': 'vertical'
+    }
+
     useEffect(() => {
         getMomentList(formData)
     }, [formData])
@@ -78,7 +86,10 @@ const Moment = () => {
             title: '内容',
             dataIndex: 'content',
             key: 'content',
-            align: 'center'
+            align: 'center',
+            render: text => (
+                <span style={textStyle}>{text}</span>
+            )
         },
         {
             title: '发布状态',

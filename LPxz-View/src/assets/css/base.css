@@ -180,7 +180,7 @@ footer {
 
 .m-box {
     /* transition: all 0.25s ease 0s, opacity 0.6s cubic-bezier(0.5, 0, 0, 1) 0s !important; */
-    font-family: 'Maple Mono SC NF';
+    font-family: Arial, 'Microsoft YaHei';
 }
 
 /* .m-box:hover {
@@ -259,7 +259,7 @@ footer {
 }
 
 .m-big-fontsize p, .m-big-fontsize ul, .m-big-fontsize ol {
-    font-size: 18px !important;
+    font-size: 19px !important;
 }
 
 @keyframes sun {
@@ -268,18 +268,13 @@ footer {
     }
 }
 
-@font-face {
-    font-family: 'Alibaba PuHui';
-    src: url('/src/assets/font/AlibabaPuHui/AlibabaPuHuiTi-3-55-Regular.ttf') format('truetype');
-}
-
 .m-font-ali {
-    font-family: 'Alibaba PuHui' !important;
+    font-family: 'Microsoft Yahei', Arial !important;
 	font-size: 1.2rem !important;
 }
 
-.m-font-maple {
-    font-family: 'Maple Mono SC NF' !important;
+.m-font-simHei {
+    font-family: 'SimHei' !important;
 }
 
 .ui.comments .comment .text img {
@@ -288,11 +283,11 @@ footer {
 }
 
 .ui.header {
-    font-family: 'Alibaba PuHui' !important;
+    font-family: 'Microsoft Yahei', Arial !important;
 }
 
 .ui.horizontal.list {
-    font-family: 'Alibaba PuHui' !important;
+    font-family: 'Microsoft Yahei', Arial !important;
 }
 
 .ui.segment {

@@ -15,7 +15,7 @@
 								<i class="star red icon" v-if="item.top" />{{ item.title }}
 							</a>
 							<!--分类-->
-							<router-link :to="`/category/${item.category.name}`" class="ui label small">
+							<router-link :to="`/category/${item.category.name}`" class="ui label medium">
 								<span class="m-text-500">{{ item.category.name }}</span>
 							</router-link>
 						</h2>
@@ -45,7 +45,7 @@
 					<!--标签-->
 					<div class="row m-padded-tb-no">
 						<div class="column m-padding-left-no">
-							<router-link :to="`/tag/${tag.name}`" class="ui tag label tiny m-text-500 m-margin-small"
+							<router-link :to="`/tag/${tag.name}`" class="ui tag label small m-margin-small m-text-500"
 								:class="tag.color" v-for="(tag, index) in item.tags" :key="index">{{ tag.name }}
 							</router-link>
 						</div>

@@ -31,11 +31,11 @@
 									<i class="font icon"></i>
 								</div>
 							</a>
-							<a class="item m-common-black" @click.prevent="changeFocusMode">
+							<!-- <a class="item m-common-black" @click.prevent="changeFocusMode">
 								<div data-inverted="" data-tooltip="专注模式" data-position="top center">
 									<i class="book icon"></i>
 								</div>
-							</a>
+							</a> -->
 						</div>
 					</div>
 					<!--分类-->
@@ -99,7 +99,7 @@
 import { getArticleById } from "@/api/article";
 import CommentList from "@/components/comment/CommentList";
 import { mapState } from "vuex";
-import { SET_FOCUS_MODE, SET_IS_BLOG_RENDER_COMPLETE } from '@/store/mutations-types';
+import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutations-types';
 import { dateFormat } from "@/util/dateTimeFormatUtils";
 
 export default {
@@ -122,7 +122,7 @@ export default {
 		next(vm => {
 			// 当 beforeRouteEnter 钩子执行前，组件实例尚未创建
 			// vm 就是当前组件的实例，可以在 next 方法中把 vm 当做 this用
-			vm.$store.commit(SET_IS_BLOG_RENDER_COMPLETE, false)
+			vm.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, false)
 		})
 	},
 	beforeRouteLeave(to, from, next) {
@@ -144,7 +144,7 @@ export default {
 			//在当前组件内路由到其它文章时，要重新获取文章
 			this.getArticle(to.params.id)
 			//只要路由路径有改变，且停留在当前Article组件内，就把文章的渲染完成状态置为 false
-			this.$store.commit(SET_IS_BLOG_RENDER_COMPLETE, false)
+			this.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, false)
 			next()
 		}
 	},
@@ -168,7 +168,7 @@ export default {
 						// eslint-disable-next-line no-undef
 						Prism.highlightAll()
 						//将文章渲染完成状态置为 true
-						this.$store.commit(SET_IS_BLOG_RENDER_COMPLETE, true)
+						this.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, true)
 					})
 				} else {
 					this.msgError(res.msg)

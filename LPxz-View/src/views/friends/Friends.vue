@@ -7,7 +7,7 @@
 					<div class="image">
 						<img :src="item.avatar" onerror="this.src = '/img/error.png'">
 					</div>
-					<div class="content m-font-maple">
+					<div class="content m-font-simHei">
 						<div class="header">{{ item.nickname }}</div>
 						<div class="description">{{ item.description }}</div>
 					</div>

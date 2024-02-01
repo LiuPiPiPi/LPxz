@@ -2,6 +2,7 @@ package work.lpxz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import java.util.Map;
  * @author LPxz
  * @date 2024/1/12
  */
+@Slf4j
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -111,7 +113,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public String getArticlePassword(Long articleId) {
-        return null;
+        return articleMapper.getArticlePassword(articleId);
     }
 
     @Override
@@ -225,7 +227,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (articleMapper.saveArticle(article) != 1) {
             throw new PersistenceException("添加文章失败");
         }
-        redisService.saveKVToHash(RedisKeyConfig.ARTICLE_VIEWS_MAP, article.getId(), 0);
+        redisService.saveKVToHash(RedisKeyConfig.ARTICLE_VIEWS_MAP, article.getId(), article.getViews());
         deleteArticleRedisCache();
     }
 
@@ -327,12 +329,10 @@ public class ArticleServiceImpl implements ArticleService {
      * @param pageResult
      */
     private void setArticleViewsFromRedisToPageResult(PageResult<ArticleInfo> pageResult) {
-        String redisKey = RedisKeyConfig.ARTICLE_VIEWS_MAP;
         List<ArticleInfo> articleInfos = pageResult.getList();
         for (int i = 0; i < articleInfos.size(); i++) {
             ArticleInfo articleInfo = JacksonUtils.convertValue(articleInfos.get(i), ArticleInfo.class);
-            Long articleId = articleInfo.getId();
-            int view = (int) redisService.getValueByHashKey(redisKey, articleId);
+            int view = (int) redisService.getValueByHashKey(RedisKeyConfig.ARTICLE_VIEWS_MAP, articleInfo.getId());
             articleInfo.setViews(view);
             articleInfos.set(i, articleInfo);
         }
@@ -358,7 +358,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     private void deleteArticleRedisCache() {
         redisService.deleteCacheByKey(RedisKeyConfig.HOME_ARTICLE_INFO_LIST);
-        redisService.deleteCacheByKey(RedisKeyConfig.NEW_ARTICLE_LIST);
+//        redisService.deleteCacheByKey(RedisKeyConfig.NEW_ARTICLE_LIST);
         redisService.deleteCacheByKey(RedisKeyConfig.ARCHIVE_ARTICLE_MAP);
     }
 }

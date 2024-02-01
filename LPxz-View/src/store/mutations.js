@@ -7,12 +7,12 @@ import {
 	RESET_COMMENT_FORM,
 	RESTORE_COMMENT_FORM,
 	SET_COMMENT_QUERY_PAGE,
-	SET_COMMENT_QUERY_BLOG_ID,
-	SET_IS_BLOG_RENDER_COMPLETE,
-	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
-	SET_BLOG_PASSWORD_FORM,
+	SET_COMMENT_QUERY_ARTICLE_ID,
+	SET_IS_ARTICLE_RENDER_COMPLETE,
+	SET_ARTICLE_PASSWORD_DIALOG_VISIBLE,
+	SET_ARTICLE_PASSWORD_FORM,
 	SET_FOCUS_MODE,
-	SET_IS_BLOG_TO_HOME,
+	SET_IS_ARTICLE_TO_HOME,
 	SAVE_CLIENT_SIZE,
 } from "./mutations-types";
 
@@ -32,8 +32,8 @@ export default {
 	[SET_COMMENT_QUERY_PAGE](state, page) {
 		state.commentQuery.page = page
 	},
-	[SET_COMMENT_QUERY_BLOG_ID](state, blogId) {
-		state.commentQuery.blogId = blogId
+	[SET_COMMENT_QUERY_ARTICLE_ID](state, articleId) {
+		state.commentQuery.articleId = articleId
 	},
 	[SET_COMMENT_QUERY_PAGE_NUM](state, pageNum) {
 		state.commentQuery.pageNum = pageNum
@@ -60,20 +60,20 @@ export default {
 			state.commentForm.website = lastForm.website
 		}
 	},
-	[SET_IS_BLOG_RENDER_COMPLETE](state, ok) {
-		state.isBlogRenderComplete = ok
+	[SET_IS_ARTICLE_RENDER_COMPLETE](state, ok) {
+		state.isArticleRenderComplete = ok
 	},
-	[SET_BLOG_PASSWORD_DIALOG_VISIBLE](state, visible) {
-		state.blogPasswordDialogVisible = visible
+	[SET_ARTICLE_PASSWORD_DIALOG_VISIBLE](state, visible) {
+		state.articlePasswordDialogVisible = visible
 	},
-	[SET_BLOG_PASSWORD_FORM](state, form) {
-		state.blogPasswordForm = form
+	[SET_ARTICLE_PASSWORD_FORM](state, form) {
+		state.articlePasswordForm = form
 	},
 	[SET_FOCUS_MODE](state, focusMode) {
 		state.focusMode = focusMode
 	},
-	[SET_IS_BLOG_TO_HOME](state, isBlogToHome) {
-		state.isBlogToHome = isBlogToHome
+	[SET_IS_ARTICLE_TO_HOME](state, isArticleToHome) {
+		state.isArticleToHome = isArticleToHome
 	},
 	[SAVE_CLIENT_SIZE](state, clientSize) {
 		state.clientSize = clientSize

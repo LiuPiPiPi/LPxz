@@ -255,7 +255,7 @@ const Friends = () => {
             <MdEditor style={{ height: '300px' }} value={content} renderHTML={text => mdParser.render(text)}
                 onChange={({ html, text }) => setContent(text)} />
             <br />
-            <Button type='primary' size='large' onClick={handleSubmit}>保存</Button>
+            <Button type='primary' onClick={handleSubmit}>保存</Button>
             <Modal
                 open={modalOpen}
                 title="添加友链"

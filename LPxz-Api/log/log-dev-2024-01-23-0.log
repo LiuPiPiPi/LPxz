@@ -1,0 +1,434 @@
+2024-01-23 14:51:42 [639 ] INFO   work.lpxz.LPxzApiApplication - Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 19984 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 14:51:42 [641 ] INFO   work.lpxz.LPxzApiApplication - The following 1 profile is active: "dev"
+2024-01-23 14:51:43 [1478] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 14:51:43 [1482] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 14:51:43 [1526] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 23 ms. Found 0 Redis repository interfaces.
+2024-01-23 14:51:43 [2208] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2024-01-23 14:51:43 [2218] INFO   o.a.c.core.StandardService - Starting service [Tomcat]
+2024-01-23 14:51:43 [2218] INFO   o.a.c.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-01-23 14:51:43 [2323] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-01-23 14:51:43 [2323] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1647 ms
+2024-01-23 14:51:44 [3212] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  368 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-23 14:51:44 [3212] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:51:44 [3212] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-01-23 14:51:44 [3214] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-23 14:51:44 [3215] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-01-23 14:51:44 [3215] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-01-23 14:51:44 [3215] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-23 14:51:44 [3215] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-01-23 14:51:44 [3215] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:51:44 [3217] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-01-23 14:51:45 [4224] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-01-23 14:51:45 [4233] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-23 14:51:45 [4233] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-01-23 14:51:45 [4233] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-01-23 14:51:45 [4233] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-23 14:51:45 [4233] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-23 14:51:45 [4233] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-01-23 14:51:45 [4233] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@46c6541f
+2024-01-23 14:51:45 [4250] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-01-23 14:51:46 [5146] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-01-23 14:51:47 [6101] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@698df5e8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32317a37, org.springframework.security.web.context.SecurityContextPersistenceFilter@2e9f3b74, org.springframework.security.web.header.HeaderWriterFilter@1ad176e1, org.springframework.web.filter.CorsFilter@1727d525, org.springframework.security.web.authentication.logout.LogoutFilter@2c8d8934, work.lpxz.config.JwtLoginFilter@1f7b7ac4, work.lpxz.config.JwtFilter@19dffe76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@365a9434, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38913b95, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2086dfb8, org.springframework.security.web.session.SessionManagementFilter@4353146f, org.springframework.security.web.access.ExceptionTranslationFilter@288be91b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6c861b25]
+2024-01-23 14:51:47 [6138] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2024-01-23 14:51:47 [6139] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-01-23 14:51:47 [6139] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-23 14:51:47 [6145] INFO   work.lpxz.LPxzApiApplication - Started LPxzApiApplication in 5.971 seconds (JVM running for 6.784)
+2024-01-23 14:52:47 [65678] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-23 14:52:47 [65692] INFO   o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-01-23 14:52:47 [65694] INFO   o.s.w.s.DispatcherServlet - Completed initialization in 2 ms
+2024-01-23 14:54:47 [186345] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Initializing Analyzer data structures
+2024-01-23 14:54:48 [186721] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Built in 388 msec : Hashmap 114881, Ranges map:2900
+2024-01-23 14:54:48 [186895] ERROR  w.l.h.ControllerExceptionHandler - Request URL : http://localhost:8090/admin/article, Exception :
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'gmt_create' cannot be null
+### The error may exist in file [C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes\mapper\ArticleMapper.xml]
+### The error may involve work.lpxz.mapper.ArticleMapper.saveArticle-Inline
+### The error occurred while setting parameters
+### SQL: insert into article (title, cover, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,                           is_top, gmt_create, gmt_modified, views, words, read_time, category_id, password)         values (?, ?, ?, ?, ?, ?, ?, ?,                 ?, ?, ?, ?, ?, ?, ?, ?)
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'gmt_create' cannot be null
+; Column 'gmt_create' cannot be null; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column 'gmt_create' cannot be null
+	at org.springframework.jdbc.support.SQLExceptionSubclassTranslator.doTranslate(SQLExceptionSubclassTranslator.java:87)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:79)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:91)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:441)
+	at com.sun.proxy.$Proxy79.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:272)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62)
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:145)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
+	at com.sun.proxy.$Proxy103.saveArticle(Unknown Source)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy104.saveArticle(Unknown Source)
+	at work.lpxz.service.impl.ArticleServiceImpl.saveArticle(ArticleServiceImpl.java:227)
+	at work.lpxz.service.impl.ArticleServiceImpl$$FastClassBySpringCGLIB$$721f8869.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at work.lpxz.service.impl.ArticleServiceImpl$$EnhancerBySpringCGLIB$$6c20b173.saveArticle(<generated>)
+	at work.lpxz.controller.admin.ArticleAdminController.getResult(ArticleAdminController.java:246)
+	at work.lpxz.controller.admin.ArticleAdminController.saveArticle(ArticleAdminController.java:157)
+	at work.lpxz.controller.admin.ArticleAdminController$$FastClassBySpringCGLIB$$b913e07b.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at work.lpxz.aspect.OperationLogAspect.logAround(OperationLogAspect.java:51)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:64)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at work.lpxz.controller.admin.ArticleAdminController$$EnhancerBySpringCGLIB$$b56a9ba4.saveArticle(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at work.lpxz.config.JwtFilter.doFilter(JwtFilter.java:59)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Column 'gmt_create' cannot be null
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:47)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:64)
+	at com.sun.proxy.$Proxy165.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:194)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:181)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
+	... 152 common frames omitted
+2024-01-23 14:56:03 [261932] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 14:56:08 [422 ] INFO   work.lpxz.LPxzApiApplication - Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 12928 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 14:56:08 [423 ] INFO   work.lpxz.LPxzApiApplication - The following 1 profile is active: "dev"
+2024-01-23 14:56:09 [1016] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 14:56:09 [1018] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 14:56:09 [1046] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2024-01-23 14:56:09 [1555] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2024-01-23 14:56:09 [1564] INFO   o.a.c.core.StandardService - Starting service [Tomcat]
+2024-01-23 14:56:09 [1565] INFO   o.a.c.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-01-23 14:56:09 [1640] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-01-23 14:56:09 [1640] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1193 ms
+2024-01-23 14:56:10 [2397] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  382 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-23 14:56:10 [2397] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:56:10 [2397] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-01-23 14:56:10 [2398] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:56:10 [2399] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-01-23 14:56:11 [3304] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-01-23 14:56:11 [3316] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-23 14:56:11 [3317] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-01-23 14:56:11 [3317] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-01-23 14:56:11 [3318] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-23 14:56:11 [3318] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-23 14:56:11 [3318] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-01-23 14:56:11 [3318] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@3f76c712
+2024-01-23 14:56:11 [3336] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-01-23 14:56:12 [4060] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-01-23 14:56:12 [4529] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@39090979, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3638ae1c, org.springframework.security.web.context.SecurityContextPersistenceFilter@84398a, org.springframework.security.web.header.HeaderWriterFilter@5bb2f959, org.springframework.web.filter.CorsFilter@c2a7ded, org.springframework.security.web.authentication.logout.LogoutFilter@6253df71, work.lpxz.config.JwtLoginFilter@4ba61340, work.lpxz.config.JwtFilter@3a95898c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f65c341, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@234523e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@492e988c, org.springframework.security.web.session.SessionManagementFilter@e071deb, org.springframework.security.web.access.ExceptionTranslationFilter@2e9f3b74, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@220f2d1b]
+2024-01-23 14:56:12 [4561] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2024-01-23 14:56:12 [4562] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-01-23 14:56:12 [4563] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-23 14:56:12 [4582] INFO   work.lpxz.LPxzApiApplication - Started LPxzApiApplication in 4.482 seconds (JVM running for 5.068)
+2024-01-23 14:56:27 [19247] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-23 14:56:27 [19247] INFO   o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-01-23 14:56:27 [19247] INFO   o.s.w.s.DispatcherServlet - Completed initialization in 0 ms
+2024-01-23 14:56:27 [19881] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Initializing Analyzer data structures
+2024-01-23 14:56:28 [20277] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Built in 395 msec : Hashmap 114881, Ranges map:2900
+2024-01-23 14:59:20 [192634] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 14:59:27 [388 ] INFO   work.lpxz.LPxzApiApplication - Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 12988 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 14:59:27 [390 ] INFO   work.lpxz.LPxzApiApplication - The following 1 profile is active: "dev"
+2024-01-23 14:59:28 [819 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 14:59:28 [820 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 14:59:28 [845 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2024-01-23 14:59:31 [408 ] INFO   work.lpxz.LPxzApiApplication - Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 14976 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 14:59:31 [410 ] INFO   work.lpxz.LPxzApiApplication - The following 1 profile is active: "dev"
+2024-01-23 14:59:32 [910 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 14:59:32 [912 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 14:59:32 [937 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-01-23 14:59:32 [1438] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2024-01-23 14:59:32 [1445] INFO   o.a.c.core.StandardService - Starting service [Tomcat]
+2024-01-23 14:59:32 [1446] INFO   o.a.c.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-01-23 14:59:32 [1515] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-01-23 14:59:32 [1515] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1074 ms
+2024-01-23 14:59:33 [2243] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  399 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-23 14:59:33 [2243] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:59:33 [2243] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-01-23 14:59:33 [2244] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-23 14:59:33 [2244] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-01-23 14:59:33 [2245] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-01-23 14:59:33 [2245] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-23 14:59:33 [2245] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-01-23 14:59:33 [2245] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 14:59:33 [2246] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-01-23 14:59:34 [3302] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-01-23 14:59:34 [3309] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-23 14:59:34 [3309] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-01-23 14:59:34 [3310] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-01-23 14:59:34 [3311] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-23 14:59:34 [3311] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-23 14:59:34 [3311] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-01-23 14:59:34 [3311] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@139e291e
+2024-01-23 14:59:34 [3328] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-01-23 14:59:35 [3755] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-01-23 14:59:35 [4258] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d94b0af, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@72a80668, org.springframework.security.web.context.SecurityContextPersistenceFilter@187b33de, org.springframework.security.web.header.HeaderWriterFilter@24a26847, org.springframework.web.filter.CorsFilter@42cb8174, org.springframework.security.web.authentication.logout.LogoutFilter@55c7ba5, work.lpxz.config.JwtLoginFilter@3108d1e1, work.lpxz.config.JwtFilter@59711ea7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@61f990b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@659b0c20, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6bd8d8a7, org.springframework.security.web.session.SessionManagementFilter@59c9e3b9, org.springframework.security.web.access.ExceptionTranslationFilter@6f475ede, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6cee6eb7]
+2024-01-23 14:59:35 [4290] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2024-01-23 14:59:35 [4290] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-01-23 14:59:35 [4290] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-23 14:59:35 [4306] INFO   work.lpxz.LPxzApiApplication - Started LPxzApiApplication in 4.203 seconds (JVM running for 5.509)
+2024-01-23 14:59:37 [5645] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-23 14:59:37 [5645] INFO   o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-01-23 14:59:37 [5645] INFO   o.s.w.s.DispatcherServlet - Completed initialization in 0 ms
+2024-01-23 14:59:37 [6162] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Initializing Analyzer data structures
+2024-01-23 14:59:37 [6610] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Built in 448 msec : Hashmap 114881, Ranges map:2900
+2024-01-23 15:00:53 [81925] WARN   c.z.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48s47ms953µs800ns).
+2024-01-23 15:02:17 [165929] WARN   c.z.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m24s4ms558µs700ns).
+2024-01-23 15:11:18 [706770] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 15:11:21 [454 ] INFO   work.lpxz.LPxzApiApplication - Starting LPxzApiApplication using Java 11.0.20 on ASUS-LPxz with PID 13096 (C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api\target\classes started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 15:11:21 [456 ] INFO   work.lpxz.LPxzApiApplication - The following 1 profile is active: "dev"
+2024-01-23 15:11:22 [950 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 15:11:22 [952 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 15:11:22 [976 ] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-01-23 15:11:22 [1424] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2024-01-23 15:11:22 [1432] INFO   o.a.c.core.StandardService - Starting service [Tomcat]
+2024-01-23 15:11:22 [1432] INFO   o.a.c.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-01-23 15:11:22 [1509] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-01-23 15:11:22 [1510] INFO   o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1028 ms
+2024-01-23 15:11:23 [2139] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  335 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-23 15:11:23 [2139] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 15:11:23 [2140] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-01-23 15:11:23 [2140] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-23 15:11:23 [2140] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-01-23 15:11:23 [2140] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-01-23 15:11:23 [2142] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-23 15:11:23 [2142] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-01-23 15:11:23 [2142] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 15:11:23 [2144] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-01-23 15:11:24 [3043] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-01-23 15:11:24 [3049] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-23 15:11:24 [3049] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-01-23 15:11:24 [3049] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-01-23 15:11:24 [3049] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-23 15:11:24 [3049] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-23 15:11:24 [3049] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-01-23 15:11:24 [3049] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7a4efee2
+2024-01-23 15:11:24 [3065] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-01-23 15:11:25 [3754] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-01-23 15:11:25 [4351] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2b82254b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d6f549c, org.springframework.security.web.context.SecurityContextPersistenceFilter@1b0964cf, org.springframework.security.web.header.HeaderWriterFilter@5c501f62, org.springframework.web.filter.CorsFilter@39090979, org.springframework.security.web.authentication.logout.LogoutFilter@45a33515, work.lpxz.config.JwtLoginFilter@3638ae1c, work.lpxz.config.JwtFilter@c2a7ded, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2739f91b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@79b01476, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4ba61340, org.springframework.security.web.session.SessionManagementFilter@5bb2f959, org.springframework.security.web.access.ExceptionTranslationFilter@7e18b9e6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7b303608]
+2024-01-23 15:11:25 [4388] INFO   o.s.b.w.e.t.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2024-01-23 15:11:25 [4389] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-01-23 15:11:25 [4389] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-23 15:11:25 [4396] INFO   work.lpxz.LPxzApiApplication - Started LPxzApiApplication in 4.292 seconds (JVM running for 4.926)
+2024-01-23 15:11:33 [11766] INFO   o.a.c.c.C.[.[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-23 15:11:33 [11771] INFO   o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-01-23 15:11:33 [11772] INFO   o.s.w.s.DispatcherServlet - Completed initialization in 0 ms
+2024-01-23 15:11:33 [12428] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Initializing Analyzer data structures
+2024-01-23 15:11:35 [13669] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Built in 1230 msec : Hashmap 114881, Ranges map:2900
+2024-01-23 15:12:58 [97027] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 15:13:25 [1128] INFO   w.lpxz.LPxzApiApplicationTests - Starting LPxzApiApplicationTests using Java 11.0.20 on ASUS-LPxz with PID 18800 (started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-01-23 15:13:25 [1130] INFO   w.lpxz.LPxzApiApplicationTests - The following 1 profile is active: "dev"
+2024-01-23 15:13:26 [2259] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-23 15:13:26 [2264] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-01-23 15:13:26 [2315] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 0 Redis repository interfaces.
+2024-01-23 15:13:29 [4892] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  794 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-01-23 15:13:29 [4893] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 15:13:29 [4893] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-01-23 15:13:29 [4895] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-01-23 15:13:29 [4908] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-01-23 15:13:32 [7735] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-01-23 15:13:32 [7761] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-01-23 15:13:32 [7761] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-01-23 15:13:32 [7763] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-01-23 15:13:32 [7764] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-01-23 15:13:32 [7765] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-01-23 15:13:32 [7765] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-01-23 15:13:32 [7765] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2db27b46
+2024-01-23 15:13:32 [7824] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-01-23 15:13:33 [8793] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-01-23 15:13:36 [12405] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@649ddfe6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5962c1b8, org.springframework.security.web.context.SecurityContextPersistenceFilter@4fdc1a37, org.springframework.security.web.header.HeaderWriterFilter@174cd1a4, org.springframework.web.filter.CorsFilter@7b48b933, org.springframework.security.web.authentication.logout.LogoutFilter@6f334ec2, work.lpxz.config.JwtLoginFilter@35929bc7, work.lpxz.config.JwtFilter@3ffa007c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@10de92aa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3c1ca89c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@705a793a, org.springframework.security.web.session.SessionManagementFilter@17294e82, org.springframework.security.web.access.ExceptionTranslationFilter@16f453c9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@35d9d10b]
+2024-01-23 15:13:36 [12671] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-01-23 15:13:36 [12672] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-01-23 15:13:36 [12696] INFO   w.lpxz.LPxzApiApplicationTests - Started LPxzApiApplicationTests in 12.126 seconds (JVM running for 13.611)
+2024-01-23 15:13:37 [13480] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 15:13:37 [13489] INFO   o.s.s.q.SchedulerFactoryBean - Shutting down Quartz Scheduler
+2024-01-23 15:13:37 [13489] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2024-01-23 15:13:37 [13490] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-01-23 15:13:37 [13490] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2024-01-23 15:13:37 [13674] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-01-23 15:13:38 [13906] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

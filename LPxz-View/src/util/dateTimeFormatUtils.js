@@ -6,6 +6,9 @@ moment.locale('zh-cn')
 
 
 export function dateFormat(value, format) {
+	if (!value) {
+		return ''
+	}
 	return moment(value).format(format)
 }
 

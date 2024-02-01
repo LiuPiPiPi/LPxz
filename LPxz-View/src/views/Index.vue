@@ -7,16 +7,11 @@
 			<Header v-if="$route.name==='home'"/>
 		</div> -->
 
-		<!-- TODO 手机端不能跳转顶部菜单 -->
-
 		<div class="main">
 			<div class="ui container">
 				<div class="ui stackable grid">
 					<!--左侧-->
-					<div class="three wide column m-mobile-hide">
-						<!-- TODO 简化界面 -->
-						<!-- <Introduction :class="{ 'm-display-none': focusMode }" /> -->
-					</div>
+					<div class="three wide column m-mobile-hide" />
 					<!--中间-->
 					<div class="ten wide column">
 						<router-view v-slot="{ Component }">
@@ -27,14 +22,17 @@
 					</div>
 					<!--右侧-->
 					<div class="three wide column m-mobile-hide">
-						<!-- TODO 随机文章改为推荐文章 -->
+						<!-- 随机文章改为推荐文章 -->
 						<!-- <RandomArticle :randomArticleList="randomArticleList"
 								:class="{ 'm-display-none': focusMode }" /> -->
-						<Categories :categoryList="categoryList" :categoryNumList="categoryNumList"
-							:class="{ 'm-display-none': focusMode }" />
-						<Tags :tagList="tagList" :class="{ 'm-display-none': focusMode }" />
+						<Introduction :class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
 						<!--只在文章页面显示目录-->
 						<Tocbot v-if="$route.name === 'article'" />
+						<!-- 标签 -->
+						<Tags :tagList="tagList" :class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
+						<!-- 分类 -->
+						<Categories :categoryList="categoryList" :categoryNumList="categoryNumList"
+							:class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
 					</div>
 				</div>
 			</div>
@@ -48,11 +46,11 @@
 			<MyAPlayer />
 		</div>
 		<!--回到顶部-->
-		<el-backtop style="box-shadow: none;background: none;z-index: 9999;">
-			<img src="/img/paper-plane.png" style="width: 40px;height: 40px;">
+		<el-backtop style="box-shadow: none; background: none; z-index: 9999;">
+			<img src="/img/back-top.png" style="width: 50px; height: 50px;">
 		</el-backtop>
 		<!--底部footer-->
-		<Footer :siteInfo="siteInfo" :badges="badges" :newArticleList="newArticleList" :hitokoto="hitokoto" />
+		<Footer :siteInfo="siteInfo" :badges="badges" :hitokoto="hitokoto" />
 	</div>
 </template>
 
@@ -82,9 +80,8 @@ export default {
 			categoryList: [],
 			categoryNumList: [],
 			tagList: [],
-			randomArticleList: [],
+			// randomArticleList: [],
 			badges: [],
-			newArticleList: [],
 			hitokoto: {},
 		}
 	},
@@ -115,11 +112,10 @@ export default {
 				if (res.code === 200) {
 					this.siteInfo = res.data.siteInfo
 					this.badges = res.data.badges
-					this.newArticleList = res.data.newArticleList
 					this.categoryList = res.data.categoryList
 					this.categoryNumList = res.data.categoryNumList
 					this.tagList = res.data.tagList
-					this.randomArticleList = res.data.randomArticleList
+					// this.randomArticleList = res.data.randomArticleList
 					this.$store.commit(SAVE_SITE_INFO, this.siteInfo)
 					this.$store.commit(SAVE_INTRODUCTION, res.data.introduction)
 					document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
@@ -140,6 +136,7 @@ export default {
 
 .main {
 	flex: 1;
+	margin-bottom: 20px;
 }
 
 .main .ui.container {

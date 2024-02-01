@@ -7,35 +7,24 @@
 			</router-link>
 			<router-link to="/home" class="item m-black"
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'home' }">
-				<!-- <i class="book icon"></i> -->
-				技术文章
-			</router-link>
-			<router-link to="/daily" class="item m-black"
-				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'dailyHome' }">
-				<!-- <i class="book icon"></i> -->
-				日常
+				文章
 			</router-link>
 			<router-link to="/moments" class="item m-black"
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'moments' }">
-				<!-- <i class="comment alternate outline icon"></i> -->
 				动态
 			</router-link>
 			<router-link to="/archives" class="item m-black"
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'archives' }">
-				<!-- <i class="clone icon"></i> -->
 				归档
 			</router-link>
 			<router-link to="/friends" class="item m-black"
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'friends' }">
-				<!-- <i class="users icon"></i> -->
 				友链
 			</router-link>
 			<router-link to="/about" class="item m-black"
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'about' }">
-				<!-- <i class="info icon"></i> -->
 				关于
 			</router-link>
-
 			<!-- <el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="Search..."
 				class="right item m-search" :class="{ 'm-mobile-hide': mobileHide }" popper-class="m-search-item"
 				@select="handleSelect">
@@ -46,10 +35,10 @@
 					<div class="title">{{ item.title }}</div>
 					<span class="content">{{ item.content }}</span>
 				</template>
-			</el-autocomplete>
+			</el-autocomplete> -->
 			<button class="ui menu black icon button m-right-top m-mobile-show" @click="toggle">
 				<i class="sidebar icon"></i>
-			</button> -->
+			</button>
 		</div>
 	</div>
 </template>
@@ -156,7 +145,7 @@ export default {
 
 <style scoped>
 .ui.header.logo {
-	font-family: 'Maple Mono SC NF' !important;
+	font-family: 'SimHei' !important;
 }
 
 .ui.menu .container {
@@ -170,6 +159,7 @@ export default {
 
 .ui.menu {
 	transition: .3s ease-out;
+	font-size: 1.2rem;
 }
 
 .ui.inverted.menu {
@@ -178,7 +168,7 @@ export default {
 
 .ui.inverted.menu .item {
 	margin: 0 20px;
-	font-family: 'Maple Mono SC NF';
+	font-family: 'SimHei';
 }
 
 .ui.inverted.menu .item:not(h3):hover {
@@ -230,7 +220,6 @@ export default {
 
 .m-search input {
 	color: rgba(255, 255, 255, .9);
-	;
 	border: 0px !important;
 	background-color: inherit;
 	padding: .67857143em 2.1em .67857143em 1em;

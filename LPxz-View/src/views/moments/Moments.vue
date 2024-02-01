@@ -17,13 +17,13 @@
 						<div class="content typo" :class="{ 'privacy': !moment.published }" v-viewer
 							v-html="moment.content">
 						</div>
-						<div class="extra content">
+						<!-- <div class="extra content">
 							<a class="left floated" @click="like(moment.id)">
 								<i class="heart icon" :class="isLike(moment.id) ? 'like-color' : 'outline'"></i>{{
 									moment.likes
 								}}
 							</a>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -54,11 +54,11 @@ export default {
 		this.getMomentList()
 	},
 	computed: {
-		isLike() {
-			return function (id) {
-				return this.likeMomentIds.indexOf(id) > -1
-			}
-		}
+		// isLike() {
+		// 	return function (id) {
+		// 		return this.likeMomentIds.indexOf(id) > -1
+		// 	}
+		// }
 	},
 	watch: {
 		likeMomentIds(newValue) {
@@ -89,39 +89,39 @@ export default {
 			this.pageNum = newPage
 			this.getMomentList()
 		},
-		like(id) {
-			if (this.likeMomentIds.indexOf(id) > -1) {
-				this.$notify({
-					title: '不可以重复点赞哦',
-					type: 'warning'
-				})
-				return
-			}
-			likeMoment(id).then(res => {
-				if (res.code === 200) {
-					this.$notify({
-						title: res.msg,
-						type: 'success'
-					})
-					this.likeMomentIds.push(id)
-					this.momentList.forEach(item => {
-						if (item.id === id) {
-							return item.likes++
-						}
-					})
-				} else {
-					this.$notify({
-						title: res.msg,
-						type: 'warning'
-					})
-				}
-			}).catch(() => {
-				this.$notify({
-					title: '异常错误',
-					type: 'error'
-				})
-			})
-		}
+		// like(id) {
+		// 	if (this.likeMomentIds.indexOf(id) > -1) {
+		// 		this.$notify({
+		// 			title: '不可以重复点赞哦',
+		// 			type: 'warning'
+		// 		})
+		// 		return
+		// 	}
+		// 	likeMoment(id).then(res => {
+		// 		if (res.code === 200) {
+		// 			this.$notify({
+		// 				title: res.msg,
+		// 				type: 'success'
+		// 			})
+		// 			this.likeMomentIds.push(id)
+		// 			this.momentList.forEach(item => {
+		// 				if (item.id === id) {
+		// 					return item.likes++
+		// 				}
+		// 			})
+		// 		} else {
+		// 			this.$notify({
+		// 				title: res.msg,
+		// 				type: 'warning'
+		// 			})
+		// 		}
+		// 	}).catch(() => {
+		// 		this.$notify({
+		// 			title: '异常错误',
+		// 			type: 'error'
+		// 		})
+		// 	})
+		// }
 	}
 }
 </script>

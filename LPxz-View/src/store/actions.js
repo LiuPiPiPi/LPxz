@@ -2,8 +2,8 @@ import {
 	SAVE_COMMENT_RESULT,
 	SET_PARENT_COMMENT_ID,
 	RESET_COMMENT_FORM,
-	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
-	SET_BLOG_PASSWORD_FORM
+	SET_ARTICLE_PASSWORD_DIALOG_VISIBLE,
+	SET_ARTICLE_PASSWORD_FORM
 } from "./mutations-types";
 
 import {getCommentListByQuery, submitComment} from "@/api/comment";
@@ -104,8 +104,8 @@ export default {
 			if (adminToken || articleToken) {
 				return router.push(`/article/${article.id}`)
 			}
-			commit(SET_BLOG_PASSWORD_FORM, {articleId: article.id, password: ''})
-			commit(SET_BLOG_PASSWORD_DIALOG_VISIBLE, true)
+			commit(SET_ARTICLE_PASSWORD_FORM, {articleId: article.id, password: ''})
+			commit(SET_ARTICLE_PASSWORD_DIALOG_VISIBLE, true)
 		} else {
 			router.push(`/article/${article.id}`)
 		}

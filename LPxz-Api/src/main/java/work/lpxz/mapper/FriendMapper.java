@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.Friend;
 import work.lpxz.model.dto.FriendDTO;
 import work.lpxz.model.vo.FriendVO;
@@ -14,6 +15,7 @@ import java.util.List;
  * @date 2024/1/18
  */
 @Mapper
+@Repository
 public interface FriendMapper {
 
     List<Friend> getFriendList();

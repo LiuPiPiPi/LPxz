@@ -39,8 +39,4 @@ public class Moment {
      */
     private Date gmtCreate;
 
-    /**
-     * 更新时间
-     */
-    private Date gmtModified;
 }

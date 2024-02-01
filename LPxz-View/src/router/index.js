@@ -20,12 +20,6 @@ const routes = [
 				meta: {title: '首页'}
 			},
 			{
-				path: '/daily',
-				name: 'dailyHome',
-				component: () => import('@/views/home/Home'),
-				meta: {title: '日常'}
-			},
-			{
 				path: '/archives',
 				name: 'archives',
 				component: () => import('@/views/archives/Archives'),
@@ -34,12 +28,6 @@ const routes = [
 			{
 				path: '/article/:id',
 				name: 'article',
-				component: () => import('@/views/article/Article'),
-				meta: {title: '文章'}
-			},
-			{
-				path: '/daily/:id',
-				name: 'daily',
 				component: () => import('@/views/article/Article'),
 				meta: {title: '文章'}
 			},

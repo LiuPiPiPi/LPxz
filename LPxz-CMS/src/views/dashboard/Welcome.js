@@ -26,17 +26,17 @@ export default function Welcome() {
     }
 
     useEffect(() => {
-        init()
+        // init()
     }, [])
 
     return (
         <>
             <Typography.Title>欢迎界面</Typography.Title>
             <>
-                <Typography.Paragraph>今日 PV：{pv}</Typography.Paragraph>
+                {/* <Typography.Paragraph>今日 PV：{pv}</Typography.Paragraph>
                 <Typography.Paragraph>今日 UV：{uv}</Typography.Paragraph>
                 <Typography.Paragraph>文章数：{articleCount}</Typography.Paragraph>
-                <Typography.Paragraph>评论数：{commentCount}</Typography.Paragraph>
+                <Typography.Paragraph>评论数：{commentCount}</Typography.Paragraph> */}
             </>
         </>
     )

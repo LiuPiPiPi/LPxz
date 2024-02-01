@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.Category;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @date 2024/1/13
  */
 @Mapper
+@Repository
 public interface CategoryMapper {
 
     List<Category> getCategoryList();

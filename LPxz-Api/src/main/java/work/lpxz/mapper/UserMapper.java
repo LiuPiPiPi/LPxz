@@ -1,6 +1,7 @@
 package work.lpxz.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import work.lpxz.entity.User;
 
 /**
@@ -10,6 +11,7 @@ import work.lpxz.entity.User;
  * @date 2024/1/13
  */
 @Mapper
+@Repository
 public interface UserMapper {
 
     User findByUsername(String username);

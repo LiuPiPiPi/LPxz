@@ -26,18 +26,18 @@ public class ScheduleJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) {
         work.lpxz.entity.ScheduleJob scheduleJob = (work.lpxz.entity.ScheduleJob) context.getMergedJobDataMap().get(work.lpxz.entity.ScheduleJob.JOB_PARAM_KEY);
-        //获取spring bean
+        // 获取 spring bean
         ScheduleJobService scheduleJobService = (ScheduleJobService) SpringContextUtils.getBean("scheduleJobServiceImpl");
-        //数据库保存任务执行记录
+        // 数据库保存任务执行记录
         ScheduleJobLog jobLog = new ScheduleJobLog();
         jobLog.setJobId(scheduleJob.getJobId());
         jobLog.setBeanName(scheduleJob.getBeanName());
         jobLog.setMethodName(scheduleJob.getMethodName());
         jobLog.setParams(scheduleJob.getParams());
         jobLog.setGmtCreate(new Date());
-        //任务开始时间
+        // 任务开始时间
         long startTime = System.currentTimeMillis();
-        //执行任务
+        // 执行任务
         log.info("任务准备执行，任务ID：{}", scheduleJob.getJobId());
         try {
             ScheduleRunnable task = new ScheduleRunnable(scheduleJob.getBeanName(), scheduleJob.getMethodName(), scheduleJob.getParams());

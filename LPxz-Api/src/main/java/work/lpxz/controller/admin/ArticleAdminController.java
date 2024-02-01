@@ -209,11 +209,11 @@ public class ArticleAdminController {
         List<Object> tagList = article.getTagList();
         List<Tag> tags = new ArrayList<>();
         for (Object t : tagList) {
-            if (t instanceof Integer) {//选择了已存在的标签
+            if (t instanceof Integer) { // 选择了已存在的标签
                 Tag tag = tagService.getTagById(((Integer) t).longValue());
                 tags.add(tag);
-            } else if (t instanceof String) {//添加新标签
-                //查询标签是否已存在
+            } else if (t instanceof String) { // 添加新标签
+                // 查询标签是否已存在
                 Tag tag1 = tagService.getTagByName((String) t);
                 if (tag1 != null) {
                     return Result.error("不可添加已存在的标签");
@@ -227,22 +227,27 @@ public class ArticleAdminController {
             }
         }
 
-        Date date = new Date();
         if (article.getReadTime() == null || article.getReadTime() < 0) {
             article.setReadTime((int) Math.round(article.getWords() / 200.0)); // 计算阅读时长
         }
         if (article.getViews() == null || article.getViews() < 0) {
             article.setViews(0);
+        } else {
+            article.setViews(article.getViews());
         }
+        Date date = new Date();
         if ("save".equals(type)) {
-//            article.setGmtCreate(date);
+            if (article.getGmtCreate() == null) {
+                article.setGmtCreate(date);
+            }
             article.setGmtModified(date);
             User user = new User();
-            user.setId((long) 1);//个人文章默认只有一个作者
+            // 个人文章默认只有一个作者
+            user.setId((long) 1);
             article.setUser(user);
 
             articleService.saveArticle(article);
-            //关联文章和标签(维护 article_tag 表)
+            // 关联文章和标签(维护 article_tag 表)
             for (Tag t : tags) {
                 articleService.saveArticleTag(article.getId(), t.getId());
             }

@@ -8,7 +8,7 @@ export default {
 	commentQuery: {
 		// 用于后端判断该评论所在页面类型(文章、友链、关于我)
 		page: 0,
-		blogId: null,
+		articleId: null,
 		pageNum: 1,
 		pageSize: 5
 	},
@@ -25,17 +25,17 @@ export default {
 		notice: true
 	},
 	// 文章渲染完成的标记
-	isBlogRenderComplete: false,
+	isArticleRenderComplete: false,
 	// 受保护文章密码对话框
-	blogPasswordDialogVisible: false,
-	blogPasswordForm: {
-		blogId: 0,
+	articlePasswordDialogVisible: false,
+	articlePasswordForm: {
+		articleId: 0,
 		password: ''
 	},
 	// 专注模式
 	focusMode: false,
 	// 文章页面路由到首页的标记
-	isBlogToHome: false,
+	isArticleToHome: false,
 	// 可视窗口大小
 	clientSize: {
 		clientHeight: 0,

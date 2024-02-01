@@ -19,7 +19,7 @@ public class RedisKeyConfig {
     public static final String SITE_INFO_MAP = "siteInfoMap";
 
     // 最新推荐文章 key
-    public static final String NEW_ARTICLE_LIST = "newArticleList";
+//    public static final String NEW_ARTICLE_LIST = "newArticleList";
 
     // 关于我页面 key
     public static final String ABOUT_INFO_MAP = "aboutInfoMap";

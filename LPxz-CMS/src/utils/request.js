@@ -3,8 +3,8 @@ import axios from 'axios'
 import { message } from 'antd'
 
 const request = axios.create({
-    // baseURL: 'http://42.193.17.157:8090/admin/',
-    baseURL: 'http://localhost:8090/admin/',
+    baseURL: 'http://42.193.17.157:8090/admin/',
+    // baseURL: 'http://localhost:8090/admin/',
     timeout: 10000
 })
 
