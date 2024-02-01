@@ -5,7 +5,6 @@ import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 
 import { getSiteSettingData, update } from "api/siteSetting"
 
-// TODO 等待后端重构
 const SiteSetting = () => {
     const [baseForm] = Form.useForm()
     const [infoForm] = Form.useForm()
@@ -41,7 +40,7 @@ const SiteSetting = () => {
                     item.value = JSON.parse(item.value)
                     arr2.push(item.value)
                 })
-                setFooterFormList(arr2)
+                setFooterFormList(res.data.type2)
                 footerForm.setFieldValue('badges', arr2)
             } else {
                 message.error(res.msg)
@@ -56,23 +55,35 @@ const SiteSetting = () => {
     }, [init])
 
     const handleSubmitBase = values => {
-        console.log({ ...baseFormList, ...values })
-        console.log(customFormList)
-        console.log(copyValue(customFormList))
+        const submitList = [...baseFormList]
+        submitList.forEach(ele => {
+            ele.value = values[ele.nameEn]
+        })
+        submit(submitList)
     }
 
     const handleSubmitInfo = values => {
-        console.log(values)
+        const infoTmpList = [...infoFormList]
+        infoTmpList.forEach(ele => {
+            ele.value = values[ele.nameEn]
+        })
+        const customTmpList = [...customFormList]
+        values.custom.forEach((ele, i) => {
+            customTmpList[i].value = ele.value
+        })
+        const submitList = [...infoTmpList, ...customTmpList]
+        submit(submitList)
     }
 
     const handleSubmitFooter = values => {
-        console.log(values)
-        footerFormList.forEach(ele => {
-
+        const submitList = [...footerFormList]
+        values.badges.forEach((ele, i) => {
+            submitList[i].value = JSON.stringify(ele)
         })
+        submit(submitList)
     }
 
-    const copyValue = (formList) => {
+    const copyValue = formList => {
         let obj = {}
         formList.forEach(ele => obj[ele.nameEn] = ele.value)
         return obj
@@ -133,19 +144,46 @@ const SiteSetting = () => {
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(({ key, name, ...restField }) => (
-                                            <Space key={key} align='baseline'>
-                                                <Form.Item name={name} label="自定义" labelCol={{ span: 5 }}>
+                                            <Space.Compact key={key} block={true}>
+                                                <Form.Item name={[name, 'value']} label="自定义" style={{ width: "100%" }}>
                                                     <Input />
                                                 </Form.Item>
                                                 <Form.Item>
-                                                    <Button danger onClick={() => remove(name)}
+                                                    <Button danger onClick={() => {
+                                                        remove(name)
+                                                        if (customFormList[key].id) {
+                                                            const tmpId = customFormList[key].id
+                                                            deleteIds.push(tmpId)
+                                                            customFormList.forEach((item, index) => {
+                                                                if (item.id === tmpId) {
+                                                                    customFormList.splice(index, 1)
+                                                                    return
+                                                                }
+                                                            })
+                                                        } else {
+                                                            customFormList.forEach((item, index) => {
+                                                                if (item.key === key) {
+                                                                    customFormList.splice(index, 1)
+                                                                    return
+                                                                }
+                                                            })
+                                                        }
+                                                    }}
                                                         icon={<MinusCircleOutlined />}>删除</Button>
                                                 </Form.Item>
-                                            </Space>
+                                            </Space.Compact>
                                         ))}
                                         <Form.Item style={{ textAlign: 'right' }}>
                                             <Space size='middle'>
-                                                <Button type='dashed' icon={<PlusOutlined />} onClick={() => add()}>
+                                                <Button type='dashed' icon={<PlusOutlined />} onClick={() => {
+                                                    add({ value: '{"title":"","content":""}' });
+                                                    customFormList.push({
+                                                        nameEn: "favorite",
+                                                        nameZh: "自定义",
+                                                        type: 3,
+                                                        value: "{\"title\":\"\",\"content\":\"\"}"
+                                                    })
+                                                }}>
                                                     添加自定义</Button>
                                                 <Button htmlType="submit" type='primary'>保存</Button>
                                             </Space>
@@ -185,14 +223,47 @@ const SiteSetting = () => {
                                             <Input placeholder="颜色" />
                                         </Form.Item>
                                         <Form.Item>
-                                            <Button danger onClick={() => remove(name)}
+                                            <Button danger onClick={() => {
+                                                remove(name)
+                                                if (footerFormList[key].id) {
+                                                    const tmpId = footerFormList[key].id
+                                                    deleteIds.push(tmpId)
+                                                    footerFormList.forEach((item, index) => {
+                                                        if (item.id === tmpId) {
+                                                            footerFormList.splice(index, 1)
+                                                            return
+                                                        }
+                                                    })
+                                                } else {
+                                                    footerFormList.forEach((item, index) => {
+                                                        if (item.key === key) {
+                                                            footerFormList.splice(index, 1)
+                                                            return
+                                                        }
+                                                    })
+                                                }
+                                            }}
                                                 icon={<MinusCircleOutlined />}>删除</Button>
                                         </Form.Item>
                                     </Space>
                                 ))}
                                 <Form.Item style={{ textAlign: 'right' }}>
                                     <Space size='middle'>
-                                        <Button type='dashed' icon={<PlusOutlined />} onClick={() => add()}>
+                                        <Button type='dashed' icon={<PlusOutlined />} onClick={() => {
+                                            add()
+                                            footerFormList.push({
+                                                nameEn: "badge",
+                                                nameZh: "徽标",
+                                                type: 2,
+                                                value: {
+                                                    color: "",
+                                                    subject: "",
+                                                    title: "",
+                                                    url: "",
+                                                    value: ""
+                                                }
+                                            })
+                                        }}>
                                             添加 badge</Button>
                                         <Button htmlType='submit' type='primary'>保存</Button>
                                     </Space>

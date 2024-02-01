@@ -71,7 +71,7 @@ export default {
 		...mapState(['clientSize'])
 	},
 	watch: {
-		//路由改变时，收起导航栏
+		// 路由改变时，收起导航栏
 		'$route.path'() {
 			this.mobileHide = true
 		}
@@ -146,6 +146,7 @@ export default {
 <style scoped>
 .ui.header.logo {
 	font-family: 'SimHei' !important;
+	letter-spacing: 2px;
 }
 
 .ui.menu .container {

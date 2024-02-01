@@ -73,11 +73,11 @@ const menus = [
         label: '页面管理',
         type: 'group',
         children: [
-            // {
-            //     key: '/siteSetting',
-            //     icon: <SettingOutlined />,
-            //     label: '站点设置'
-            // },
+            {
+                key: '/siteSetting',
+                icon: <SettingOutlined />,
+                label: '站点设置'
+            },
             {
                 key: '/friends',
                 icon: <TeamOutlined />,

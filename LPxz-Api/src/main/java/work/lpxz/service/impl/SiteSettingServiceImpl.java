@@ -1,7 +1,9 @@
 package work.lpxz.service.impl;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import work.lpxz.config.RedisKeyConfig;
 import work.lpxz.entity.SiteSetting;
 import work.lpxz.mapper.SiteSettingMapper;
@@ -34,7 +36,24 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
     @Override
     public Map<String, List<SiteSetting>> getList() {
-        return null;
+        List<SiteSetting> siteSettings = siteSettingMapper.getList();
+        Map<String, List<SiteSetting>> map = new HashMap<>();
+        List<SiteSetting> type1 = new ArrayList<>();
+        List<SiteSetting> type2 = new ArrayList<>();
+        List<SiteSetting> type3 = new ArrayList<>();
+        for (SiteSetting s : siteSettings) {
+            if (s.getType() == 1) {
+                type1.add(s);
+            } else if (s.getType() == 2) {
+                type2.add(s);
+            } else if (s.getType() == 3) {
+                type3.add(s);
+            }
+        }
+        map.put("type1", type1);
+        map.put("type2", type2);
+        map.put("type3", type3);
+        return map;
     }
 
     @Override
@@ -99,12 +118,51 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
     @Override
     public String getWebTitleSuffix() {
-        return null;
+        return siteSettingMapper.getWebTitleSuffix();
     }
 
     @Override
     public void updateSiteSetting(List<LinkedHashMap> siteSettings, List<Integer> deleteIds) {
+        for (Integer id : deleteIds) { // 删除
+            deleteOneSiteSettingById(id);
+        }
+        for (LinkedHashMap s : siteSettings) {
+            SiteSetting siteSetting = JacksonUtils.convertValue(s, SiteSetting.class);
+            if (siteSetting.getId() != null) { // 修改
+                updateOneSiteSetting(siteSetting);
+            } else { // 添加
+                saveOneSiteSetting(siteSetting);
+            }
+        }
+        deleteSiteInfoRedisCache();
+    }
 
+    @Transactional
+    public void saveOneSiteSetting(SiteSetting siteSetting) {
+        if (siteSettingMapper.saveSiteSetting(siteSetting) != 1) {
+            throw new PersistenceException("配置添加失败");
+        }
+    }
+
+    @Transactional
+    public void updateOneSiteSetting(SiteSetting siteSetting) {
+        if (siteSettingMapper.updateSiteSetting(siteSetting) != 1) {
+            throw new PersistenceException("配置修改失败");
+        }
+    }
+
+    @Transactional
+    public void deleteOneSiteSettingById(Integer id) {
+        if (siteSettingMapper.deleteSiteSettingById(id) != 1) {
+            throw new PersistenceException("配置删除失败");
+        }
+    }
+
+    /**
+     * 删除站点信息缓存
+     */
+    private void deleteSiteInfoRedisCache() {
+        redisService.deleteCacheByKey(RedisKeyConfig.SITE_INFO_MAP);
     }
 
 }

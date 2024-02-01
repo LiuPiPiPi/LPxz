@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Input, Form, Button, Checkbox, message, notification, Tabs, Select } from 'antd'
-import "antd/dist/antd.min.css"
+import "antd/dist/reset.css"
 import { UserOutlined, LockOutlined, PhoneOutlined } from '@ant-design/icons'
 
 import { login } from 'api/login'
@@ -19,7 +19,7 @@ const Login = () => {
 
     useEffect(() => {
         notification['info']({
-            message: '欢迎使用 White Stone - CMS',
+            message: '欢迎使用 LPxz-CMS',
             duration: null,
             description: '账号 Admin(管理员)'
         })
@@ -68,7 +68,7 @@ const Login = () => {
     return (
         <div className='layout_style'>
             <div className='login_card'>
-                <span className='login_title'>White Stone 后台管理系统</span>
+                <span className='login_title'>LPxz 后台管理系统</span>
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="账号密码" key="1">
                         <Form

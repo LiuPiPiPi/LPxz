@@ -33,7 +33,7 @@ public class SiteSetting {
     private String value;
 
     /**
-     * 类型
+     * 类型，1->站点信息，2->页脚徽标，3->个人偏好
      */
     private Integer type;
 

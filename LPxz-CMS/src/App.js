@@ -1,11 +1,11 @@
 import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
-import zh_CN from 'antd/lib/locale-provider/zh_CN'
+import zhCN from 'antd/locale/zh_CN';
 
 import Routes from 'routes'
 
 const App = () => (
-    <ConfigProvider locale={zh_CN}>
+    <ConfigProvider locale={zhCN}>
         {/* <BrowserRouter basename="/admin"> */}
         <BrowserRouter>
             <Routes />
