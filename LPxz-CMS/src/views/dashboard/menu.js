@@ -125,28 +125,34 @@ const menus = [
                 icon: <AlertOutlined />,
                 label: '异常日志'
             },
-            {
-                key: '/log/visitLog',
-                icon: <LaptopOutlined />,
-                label: '访问日志'
-            }
+            // {
+            //     key: '/log/visitLog',
+            //     icon: <LaptopOutlined />,
+            //     label: '访问日志'
+            // }
         ]
     },
+    // {
+    //     key: 'statistics',
+    //     label: '数据统计',
+    //     type: 'group',
+    //     children: [{
+    //         key: '/visitor',
+    //         icon: <UserOutlined />,
+    //         label: '访客统计'
+    //     }]
+    // },
     {
-        key: 'statistics',
-        label: '数据统计',
+        key: 'external',
+        label: '外部访问',
         type: 'group',
         children: [{
-            key: '/visitor',
-            icon: <UserOutlined />,
-            label: '访客统计'
+            key: 'lpxz-site',
+            icon: <SendOutlined />,
+            label: '站点跳转'
         }]
-    },
-    {
-        key: 'lpxz-site',
-        icon: <SendOutlined />,
-        label: '站点跳转'
     }
+    
 ]
 
 export default menus

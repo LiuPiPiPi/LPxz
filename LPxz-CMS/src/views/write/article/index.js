@@ -27,7 +27,7 @@ const Article = () => {
                 if (res.code === 200) {
                     setArticleList(res.data.articles.list)
                     setCategoryList(res.data.categories)
-                    setTotal(res.data.total)
+                    setTotal(res.data.articles.total)
                 } else {
                     message.error(res.msg)
                 }

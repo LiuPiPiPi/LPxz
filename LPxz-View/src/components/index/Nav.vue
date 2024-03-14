@@ -1,6 +1,5 @@
 <template>
-	<div ref="nav" class="ui inverted stackable pointing menu"
-		:class="{ 'transparent': clientSize.clientWidth > 768 }">
+	<div ref="nav" class="ui inverted stackable pointing menu" :class="{ 'transparent': clientSize.clientWidth > 768 }">
 		<div class="ui container">
 			<router-link to="/">
 				<h3 class="ui header item m-orange logo" style="">{{ siteName }}</h3>
@@ -25,17 +24,16 @@
 				:class="{ 'm-mobile-hide': mobileHide, 'active': $route.name === 'about' }">
 				关于
 			</router-link>
-			<!-- <el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="Search..."
-				class="right item m-search" :class="{ 'm-mobile-hide': mobileHide }" popper-class="m-search-item"
-				@select="handleSelect">
-				<template v-slot:suffix>
+			<el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="搜索..."
+				class="item" style="width: 250px" :class="{ 'm-mobile-hide': mobileHide }" popper-class="m-search-item"
+				@select="handleSelect" placement="bottom" fit-input-width>
+				<!-- <template #suffix>
 					<i class="search icon el-input__icon"></i>
-				</template>
-				<template v-slot:item>
+				</template> -->
+				<template #default="{ item }">
 					<div class="title">{{ item.title }}</div>
-					<span class="content">{{ item.content }}</span>
 				</template>
-			</el-autocomplete> -->
+			</el-autocomplete>
 			<button class="ui menu black icon button m-right-top m-mobile-show" @click="toggle">
 				<i class="sidebar icon"></i>
 			</button>
@@ -104,9 +102,6 @@ export default {
 		toggle() {
 			this.mobileHide = !this.mobileHide
 		},
-		categoryRoute(name) {
-			this.$router.push(`/category/${name}`)
-		},
 		debounceQuery(queryString, callback) {
 			this.timer && clearTimeout(this.timer)
 			this.timer = setTimeout(() => this.querySearchAsync(queryString, callback), 1000)
@@ -146,6 +141,7 @@ export default {
 <style scoped>
 .ui.header.logo {
 	font-family: 'SimHei' !important;
+	font-size: 23px;
 	letter-spacing: 2px;
 }
 
@@ -168,7 +164,7 @@ export default {
 }
 
 .ui.inverted.menu .item {
-	margin: 0 20px;
+	margin: 0 15px;
 	font-family: 'SimHei';
 }
 
@@ -212,22 +208,6 @@ export default {
 
 .popper__arrow {
 	display: none !important;
-}
-
-.m-search {
-	min-width: 220px;
-	padding: 0 !important;
-}
-
-.m-search input {
-	color: rgba(255, 255, 255, .9);
-	border: 0px !important;
-	background-color: inherit;
-	padding: .67857143em 2.1em .67857143em 1em;
-}
-
-.m-search i {
-	color: rgba(255, 255, 255, .9) !important;
 }
 
 .m-search-item {

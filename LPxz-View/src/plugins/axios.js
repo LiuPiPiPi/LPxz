@@ -27,7 +27,7 @@ request.interceptors.response.use(
 		NProgress.done()
 		const identification = config.headers.identification
 		if (identification) {
-			//保存身份标识到localStorage
+			// 保存身份标识到localStorage
 			window.localStorage.setItem('identification', identification)
 		}
 		return config.data

@@ -15,7 +15,7 @@
 						<div class="ui horizontal link list m-center">
 							<div class="item m-datetime">
 								<i class="small calendar icon"></i><span>{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD')
-								}}</span>
+									}}</span>
 							</div>
 							<div class="item m-views">
 								<i class="small eye icon"></i><span>{{ article.views }}</span>
@@ -41,11 +41,12 @@
 					<!--分类-->
 					<router-link :to="`/category/${article.category.name}`" class="ui orange large ribbon label"
 						v-if="article.category">
-						<i class="small folder open icon"></i><span class="m-text-500">{{ article.category.name }}</span>
+						<i class="small folder open icon"></i><span class="m-text-500">{{ article.category.name
+							}}</span>
 					</router-link>
 					<!--文章Markdown正文-->
-					<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" v-viewer
-						:class="{ 'm-big-fontsize': bigFontSize }" v-html="article.content"></div>
+					<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" id="content"
+						v-viewer :class="{ 'm-big-fontsize': bigFontSize }" v-html="article.content"></div>
 					<!--赞赏-->
 					<div style="margin: 2em auto">
 						<el-popover placement="top" width="220" trigger="click" v-if="article.appreciation">
@@ -101,6 +102,7 @@ import CommentList from "@/components/comment/CommentList";
 import { mapState } from "vuex";
 import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutations-types';
 import { dateFormat } from "@/util/dateTimeFormatUtils";
+import MathJax from '@/util/MathJax'
 
 export default {
 	name: "articleArticle",
@@ -108,7 +110,7 @@ export default {
 	data() {
 		return {
 			article: {},
-			bigFontSize: false,
+			bigFontSize: false
 		}
 	},
 	computed: {
@@ -116,6 +118,18 @@ export default {
 			return parseInt(this.$route.params.id)
 		},
 		...mapState(['siteInfo', 'focusMode'])
+	},
+	watch: {
+		article() {
+			// 使用$nextTick等组件数据渲染完之后再调用MathJax渲染方法，要不然会获取不到数据
+			this.$nextTick(function () {
+				// 判断是否初始配置，若无则配置
+				if (!MathJax.isMathjaxConfig) {
+					MathJax.initMathjaxConfig()
+				}
+				MathJax.MathQueue("content") // 传入组件id，让组件被MathJax渲染
+			})
+		}
 	},
 	beforeRouteEnter(to, from, next) {
 		//路由到文章文章页面之前，应将文章的渲染完成状态置为 false

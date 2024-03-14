@@ -5334,3 +5334,46 @@ java.lang.NullPointerException: null
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 2024-02-01 19:48:18 [602474] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-02-01 19:50:52 [1004] INFO   w.lpxz.LPxzApiApplicationTests - Starting LPxzApiApplicationTests using Java 11.0.20 on ASUS-LPxz with PID 19912 (started by lpxz in C:\Users\lpxz\Desktop\Proj-Code\LPxz\LPxz-Api)
+2024-02-01 19:50:52 [1008] INFO   w.lpxz.LPxzApiApplicationTests - The following 1 profile is active: "dev"
+2024-02-01 19:50:53 [2003] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-02-01 19:50:53 [2009] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-02-01 19:50:53 [2059] INFO   o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 Redis repository interfaces.
+2024-02-01 19:50:56 [4895] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - - Loaded 90 files in  840 msec using expression: classpath*:UserAgents/**/*.yaml
+2024-02-01 19:50:56 [4895] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-02-01 19:50:56 [4896] INFO   n.b.p.u.utils.YauaaVersion - /-----------------------------------------------------------\
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - | Yauaa 5.20 (v5.20 @ 2020-11-22T15:39:16Z)                 |
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - +-----------------------------------------------------------+
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - | For more information: https://yauaa.basjes.nl             |
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - | Copyright (C) 2013-2020 Niels Basjes - License Apache 2.0 |
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - \-----------------------------------------------------------/
+2024-02-01 19:50:56 [4897] INFO   n.b.p.u.utils.YauaaVersion - 
+2024-02-01 19:50:56 [4918] INFO   n.b.p.u.AbstractUserAgentAnalyzerDirect - Building all needed matchers for the requested 11 fields.
+2024-02-01 19:50:58 [7576] INFO   o.q.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2024-02-01 19:50:58 [7588] INFO   o.q.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-02-01 19:50:58 [7588] INFO   o.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2024-02-01 19:50:58 [7589] INFO   org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2024-02-01 19:50:58 [7589] INFO   o.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-02-01 19:50:58 [7589] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-02-01 19:50:58 [7590] INFO   o.q.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2024-02-01 19:50:58 [7590] INFO   o.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@dc9033f
+2024-02-01 19:50:58 [7626] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-02-01 19:50:59 [8728] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-02-01 19:51:02 [11648] INFO   o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6fe1a8f9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2882a80d, org.springframework.security.web.context.SecurityContextPersistenceFilter@66997c32, org.springframework.security.web.header.HeaderWriterFilter@4799ce06, org.springframework.web.filter.CorsFilter@36d28b4c, org.springframework.security.web.authentication.logout.LogoutFilter@18505320, work.lpxz.config.JwtLoginFilter@6d919a4, work.lpxz.config.JwtFilter@649ddfe6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2a03b7d2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@9c53820, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5962c1b8, org.springframework.security.web.session.SessionManagementFilter@1eacc589, org.springframework.security.web.access.ExceptionTranslationFilter@f905f3e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@58f28c5e]
+2024-02-01 19:51:02 [11862] INFO   o.s.s.q.SchedulerFactoryBean - Starting Quartz Scheduler now
+2024-02-01 19:51:02 [11863] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-02-01 19:51:03 [11879] INFO   w.lpxz.LPxzApiApplicationTests - Started LPxzApiApplicationTests in 11.463 seconds (JVM running for 12.556)
+2024-02-01 19:51:03 [12536] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-02-01 19:51:03 [12544] INFO   o.s.s.q.SchedulerFactoryBean - Shutting down Quartz Scheduler
+2024-02-01 19:51:03 [12545] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2024-02-01 19:51:03 [12545] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-02-01 19:51:03 [12545] INFO   o.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2024-02-01 19:51:03 [12698] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-02-01 19:51:04 [12962] INFO   c.z.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
