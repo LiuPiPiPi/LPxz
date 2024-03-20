@@ -35,6 +35,7 @@ export default {
 	},
 	methods: {
 		initTocbot() {
+			// eslint-disable-next-line no-undef
 			tocbot.init({
 				// Where to render the table of contents.
 				tocSelector: '.js-toc',

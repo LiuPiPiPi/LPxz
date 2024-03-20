@@ -59,11 +59,6 @@ export default {
 			type: Object,
 			required: true
 		}
-	},
-	methods: {
-		toArticle(article) {
-			this.$store.dispatch('goArticlePage', article)
-		}
 	}
 }
 </script>

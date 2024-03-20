@@ -57,7 +57,7 @@ public class ArticleController {
             if (JwtUtils.judgeTokenIsExist(jwt)) {
                 try {
                     String subject = JwtUtils.getTokenBody(jwt).getSubject();
-                    if (subject.startsWith("admin:")) {//站长身份Token
+                    if (subject.startsWith("admin:")) { // 站长身份Token
                         String username = subject.replace("admin:", "");
                         User admin = (User) userService.loadUserByUsername(username);
                         if (admin == null) {

@@ -97,12 +97,13 @@
 </template>
 
 <script>
-import { getArticleById } from "@/api/article";
-import CommentList from "@/components/comment/CommentList";
-import { mapState } from "vuex";
-import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutations-types';
-import { dateFormat } from "@/util/dateTimeFormatUtils";
+import { getArticleById } from "@/api/article"
+import CommentList from "@/components/comment/CommentList"
+import { mapState } from "vuex"
+import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutations-types'
+import { dateFormat } from "@/util/dateTimeFormatUtils"
 import MathJax from '@/util/MathJax'
+import { getArticleToken } from '@/util/localStorageToken'
 
 export default {
 	name: "articleArticle",
@@ -132,7 +133,7 @@ export default {
 		}
 	},
 	beforeRouteEnter(to, from, next) {
-		//路由到文章文章页面之前，应将文章的渲染完成状态置为 false
+		// 路由到文章文章页面之前，应将文章的渲染完成状态置为 false
 		next(vm => {
 			// 当 beforeRouteEnter 钩子执行前，组件实例尚未创建
 			// vm 就是当前组件的实例，可以在 next 方法中把 vm 当做 this用
@@ -143,6 +144,7 @@ export default {
 		this.$store.commit(SET_FOCUS_MODE, false)
 		// 从文章页面路由到其它页面时，销毁当前组件的同时，要销毁tocbot实例
 		// 否则tocbot一直在监听页面滚动事件，而文章页面的锚点已经不存在了，会报"Uncaught TypeError: Cannot read property 'className' of null"
+		// eslint-disable-next-line no-undef
 		tocbot.destroy()
 		next()
 	},
@@ -168,20 +170,20 @@ export default {
 	methods: {
 		dateFormat: dateFormat,
 		getArticle(id = this.articleId) {
-			//密码保护的文章，需要发送密码验证通过后保存在localStorage的Token
-			const articleToken = window.localStorage.getItem(`article${id}`)
-			//如果有则发送博主身份Token
-			const adminToken = window.localStorage.getItem('adminToken')
+			// 密码保护的文章，需要发送密码验证通过后保存在localStorage的Token
+			const articleToken = getArticleToken(`article${id}`)
+			// 如果有则发送博主身份Token
+			const adminToken = getArticleToken('adminToken')
 			const token = adminToken ? adminToken : (articleToken ? articleToken : '')
 			getArticleById(token, id).then(res => {
 				if (res.code === 200) {
 					this.article = res.data
 					document.title = this.article.title + this.siteInfo.webTitleSuffix
-					//v-html渲染完毕后，渲染代码块样式
+					// v-html渲染完毕后，渲染代码块样式
 					this.$nextTick(() => {
 						// eslint-disable-next-line no-undef
 						Prism.highlightAll()
-						//将文章渲染完成状态置为 true
+						// 将文章渲染完成状态置为 true
 						this.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, true)
 					})
 				} else {

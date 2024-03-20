@@ -6,16 +6,17 @@ import {
 	SET_ARTICLE_PASSWORD_FORM
 } from "./mutations-types";
 
-import {getCommentListByQuery, submitComment} from "@/api/comment";
-import {ElMessage, ElNotification} from "element-plus";
+import { getCommentListByQuery, submitComment } from "@/api/comment";
+import { ElMessage, ElNotification } from "element-plus";
 import router from "../router";
 import tvMapper from '@/plugins/tvMapper.json'
 import aruMapper from '@/plugins/aruMapper.json'
 import paopaoMapper from '@/plugins/paopaoMapper.json'
 import sanitizeHtml from 'sanitize-html'
+import { getArticleToken } from '@/util/localStorageToken'
 
 export default {
-	getCommentList({commit, rootState}) {
+	getCommentList({ commit, rootState }) {
 		//密码保护的文章，需要发送密码验证通过后保存在localStorage的Token
 		const articleToken = window.localStorage.getItem(`article${rootState.commentQuery.articleId}`)
 		//如果有则发送博主身份Token
@@ -67,8 +68,8 @@ export default {
 			ElMessage.error("请求失败")
 		})
 	},
-	submitCommentForm({rootState, dispatch, commit}, token) {
-		let form = {...rootState.commentForm}
+	submitCommentForm({ rootState, dispatch, commit }, token) {
+		let form = { ...rootState.commentForm }
 		form.page = rootState.commentQuery.page
 		form.articleId = rootState.commentQuery.articleId
 		form.parentCommentId = rootState.parentCommentId
@@ -96,18 +97,19 @@ export default {
 			})
 		})
 	},
-	goArticlePage({commit}, article) {
+	goArticlePage({ commit }, article) {
 		if (article.privacy) {
-			const adminToken = window.localStorage.getItem('adminToken')
-			const articleToken = window.localStorage.getItem(`article${article.id}`)
+			const adminToken = getArticleToken('adminToken')
+			const articleToken = getArticleToken(`article${article.id}`)
 			//对于密码保护文章，博主身份Token和经过密码验证后的Token都可以跳转路由，再由后端验证Token有效性
 			if (adminToken || articleToken) {
 				return router.push(`/article/${article.id}`)
 			}
-			commit(SET_ARTICLE_PASSWORD_FORM, {articleId: article.id, password: ''})
+			commit(SET_ARTICLE_PASSWORD_FORM, { articleId: article.id, password: '' })
 			commit(SET_ARTICLE_PASSWORD_DIALOG_VISIBLE, true)
 		} else {
-			router.push(`/article/${article.id}`)
+			return router.push(`/article/${article.id}`)
 		}
-	},
+	}
+
 }
