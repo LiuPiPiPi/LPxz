@@ -102,7 +102,7 @@ import CommentList from "@/components/comment/CommentList"
 import { mapState } from "vuex"
 import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutations-types'
 import { dateFormat } from "@/util/dateTimeFormatUtils"
-import MathJax from '@/util/MathJax'
+import MathJax from '@/plugins/MathJax'
 import { getArticleToken } from '@/util/localStorageToken'
 
 export default {
