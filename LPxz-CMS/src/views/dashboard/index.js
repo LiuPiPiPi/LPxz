@@ -52,7 +52,7 @@ export default function Dashboard() {
                             selectedKeys={[location.pathname]}
                             items={menus}
                             onClick={event => {
-                                event.key === 'lpxz-site' ? window.open('http://lpxz.work:8081') : navigate(event.key)
+                                event.key === 'lpxz-site' ? window.open('http://lpxz.work') : navigate(event.key)
                             }}
                             style={{ height: '100%' }}
                         >

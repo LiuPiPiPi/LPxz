@@ -28,7 +28,7 @@
 				</router-link>
 				<span v-if="siteInfo.copyright && siteInfo.beian">. All Rights Reserved.&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 				<img src="/img/beian.png" alt="" class="beian" v-if="siteInfo.beian">
-				<a rel="external nofollow noopener" href="http://www.beian.miit.gov.cn/" target="_blank">
+				<a rel="external nofollow noopener" href="https://beian.miit.gov.cn/" target="_blank">
 					{{ siteInfo.beian }}</a>
 			</p>
 
