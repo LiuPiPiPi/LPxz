@@ -73,7 +73,7 @@ export default function Dashboard() {
                 </Layout>
             </Content>
             <Footer style={{ textAlign: 'center', color: 'grey' }}>
-                {'Copyright © ' + new Date().getFullYear() + ' '}<a href={siteUrl}>LPxz</a>
+                {'Copyright © 2020 – ' + new Date().getFullYear() + ' '}<a href={siteUrl}>LPxz</a>
                 <Divider type='vertical' />
                 {'Powered by '}<a type='link' href="https://reactjs.org">React</a>
                 <Divider type='vertical' />

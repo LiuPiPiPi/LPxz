@@ -221,7 +221,7 @@ const Article = () => {
                 <Form.Item name="title">
                     <Input placeholder="文章标题" allowClear />
                 </Form.Item>
-                <Form.Item name="categoryId">
+                <Form.Item name="categoryId" style={{ minWidth: 180 }}>
                     <Select
                         options={categoryList.map(ele => {
                             return {

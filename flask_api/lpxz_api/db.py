@@ -22,6 +22,9 @@ def close_db(_error=None):
 
 def init_db():
     db = get_db()
+    existing = db.execute("select name from sqlite_master where type='table' and name='user'").fetchone()
+    if existing:
+        return
     schema_path = Path(__file__).with_name("schema.sql")
     db.executescript(schema_path.read_text(encoding="utf-8"))
     db.commit()

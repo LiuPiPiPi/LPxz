@@ -22,7 +22,7 @@
 			<div class="ui inverted section divider"></div> -->
 
 			<p class="m-text-spaced m-margin-top" style="color: black;">
-				<span v-if="siteInfo.copyright">{{ siteInfo.copyright.title }}&nbsp;</span>
+				<span v-if="siteInfo.copyright">Copyright © 2020 – {{ new Date().getFullYear() }}&nbsp;</span>
 				<router-link to="/" style="color:#d44335" v-if="siteInfo.copyright">
 					{{ siteInfo.copyright.siteName }}
 				</router-link>

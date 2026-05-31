@@ -35,9 +35,6 @@
 					<el-input v-model="queryString" placeholder="搜索文章" clearable
 						@input="handleSearchInput" @focus="openSearchPanel" @clear="clearSearch"
 						@keydown.enter.prevent="goFirstResult">
-						<template #prefix>
-							<span class="search-icon" aria-hidden="true"></span>
-						</template>
 					</el-input>
 					<transition name="search-panel">
 						<div v-if="showSearchPanel" class="search-panel">
@@ -342,6 +339,7 @@ export default {
 .nav-search {
 	position: relative;
 	width: 320px;
+	margin-left: 16px;
 }
 
 .nav-search :deep(.el-input__wrapper) {

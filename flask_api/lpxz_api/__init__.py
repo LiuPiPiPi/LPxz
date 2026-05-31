@@ -1,5 +1,6 @@
 import bcrypt
 import click
+import os
 from flask import Flask, make_response, request
 from werkzeug.exceptions import HTTPException
 
@@ -58,6 +59,17 @@ def create_app(config_object=Config):
     def init_db_command():
         init_db()
         print("Initialized the SQLite database.")
+        admin_username = os.getenv("ADMIN_USERNAME")
+        admin_password = os.getenv("ADMIN_PASSWORD")
+        if admin_username and admin_password:
+            existing = fetch_one("select id from user where username = ?", (admin_username,))
+            if not existing:
+                password_hash = bcrypt.hashpw(admin_password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+                execute(
+                    "insert into user (username, password, role) values (?, ?, 'ROLE_admin')",
+                    (admin_username, password_hash),
+                )
+                print(f"Created default admin user: {admin_username}")
 
     @app.cli.command("create-admin")
     @click.argument("username")
