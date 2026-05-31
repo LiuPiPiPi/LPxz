@@ -1,0 +1,38 @@
+html,
+body {
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.layout_style {
+    height: 100%;
+    background: linear-gradient(180deg, #a0d7e7, #6c5dd3);
+    margin: auto;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.login_card {
+    width: 500px;
+    background: #f2f3f7;
+    border-radius: 20px;
+    margin: auto;
+    padding: 10px 50px;
+}
+
+.login_title {
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 70px;
+}
+
+.login_button {
+    width: 100%;
+    background: #6c5dd3;
+    border-radius: 12px;
+}

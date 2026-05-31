@@ -1,0 +1,37 @@
+{
+  "id": "4417784",
+  "name": "lpxz-site",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+      {
+          "icon_id": "666888",
+          "name": "手机",
+          "font_class": "shouji",
+          "unicode": "e692",
+          "unicode_decimal": 59026
+      },
+      {
+          "icon_id": "4766293",
+          "name": "user",
+          "font_class": "user",
+          "unicode": "e7ae",
+          "unicode_decimal": 59310
+      },
+      {
+          "icon_id": "7008953",
+          "name": "label",
+          "font_class": "label",
+          "unicode": "e706",
+          "unicode_decimal": 59142
+      },
+      {
+          "icon_id": "16618565",
+          "name": "folder",
+          "font_class": "folder",
+          "unicode": "e6b0",
+          "unicode_decimal": 59056
+      }
+  ]
+}

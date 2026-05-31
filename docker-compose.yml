@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: ./flask_api
+    env_file:
+      - ./.env
+    ports:
+      - "${API_PORT:-8090}:8090"
+    volumes:
+      - ./flask_api/instance:/app/instance
+      - ./flask_api/backups:/app/backups
+    restart: unless-stopped
+
+  view:
+    build:
+      context: ./lpxz_view
+      args:
+        VUE_APP_API_BASE_URL: ${VUE_APP_API_BASE_URL:-http://localhost:8090/}
+        VUE_APP_NAME: ${VUE_APP_NAME:-prod}
+        VUE_APP_DEFAULT_LOGIN_USERNAME: ${VUE_APP_DEFAULT_LOGIN_USERNAME:-}
+    ports:
+      - "${VIEW_PORT:-8080}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  cms:
+    build:
+      context: ./lpxz_cms
+      args:
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-http://localhost:8090/admin/}
+        REACT_APP_SITE_URL: ${REACT_APP_SITE_URL:-http://localhost:8080}
+    ports:
+      - "${CMS_PORT:-3000}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
