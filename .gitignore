@@ -46,8 +46,6 @@ flask_api/backups/
 # Node.js
 node_modules/
 **/node_modules/
-package-lock.json
-**/package-lock.json
 
 # Frontend build outputs / caches
 lpxz_view/dist/
