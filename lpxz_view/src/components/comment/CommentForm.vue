@@ -186,18 +186,20 @@
 
 <style>
 	.form {
-		background: #fff;
 		position: relative;
 	}
 
 	.form h3 {
-		margin: 5px;
-		font-weight: 500 !important;
+		margin: 5px 0 16px;
+		color: #0f172a;
+		font-weight: 600;
+		font-family: "LXGW WenKai TC", Inter, ui-sans-serif, system-ui, sans-serif;
+		font-size: 16px;
 	}
 
 	.form .m-small {
 		margin-left: 5px;
-		padding: 4px 5px;
+		padding: 4px 8px;
 	}
 
 	.el-form .textarea {

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import getPageTitle from '@/util/get-page-title'
+import { resolveScrollPosition, saveHomeScrollPosition } from './scroll-position'
 
 
 const routes = [
@@ -66,15 +67,16 @@ const routes = [
 ]
 
 const router = createRouter({
-	// hash模式
-	// history: createWebHashHistory(),
 	history: createWebHistory(),
 	base: process.env.BASE_URL,
 	routes: routes,
+	scrollBehavior(to, from, savedPosition) {
+		return resolveScrollPosition(to, savedPosition)
+	}
 })
 
-// 挂载路由守卫
 router.beforeEach((to, from, next) => {
+	saveHomeScrollPosition(from, window.scrollY)
 	document.title = getPageTitle(to.meta.title)
 	next()
 })

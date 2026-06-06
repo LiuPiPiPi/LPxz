@@ -1,0 +1,162 @@
+.site {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+.main {
+	flex: 1;
+	padding-top: 56px;
+	margin-bottom: 20px;
+}
+
+.main-inner {
+	display: flex;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 24px 32px 0;
+	gap: 32px;
+}
+
+.main-content {
+	flex: 1 1 70%;
+	min-width: 0;
+}
+
+.main-sidebar {
+	flex: 0 0 calc(30% - 32px);
+	min-width: 200px;
+}
+
+.is-home-main {
+	background: transparent;
+	margin-bottom: 0;
+}
+
+.is-home-main .main-inner {
+	max-width: none;
+	padding: 0;
+	gap: 0;
+}
+
+.is-home-main .main-content {
+	flex: 1 1 100%;
+}
+
+.is-home-main .main-sidebar {
+	display: none !important;
+}
+
+.is-about-main {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.is-about-main .main-inner {
+  max-width: none;
+  padding: 0;
+  gap: 0;
+}
+
+.is-about-main .main-content {
+  flex: 1 1 100%;
+}
+
+.is-about-main .main-sidebar {
+  display: none !important;
+}
+
+.is-friends-main {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.is-friends-main .main-inner {
+  max-width: none;
+  padding: 0;
+  gap: 0;
+}
+
+.is-friends-main .main-content {
+  flex: 1 1 100%;
+}
+
+.is-friends-main .main-sidebar {
+  display: none !important;
+}
+
+.is-moments-main {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.is-moments-main .main-inner {
+  max-width: none;
+  padding: 0;
+  gap: 0;
+}
+
+.is-moments-main .main-content {
+  flex: 1 1 100%;
+}
+
+.is-moments-main .main-sidebar {
+  display: none !important;
+}
+
+.is-archives-main {
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.is-archives-main .main-inner {
+  max-width: none;
+  padding: 0;
+  gap: 0;
+}
+
+.is-archives-main .main-content {
+  flex: 1 1 100%;
+}
+
+.is-archives-main .main-sidebar {
+  display: none !important;
+}
+
+.is-content-main .main-content {
+  flex: 1 1 100%;
+}
+
+.is-content-main .main-sidebar {
+  display: none !important;
+}
+
+.is-article-main .main-content {
+	max-width: 100%;
+}
+
+.backtop-custom {
+	box-shadow: none;
+	background: none;
+	z-index: 9999;
+}
+
+.backtop-img {
+	width: 50px;
+	height: 50px;
+}
+
+@media screen and (max-width: 767px) {
+	.main-inner {
+		padding: 12px 16px 0;
+		gap: 0;
+	}
+
+	.main-content {
+		flex: 1 1 100%;
+	}
+
+	.main-sidebar {
+		display: none !important;
+	}
+}

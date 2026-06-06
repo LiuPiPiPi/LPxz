@@ -2,38 +2,23 @@
 	<div class="site">
 		<!--顶部导航-->
 		<Nav :categoryList="categoryList" />
-		<!--首页大图 只在首页且pc端时显示-->
-		<!-- <div class="m-mobile-hide">
-			<Header v-if="$route.name==='home'"/>
-		</div> -->
 
-		<div class="main">
-			<div class="ui container">
-				<div class="ui stackable grid">
-					<!--左侧-->
-					<div class="three wide column m-mobile-hide" />
-					<!--中间-->
-					<div class="ten wide column">
-						<router-view v-slot="{ Component }">
-							<keep-alive include="Home">
-								<component :is="Component" />
-							</keep-alive>
-						</router-view>
-					</div>
-					<!--右侧-->
-					<div class="three wide column m-mobile-hide">
-						<!-- 随机文章改为推荐文章 -->
-						<!-- <RandomArticle :randomArticleList="randomArticleList"
-								:class="{ 'm-display-none': focusMode }" /> -->
-						<Introduction :class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
-						<!--只在文章页面显示目录-->
-						<Tocbot v-if="$route.name === 'article'" />
-						<!-- 标签 -->
-						<Tags :tagList="tagList" :class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
-						<!-- 分类 -->
+		<div class="main" :class="mainClass">
+			<div class="main-inner">
+				<div class="main-content">
+					<router-view v-slot="{ Component }">
+						<keep-alive include="Home,articleArchives">
+							<component :is="Component" />
+						</keep-alive>
+					</router-view>
+				</div>
+				<div class="main-sidebar m-mobile-hide">
+					<template v-if="$route.name === 'home'">
+						<Introduction :class="{ 'm-display-none': focusMode }" />
+						<Tags :tagList="tagList" :class="{ 'm-display-none': focusMode }" />
 						<Categories :categoryList="categoryList" :categoryNumList="categoryNumList"
-							:class="{ 'm-display-none': focusMode }" v-if="$route.name === 'home'" />
-					</div>
+							:class="{ 'm-display-none': focusMode }" />
+					</template>
 				</div>
 			</div>
 		</div>
@@ -46,8 +31,8 @@
 			<MyAPlayer />
 		</div>
 		<!--回到顶部-->
-		<el-backtop style="box-shadow: none; background: none; z-index: 9999;">
-			<img src="/img/back-top.png" style="width: 50px; height: 50px;">
+		<el-backtop class="backtop-custom">
+			<img src="/img/back-top.png" class="backtop-img">
 		</el-backtop>
 		<!--底部footer-->
 		<Footer :siteInfo="siteInfo" :badges="badges" :hitokoto="hitokoto" />
@@ -64,14 +49,13 @@ import Tags from "@/components/sidebar/Tags";
 import Categories from "@/components/sidebar/Categories";
 import RandomArticle from "@/components/sidebar/RandomArticle";
 import MyAPlayer from "@/components/index/MyAPlayer";
-import Tocbot from "@/components/sidebar/Tocbot";
 import ArticlePasswordDialog from "@/components/index/ArticlePasswordDialog";
 import { mapState } from 'vuex'
 import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, RESTORE_COMMENT_FORM } from "@/store/mutations-types";
 
 export default {
 	name: "articleIndex",
-	components: { Header, ArticlePasswordDialog, Tocbot, MyAPlayer, RandomArticle, Tags, Categories, Nav, Footer, Introduction },
+	components: { Header, ArticlePasswordDialog, MyAPlayer, RandomArticle, Tags, Categories, Nav, Footer, Introduction },
 	data() {
 		return {
 			siteInfo: {
@@ -86,12 +70,18 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['focusMode'])
-	},
-	watch: {
-		//路由改变时，页面滚动至顶部
-		'$route.path'() {
-			this.scrollToTop()
+		...mapState(['focusMode']),
+		mainClass() {
+			const name = this.$route.name
+			return {
+				'is-home-main': name === 'home',
+				'is-article-main': name === 'article',
+				'is-about-main': name === 'about',
+				'is-friends-main': name === 'friends',
+				'is-moments-main': name === 'moments',
+				'is-archives-main': name === 'archives',
+				'is-content-main': name !== 'home' && name !== 'about' && name !== 'friends' && name !== 'moments' && name !== 'archives'
+			}
 		}
 	},
 	created() {
@@ -125,35 +115,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-.site {
-	display: flex;
-	min-height: 100vh;
-	/* 没有元素时，也把页面撑开至100% */
-	flex-direction: column;
-}
-
-.main {
-	flex: 1;
-	margin-bottom: 20px;
-}
-
-.main .ui.container {
-	width: 1400px !important;
-	margin-left: auto !important;
-	margin-right: auto !important;
-}
-
-.ui.grid .three.column {
-	padding: 0;
-}
-
-.ui.grid .ten.column {
-	padding-top: 0;
-}
-
-.m-display-none {
-	display: none !important;
-}
-</style>

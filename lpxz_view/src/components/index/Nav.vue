@@ -1,5 +1,5 @@
 <template>
-	<div ref="nav" class="ui inverted stackable pointing menu site-nav" :class="{ 'transparent': clientSize.clientWidth > 768 }">
+	<div ref="nav" class="ui stackable menu site-nav" :class="{ 'transparent': clientSize.clientWidth > 768 }">
 		<div class="ui container nav-shell">
 			<router-link to="/" class="brand-link" aria-label="LPxz Home">
 				<span class="brand-mark" aria-hidden="true">
@@ -10,7 +10,7 @@
 			<nav class="nav-links" :class="{ 'is-collapsed': mobileHide }" aria-label="主导航">
 				<router-link to="/home" class="item nav-item"
 					:class="{ 'active': $route.name === 'home' }">
-					文章
+					首页
 				</router-link>
 				<router-link to="/moments" class="item nav-item"
 					:class="{ 'active': $route.name === 'moments' }">
@@ -224,33 +224,45 @@ export default {
 
 <style scoped>
 .site-nav {
-	position: sticky;
+	position: fixed;
+	left: 0;
+	right: 0;
 	top: 0;
 	z-index: 1000;
 	border: 0 !important;
+	border-bottom: 1px solid rgba(15, 23, 42, .06) !important;
 	border-radius: 0 !important;
-	background: rgba(255, 255, 255, 0.86) !important;
-	backdrop-filter: blur(18px) saturate(140%);
-	box-shadow: 0 16px 48px rgba(20, 26, 45, 0.08);
+	background: rgba(255, 255, 255, .94) !important;
+	backdrop-filter: blur(12px) saturate(140%);
+	box-shadow: none;
 	transition: background .3s ease, box-shadow .3s ease, padding .3s ease;
 	font-size: 1rem;
 }
 
+.site-nav :deep(.item) {
+	border-right: 0 !important;
+}
+
+.site-nav :deep(.item::before) {
+	display: none !important;
+}
+
 .site-nav.transparent {
-	background: rgba(255, 255, 255, 0.46) !important;
+	background: rgba(255, 255, 255, .94) !important;
 	box-shadow: none;
 }
 
 .ui.menu .nav-shell {
-	width: 1400px !important;
+	position: relative;
+	width: 100% !important;
 	margin-left: auto !important;
 	margin-right: auto !important;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 24px;
-	min-height: 76px;
-	padding: 12px 24px;
+	gap: 18px;
+	min-height: 56px;
+	padding: 0 24px;
 }
 
 .brand-link {
@@ -265,13 +277,13 @@ export default {
 
 .brand-mark {
 	position: relative;
-	width: 50px;
-	height: 50px;
-	flex: 0 0 50px;
+	width: 30px;
+	height: 30px;
+	flex: 0 0 30px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	filter: drop-shadow(0 10px 18px rgba(0, 102, 255, 0.18));
+	filter: none;
 }
 
 .brand-mark img {
@@ -285,86 +297,75 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 18px;
+	gap: 6px;
 	flex: 1 1 auto;
 }
 
-.ui.inverted.menu .nav-item {
+.nav-links :deep(.nav-item) {
 	position: relative;
 	margin: 0;
-	padding: 12px 16px !important;
-	border-radius: 8px !important;
-	color: #2f3442 !important;
+	padding: 6px 16px;
+	border-radius: 8px;
+	color: #475569;
 	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 16px;
-	font-weight: 700;
-	transition: color .2s ease, background .2s ease, transform .2s ease;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: color .25s ease, background .25s ease;
 }
 
-.ui.inverted.menu .nav-item:hover {
-	color: #1f6fff !important;
-	background: rgba(31, 111, 255, 0.06) !important;
-	transform: translateY(-1px);
+.nav-links :deep(.nav-item:hover) {
+	color: #0f172a;
+	background: rgba(14, 165, 233, .08);
 }
 
-.ui.inverted.menu .active.nav-item {
-	color: #1f6fff !important;
-	background: transparent !important;
-	font-weight: 800;
+.nav-links :deep(.nav-item.active) {
+	color: #0f172a;
+	background: rgba(14, 165, 233, .12);
+	font-weight: 600;
 }
 
-.ui.inverted.menu .active.nav-item:before {
-	content: "";
-	position: absolute;
-	left: 50%;
-	bottom: 6px;
-	width: 18px;
-	height: 2px;
-	border-radius: 999px;
-	background: #1f6fff;
-	transform: translateX(-50%);
-}
 
-.ui.inverted.pointing.menu .active.item:after,
-.ui.inverted.pointing.menu .active.item:hover:after {
-	background: none !important;
-}
+
+
+
+
 
 .nav-actions {
 	display: flex;
 	align-items: center;
-	flex: 0 0 320px;
+	flex: 0 0 210px;
 }
 
 .nav-search {
 	position: relative;
-	width: 320px;
+	width: 210px;
 	margin-left: 16px;
 }
 
 .nav-search :deep(.el-input__wrapper) {
 	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.82);
-	box-shadow: inset 0 0 0 1px rgba(22, 32, 51, 0.1), 0 10px 28px rgba(20, 26, 45, 0.07);
+	background: rgba(15, 23, 42, .03);
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .08);
 	transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 
 .nav-search :deep(.el-input__wrapper:hover) {
-	background: rgba(255, 255, 255, 0.96);
-	box-shadow: inset 0 0 0 1px rgba(58, 122, 254, 0.24), 0 12px 30px rgba(20, 26, 45, 0.09);
+	background: rgba(15, 23, 42, .05);
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .12);
 }
 
 .nav-search :deep(.el-input__wrapper.is-focus) {
 	background: #fff;
-	box-shadow: inset 0 0 0 2px rgba(58, 122, 254, 0.34), 0 14px 34px rgba(58, 122, 254, 0.14);
-	transform: translateY(-1px);
+	box-shadow: inset 0 0 0 2px rgba(14, 165, 233, .22);
+	transform: none;
 }
 
 .nav-search :deep(.el-input__inner) {
-	height: 40px;
+	height: 32px;
 	color: #202532;
 	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 500;
 }
 
@@ -535,10 +536,11 @@ export default {
 }
 
 .nav-toggle {
-	top: 17px;
+	position: absolute;
+	top: 9px;
 	right: 16px;
-	width: 42px;
-	height: 42px;
+	width: 38px;
+	height: 38px;
 	padding: 0 !important;
 	border-radius: 8px !important;
 	background: #121827 !important;
@@ -552,16 +554,19 @@ export default {
 
 @media screen and (max-width: 767px) {
 	.site-nav {
-		position: sticky;
+		position: fixed;
 		background: rgba(255, 255, 255, 0.94) !important;
 	}
 
 	.ui.menu .nav-shell {
 		width: 100% !important;
-		min-height: 72px;
-		padding: 13px 68px 13px 16px;
+		display: flex !important;
+		flex-direction: row !important;
+		min-height: 56px;
+		padding: 8px 68px 8px 16px;
 		flex-wrap: wrap;
-		align-items: flex-start;
+		align-items: center;
+		justify-content: flex-start;
 		gap: 12px;
 	}
 
@@ -592,15 +597,10 @@ export default {
 		justify-content: center;
 		min-width: 0;
 		margin: 0 !important;
-		padding: 10px 4px !important;
+		padding: 8px 12px !important;
+		border-radius: 8px;
 		font-size: 14px;
 		text-align: center;
-	}
-
-	.ui.inverted.menu .active.nav-item:before {
-		left: 50%;
-		width: 16px;
-		bottom: 5px;
 	}
 
 	.nav-search {
@@ -620,27 +620,27 @@ export default {
 <style>
 .site-nav .nav-search .el-input__wrapper {
 	border-radius: 999px !important;
-	background: rgba(255, 255, 255, 0.82) !important;
-	box-shadow: inset 0 0 0 1px rgba(22, 32, 51, 0.1), 0 10px 28px rgba(20, 26, 45, 0.07) !important;
+	background: rgba(15, 23, 42, .03) !important;
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .08) !important;
 	transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 
 .site-nav .nav-search .el-input__wrapper:hover {
-	background: rgba(255, 255, 255, 0.96) !important;
-	box-shadow: inset 0 0 0 1px rgba(58, 122, 254, 0.24), 0 12px 30px rgba(20, 26, 45, 0.09) !important;
+	background: rgba(15, 23, 42, .05) !important;
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .12) !important;
 }
 
 .site-nav .nav-search .el-input__wrapper.is-focus {
 	background: #fff !important;
-	box-shadow: inset 0 0 0 2px rgba(58, 122, 254, 0.34), 0 14px 34px rgba(58, 122, 254, 0.14) !important;
-	transform: translateY(-1px);
+	box-shadow: inset 0 0 0 2px rgba(14, 165, 233, .22) !important;
+	transform: none;
 }
 
 .site-nav .nav-search .el-input__inner {
-	height: 40px;
+	height: 32px;
 	color: #202532;
 	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 500;
 }
 

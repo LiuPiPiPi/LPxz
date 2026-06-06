@@ -5,10 +5,14 @@ import store from './store'
 
 // 自定义css
 import './assets/css/base.css'
+import './assets/css/layout.css'
+import './assets/css/article.css'
+import './assets/css/tocbot.css'
 // 阿里icon
 import './assets/css/icon/iconfont.css'
 // typo.css
 import "./assets/css/typo.css";
+import "./assets/css/prism-atom-one-light.css";
 // semantic-ui
 import 'semantic-ui-css/semantic.min.css'
 // element-plus
@@ -28,6 +32,8 @@ console.log(
     'background:#41b883 ; padding: 1px; border-radius: 0 3px 3px 0;  color: #000',
     'background:transparent'
 )
+
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 
 const app = createApp(App,
     {

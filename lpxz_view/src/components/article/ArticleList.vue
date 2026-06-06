@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--content-->
-		<ArticleItem :articleList="articleList" v-viewer />
+		<ArticleItem :articleList="articleList" :disableEntranceAnimation="disableEntranceAnimation" v-viewer />
 		<!--分页-->
 		<Pagination :getArticleList="getArticleList" :totalPage="totalPage" />
 	</div>
@@ -26,6 +26,10 @@ export default {
 		totalPage: {
 			type: Number,
 			required: true
+		},
+		disableEntranceAnimation: {
+			type: Boolean,
+			default: false
 		}
 	}
 }

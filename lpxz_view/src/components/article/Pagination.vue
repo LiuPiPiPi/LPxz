@@ -1,5 +1,5 @@
 <template>
-	<div class="ui bottom" style="text-align:center">
+	<div class="article-pagination">
 		<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
 			layout="prev, pager, next" hide-on-single-page>
 		</el-pagination>
@@ -55,8 +55,38 @@ export default {
 }
 </script>
 
-<style>
-.el-pagination .el-pager li:not(.disabled).active {
-	background-color: #409EFF !important;
+<style scoped>
+.article-pagination {
+	display: flex;
+	justify-content: center;
+	padding-top: 48px;
+}
+
+.article-pagination :deep(.el-pagination) {
+	--el-pagination-button-bg-color: transparent;
+	--el-pagination-bg-color: transparent;
+	--el-pagination-hover-color: #0284c7;
+	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Yahei", sans-serif;
+}
+
+.article-pagination :deep(.btn-prev),
+.article-pagination :deep(.btn-next),
+.article-pagination :deep(.el-pager li) {
+	min-width: 34px;
+	height: 34px;
+	border-radius: 999px;
+	color: #475569;
+	font-weight: 700;
+}
+
+.article-pagination :deep(.el-pager li:not(.disabled).active) {
+	background-color: #0f172a !important;
+	color: #ffffff !important;
+}
+
+.article-pagination :deep(.btn-prev:hover),
+.article-pagination :deep(.btn-next:hover),
+.article-pagination :deep(.el-pager li:hover) {
+	background: #f1f5f9;
 }
 </style>

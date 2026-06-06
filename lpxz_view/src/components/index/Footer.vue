@@ -1,44 +1,24 @@
 <template>
-	<footer class="ui inverted vertical segment m-opacity">
-		<div class="ui center aligned container">
-			<!-- <div class="ui inverted divided stackable grid">
-
-				<div class="three wide column">
-					<div class="ui link list">
-						<h4 class="ui inverted header m-text-thin m-text-spaced">{{ siteInfo.footerImgTitle }}</h4>
-						<div class="item">
-							<img :src="siteInfo.footerImgUrl" class="ui rounded image" alt="" style="width: 100px">
-						</div>
-					</div>
-				</div>
-
-				<div class="seven wide column">
-					<p id="hitokotoText" class="m-text-thin m-text-spaced m-opacity-mini">{{ hitokoto.hitokoto }}</p>
-					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right"
-						v-text="hitokoto.from ? `——《${hitokoto.from}》` : ''"></p>
-				</div>
-			</div>
-
-			<div class="ui inverted section divider"></div> -->
-
-			<p class="m-text-spaced m-margin-top" style="color: black;">
+	<footer class="site-footer">
+		<div class="footer-inner">
+			<p class="footer-copyright">
 				<span v-if="siteInfo.copyright">Copyright © 2020 – {{ new Date().getFullYear() }}&nbsp;</span>
-				<router-link to="/" style="color:#d44335" v-if="siteInfo.copyright">
+				<router-link to="/" class="footer-brand" v-if="siteInfo.copyright">
 					{{ siteInfo.copyright.siteName }}
 				</router-link>
 				<span v-if="siteInfo.copyright && siteInfo.beian">. All Rights Reserved.&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 				<img src="/img/beian.png" alt="" class="beian" v-if="siteInfo.beian">
-				<a rel="external nofollow noopener" href="https://beian.miit.gov.cn/" target="_blank">
+				<a rel="external nofollow noopener" href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">
 					{{ siteInfo.beian }}</a>
 			</p>
 
-			<div class="github-badge" v-for="(item, index) in badges" :key="index">
-				<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title">
+			<div class="footer-badges" v-for="(item, index) in badges" :key="index">
+				<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title"
+					class="badge-link">
 					<span class="badge-subject">{{ item.subject }}</span>
 					<span class="badge-value" :class="`bg-${item.color}`">{{ item.value }}</span>
 				</a>
 			</div>
-
 		</div>
 	</footer>
 </template>
@@ -66,8 +46,47 @@ export default {
 <style scoped>
 @import "../../assets/css/badge.css";
 
-.github-badge a {
-	color: #fff;
+.site-footer {
+	border-top: 1px solid rgba(15, 23, 42, .06);
+	background: rgba(248, 250, 252, .6);
+	backdrop-filter: blur(8px);
+}
+
+.footer-inner {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 32px 24px 28px;
+	text-align: center;
+	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Yahei", sans-serif;
+}
+
+.footer-copyright {
+	margin: 0 0 16px;
+	color: #64748b;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.6;
+}
+
+.footer-brand {
+	color: #0284c7;
+	font-weight: 700;
+	text-decoration: none;
+	transition: color .2s ease;
+}
+
+.footer-brand:hover {
+	color: #0369a1;
+}
+
+.footer-link {
+	color: #64748b;
+	text-decoration: none;
+	transition: color .2s ease;
+}
+
+.footer-link:hover {
+	color: #0284c7;
 }
 
 .beian {
@@ -77,8 +96,18 @@ export default {
 	margin-right: 5px;
 }
 
-.ui.inverted.segment,
-.ui.primary.inverted.segment {
-	background: #d4e6f4;
+.footer-badges {
+	display: inline-flex;
+}
+
+.badge-link {
+	color: #fff;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+	.footer-inner {
+		padding: 24px 16px 20px;
+	}
 }
 </style>
