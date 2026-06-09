@@ -259,13 +259,17 @@ export default {
 	margin-right: auto !important;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	gap: 18px;
 	min-height: 56px;
-	padding: 0 24px;
+	padding: 0 260px;
 }
 
 .brand-link {
+	position: absolute;
+	left: 24px;
+	top: 50%;
+	transform: translateY(-50%);
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
@@ -298,7 +302,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	gap: 6px;
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 }
 
 .nav-links :deep(.nav-item) {
@@ -332,15 +336,19 @@ export default {
 
 
 .nav-actions {
+	position: absolute;
+	right: 24px;
+	top: 50%;
+	transform: translateY(-50%);
 	display: flex;
 	align-items: center;
-	flex: 0 0 210px;
+	flex: 0 0 auto;
 }
 
 .nav-search {
 	position: relative;
 	width: 210px;
-	margin-left: 16px;
+	margin-left: 0;
 }
 
 .nav-search :deep(.el-input__wrapper) {
@@ -552,6 +560,26 @@ export default {
 	background: #5d4df1 !important;
 }
 
+@media screen and (min-width: 768px) and (max-width: 980px) {
+	.ui.menu .nav-shell {
+		padding-left: 210px;
+		padding-right: 210px;
+	}
+
+	.nav-links {
+		gap: 2px;
+	}
+
+	.nav-links :deep(.nav-item) {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.nav-search {
+		width: 180px;
+	}
+}
+
 @media screen and (max-width: 767px) {
 	.site-nav {
 		position: fixed;
@@ -568,6 +596,12 @@ export default {
 		align-items: center;
 		justify-content: flex-start;
 		gap: 12px;
+	}
+
+	.brand-link,
+	.nav-actions {
+		position: static;
+		transform: none;
 	}
 
 	.nav-links,

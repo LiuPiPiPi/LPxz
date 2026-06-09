@@ -10,15 +10,17 @@
 			<div class="hero-inner">
 				<div class="hero-copy">
 					<p class="hero-kicker">Friends</p>
-					<h2>友情链接</h2>
-					<p class="hero-desc">那些值得相遇的角落，串联起更广阔的世界</p>
-				</div>
-				<div class="hero-stats" v-if="friendList.length > 0">
-					<div class="stat-pill">
-						<span class="stat-dot"></span>
-						<span class="stat-value">{{ friendList.length }}</span>
-						<span class="stat-label">位好友</span>
+					<div class="hero-title-row">
+						<h2>友情链接</h2>
+						<div class="hero-stats" v-if="friendList.length > 0">
+							<div class="stat-pill">
+								<span class="stat-dot"></span>
+								<span class="stat-value">{{ friendList.length }}</span>
+								<span class="stat-label">位好友</span>
+							</div>
+						</div>
 					</div>
+					<p class="hero-desc">那些值得相遇的角落，串联起更广阔的世界</p>
 				</div>
 				<div class="hero-ornament" aria-hidden="true">
 					<div class="ornament-ring"></div>
@@ -249,6 +251,14 @@ export default {
 	animation: fadeSlideIn .5s ease both;
 }
 
+.hero-title-row {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	flex-wrap: wrap;
+	animation: fadeSlideIn .5s ease .08s both;
+}
+
 .hero-copy h2 {
 	margin: 0;
 	color: #020617;
@@ -260,7 +270,6 @@ export default {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: fadeSlideIn .5s ease .08s both;
 }
 
 .hero-desc {
@@ -275,9 +284,9 @@ export default {
 .hero-stats {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	gap: 10px;
-	flex-shrink: 0;
-	animation: fadeSlideIn .5s ease .24s both;
+	flex: 0 0 auto;
 }
 
 .stat-pill {
@@ -401,9 +410,9 @@ export default {
 }
 
 .friends-page-restored .hero-kicker,
+.friends-page-restored .hero-title-row,
 .friends-page-restored .hero-copy h2,
 .friends-page-restored .hero-desc,
-.friends-page-restored .hero-stats,
 .friends-page-restored .friend-card {
 	animation: none;
 }
@@ -596,6 +605,10 @@ export default {
 	.hero-inner {
 		padding: 40px 20px 32px;
 		flex-wrap: wrap;
+	}
+
+	.hero-stats {
+		align-items: flex-start;
 	}
 
 	.hero-ornament {

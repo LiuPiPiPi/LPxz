@@ -31,8 +31,8 @@
 			<MyAPlayer />
 		</div>
 		<!--回到顶部-->
-		<el-backtop class="backtop-custom">
-			<img src="/img/back-top.png" class="backtop-img">
+		<el-backtop class="backtop-custom" title="返回顶部" aria-label="返回顶部">
+			<i class="angle up icon"></i>
 		</el-backtop>
 		<!--底部footer-->
 		<Footer :siteInfo="siteInfo" :badges="badges" :hitokoto="hitokoto" />

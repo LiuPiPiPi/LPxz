@@ -10,15 +10,17 @@
 			<div class="hero-inner">
 				<div class="hero-copy">
 					<p class="hero-kicker">Archives</p>
-					<h2>文章归档</h2>
-					<p class="hero-desc">以时间为线索，回溯每一篇留下的文字</p>
-				</div>
-				<div class="hero-stats" v-if="count > 0">
-					<div class="stat-pill">
-						<span class="stat-dot"></span>
-						<span class="stat-value">{{ count }}</span>
-						<span class="stat-label">篇文章</span>
+					<div class="hero-title-row">
+						<h2>文章归档</h2>
+						<div class="hero-stats" v-if="count > 0">
+							<div class="stat-pill">
+								<span class="stat-dot"></span>
+								<span class="stat-value">{{ count }}</span>
+								<span class="stat-label">篇文章</span>
+							</div>
+						</div>
 					</div>
+					<p class="hero-desc">以时间为线索，回溯每一篇留下的文字</p>
 				</div>
 				<div class="hero-ornament" aria-hidden="true">
 					<div class="ornament-ring"></div>
@@ -277,6 +279,14 @@ export default {
 	animation: fadeSlideIn .5s ease both;
 }
 
+.hero-title-row {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	flex-wrap: wrap;
+	animation: fadeSlideIn .5s ease .08s both;
+}
+
 .hero-copy h2 {
 	margin: 0;
 	color: #020617;
@@ -288,7 +298,6 @@ export default {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: fadeSlideIn .5s ease .08s both;
 }
 
 .hero-desc {
@@ -303,15 +312,15 @@ export default {
 .hero-stats {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	gap: 10px;
-	flex-shrink: 0;
-	animation: fadeSlideIn .5s ease .24s both;
+	flex: 0 0 auto;
 }
 
 .archives-page-restored .hero-kicker,
+.archives-page-restored .hero-title-row,
 .archives-page-restored .hero-copy h2,
 .archives-page-restored .hero-desc,
-.archives-page-restored .hero-stats,
 .archives-page-restored .feed-sidebar,
 .archives-page-restored .empty-state,
 .archives-page-restored .archive-group,
@@ -769,6 +778,10 @@ export default {
 	.hero-inner {
 		padding: 40px 20px 32px;
 		flex-wrap: wrap;
+	}
+
+	.hero-stats {
+		align-items: flex-start;
 	}
 
 	.hero-ornament {

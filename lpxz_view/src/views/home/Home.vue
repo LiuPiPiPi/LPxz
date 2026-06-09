@@ -13,41 +13,12 @@
 					<h1>热爱生活，从容面对</h1>
 					<p class="home-summary">Success is not final. Failure is not fatal.<br>It is the courage to continue that counts.</p>
 				</div>
-				<div class="insight-panel" aria-hidden="true">
-					<div class="panel-grid"></div>
-					<div class="ai-model-map">
-						<div class="model-row model-row-top">
-							<div class="model-node model-node-small">
-								<span>Tokens</span>
-								<i></i><i></i><i></i>
-							</div>
-							<div class="model-arrow"></div>
-							<div class="model-node model-node-small">
-								<span>Embed</span>
-								<i></i><i></i><i></i>
-							</div>
-						</div>
-						<div class="model-core">
-							<div class="core-label">Transformer Stack</div>
-							<div class="core-block">
-								<span>Attention</span>
-								<b></b><b></b><b></b>
-							</div>
-							<div class="core-block">
-								<span>Reasoning</span>
-								<b></b><b></b><b></b>
-							</div>
-							<div class="core-block">
-								<span>Memory</span>
-								<b></b><b></b><b></b>
-							</div>
-						</div>
-						<div class="model-row model-row-bottom">
-							<div class="model-node model-node-wide">Safety</div>
-							<div class="model-arrow"></div>
-							<div class="model-node model-node-wide">Output</div>
-						</div>
-					</div>
+				<div class="insight-panel portrait-panel" aria-hidden="true">
+					<div class="portrait-aura portrait-aura-cyan"></div>
+					<div class="portrait-aura portrait-aura-violet"></div>
+					<img class="hero-portrait" src="/img/hero/lpxz-neon-lines.png" alt="">
+					<div class="portrait-glass portrait-glass-large"></div>
+					<div class="portrait-glass portrait-glass-small"></div>
 				</div>
 			</div>
 			
@@ -234,6 +205,7 @@ export default {
 .home-copy {
 	position: relative;
 	z-index: 2;
+	width: min(100%, calc(100vw - min(28vw, 340px) - clamp(180px, 20vw, 300px)));
 	max-width: 800px;
 	padding-top: 24px;
 }
@@ -243,11 +215,11 @@ export default {
 	padding: 12px 0;
 	color: #020617;
 	font-family: "Noto Serif SC", serif;
-	font-size: 76px;
+	font-size: clamp(48px, 5vw, 76px);
 	font-weight: 900;
 	line-height: 1.08;
 	letter-spacing: 0;
-	white-space: nowrap;
+	white-space: normal;
 	animation: fadeSlideIn .7s ease both;
 	background: linear-gradient(135deg, #0f172a 0%, #0284c7 60%, #8b5cf6 100%);
 	-webkit-background-clip: text;
@@ -329,14 +301,102 @@ export default {
 
 .insight-panel {
 	position: absolute;
-	top: 112px;
-	right: clamp(72px, 8vw, 136px);
+	top: 86px;
+	right: clamp(84px, 10vw, 150px);
 	z-index: 1;
-	width: 420px;
-	height: 300px;
+	width: min(28vw, 340px);
+	aspect-ratio: 1 / 1;
+	height: auto;
 	pointer-events: none;
 	color: #0f172a;
 	filter: none;
+}
+
+.portrait-panel {
+	overflow: visible;
+	border-radius: 0;
+	opacity: 1;
+	background: none;
+	box-shadow: none;
+	animation: portraitFloat 8s ease-in-out .5s infinite;
+}
+
+.portrait-panel::before {
+	display: none;
+}
+
+.hero-portrait {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	opacity: 1;
+	filter: saturate(1.02) contrast(1.03) brightness(1.01);
+	mix-blend-mode: normal;
+}
+
+.portrait-panel::after {
+	display: none;
+}
+
+.portrait-aura {
+	display: none;
+	position: absolute;
+	border-radius: 999px;
+	filter: blur(22px);
+	opacity: .38;
+}
+
+.portrait-aura-cyan {
+	right: 18px;
+	top: 42px;
+	width: 190px;
+	height: 170px;
+	background: rgba(14, 165, 233, .3);
+}
+
+.portrait-aura-violet {
+	right: -12px;
+	bottom: -8px;
+	width: 190px;
+	height: 150px;
+	background: rgba(139, 92, 246, .22);
+}
+
+.portrait-glass {
+	display: none;
+	position: absolute;
+	border: 1px solid rgba(255, 255, 255, .58);
+	border-radius: 36px;
+	background: linear-gradient(135deg, rgba(255, 255, 255, .32), rgba(255, 255, 255, .04));
+	box-shadow: inset 0 0 0 1px rgba(14, 165, 233, .08);
+	backdrop-filter: blur(2px);
+	opacity: .68;
+}
+
+.portrait-glass-large {
+	top: 28px;
+	right: 22px;
+	width: 210px;
+	height: 156px;
+	transform: rotate(-12deg);
+}
+
+.portrait-glass-small {
+	right: 188px;
+	bottom: 36px;
+	width: 110px;
+	height: 82px;
+	border-radius: 26px;
+	transform: rotate(14deg);
+	opacity: .42;
+}
+
+@keyframes portraitFloat {
+	0%, 100% { transform: translate3d(0, 0, 0); }
+	50% { transform: translate3d(0, 8px, 0); }
 }
 
 .panel-grid {
@@ -1278,11 +1338,13 @@ export default {
 	}
 
 	.home-copy {
+		width: 100%;
+		max-width: 100%;
 		padding-top: 0;
 	}
 
 	.home-copy h1 {
-		font-size: 38px;
+		font-size: clamp(32px, 9vw, 38px);
 		line-height: 1.12;
 		white-space: normal;
 	}
@@ -1307,6 +1369,37 @@ export default {
 	}
 }
 
+@media screen and (min-width: 1121px) and (max-width: 1320px) {
+	.home-copy {
+		width: min(100%, calc(100vw - min(26vw, 300px) - 230px));
+	}
+
+	.insight-panel {
+		top: 94px;
+		right: clamp(48px, 6vw, 84px);
+		width: min(26vw, 300px);
+	}
+}
+
+@media screen and (min-width: 961px) and (max-width: 1120px) {
+	.home-copy {
+		width: min(100%, calc(100vw - 280px));
+		max-width: 720px;
+	}
+
+	.home-copy h1 {
+		font-size: clamp(48px, 6vw, 64px);
+		line-height: 1.1;
+	}
+
+	.insight-panel {
+		top: 108px;
+		right: 28px;
+		width: 240px;
+		opacity: .72;
+	}
+}
+
 @media screen and (min-width: 768px) and (max-width: 1120px) {
 	.hero-inner {
 		padding-left: 32px;
@@ -1314,14 +1407,27 @@ export default {
 	}
 
 	.insight-panel {
-		right: 32px;
-		opacity: .44;
-		transform: scale(.92);
 		transform-origin: top right;
 	}
 
 	.updates-column {
 		margin-left: 48px;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 960px) {
+	.home-copy {
+		width: 100%;
+		max-width: 760px;
+	}
+
+	.home-copy h1 {
+		font-size: clamp(42px, 8vw, 58px);
+		line-height: 1.12;
+	}
+
+	.insight-panel {
+		display: none;
 	}
 }
 </style>

@@ -2,10 +2,16 @@
 	<div class="article-page">
 		<div class="article-header">
 			<div class="article-header-inner">
-				<div class="article-badge" v-if="article.top">
-					<i class="star icon"></i>置顶
+				<button class="article-back-btn" type="button" @click="goBack" title="返回上一页">
+					<i class="angle left icon"></i>
+					<span>返回</span>
+				</button>
+				<div class="article-title-row">
+					<h1 class="article-title">{{ article.title }}</h1>
+					<div class="article-badge" v-if="article.top">
+						<i class="star icon"></i>置顶
+					</div>
 				</div>
-				<h1 class="article-title">{{ article.title }}</h1>
 				<div class="article-meta">
 					<span class="meta-item">
 						<i class="calendar icon"></i>{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD') }}
@@ -37,11 +43,11 @@
 
 				<div class="article-appreciation" v-if="article.appreciation">
 					<el-popover placement="top" width="220" trigger="click">
-<div class="appreciation-inner">
-						<div class="appreciation-hint">一毛是鼓励</div>
-						<img :src="$store.state.siteInfo.reward" alt="" class="appreciation-reward-img">
-						<div class="appreciation-hint">一块是真爱</div>
-					</div>
+						<div class="appreciation-inner">
+							<div class="appreciation-hint">一毛是鼓励</div>
+							<img :src="$store.state.siteInfo.reward" alt="" class="appreciation-reward-img">
+							<div class="appreciation-hint">一块是真爱</div>
+						</div>
 						<template v-slot:reference>
 							<button class="appreciation-btn">赞赏</button>
 						</template>
@@ -61,21 +67,26 @@
 			</div>
 		</div>
 
-		<div class="article-info">
-			<ul>
-				<li>作者：{{ $store.state.introduction.name }}
-					<router-link to="/about">（联系作者）</router-link>
-				</li>
-				<li>发表时间：{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD HH:mm') }}</li>
-				<li>最后修改：{{ dateFormat(article.gmtModified, 'YYYY-MM-DD HH:mm') }}</li>
-				<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> 署名 4.0 国际 (CC BY 4.0)
-					</a>创作共享协议。可自由转载、引用，并且允许商业性使用。但需署名作者且注明文章出处。</li>
-			</ul>
-		</div>
+		<div class="article-support-row" :class="{ 'no-toc': !hasToc }">
+			<div class="article-support-body">
+				<div class="article-info">
+					<ul>
+						<li>作者：{{ $store.state.introduction.name }}
+							<router-link to="/about">（联系作者）</router-link>
+						</li>
+						<li>发表时间：{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD HH:mm') }}</li>
+						<li>最后修改：{{ dateFormat(article.gmtModified, 'YYYY-MM-DD HH:mm') }}</li>
+						<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> 署名 4.0 国际 (CC BY 4.0)
+							</a>创作共享协议。可自由转载、引用，并且允许商业性使用。但需署名作者且注明文章出处。</li>
+					</ul>
+				</div>
 
-		<div class="article-comments">
-			<CommentList :page="0" :articleId="articleId" v-if="article.commentEnabled" />
-			<h3 class="comments-closed" v-else>评论已关闭</h3>
+				<div class="article-comments">
+					<CommentList :page="0" :articleId="articleId" v-if="article.commentEnabled" />
+					<h3 class="comments-closed" v-else>评论已关闭</h3>
+				</div>
+			</div>
+			<div class="article-support-spacer" v-if="hasToc"></div>
 		</div>
 	</div>
 </template>
@@ -164,6 +175,13 @@ export default {
 		},
 		changeFocusMode() {
 			this.$store.commit(SET_FOCUS_MODE, !this.focusMode)
+		},
+		goBack() {
+			if (window.history.length > 1) {
+				this.$router.back()
+			} else {
+				this.$router.push('/home')
+			}
 		}
 	}
 }

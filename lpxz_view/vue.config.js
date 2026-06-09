@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   devServer: {
     historyApiFallback: true
@@ -21,6 +23,16 @@ module.exports = {
 //     at <RouterView>
 //     at <App render=fn<render> >
   chainWebpack: config => {
+    const stripGoogleFontsLoader = path.resolve(__dirname, 'scripts/strip-google-fonts-import-loader.js')
+    const cssRule = config.module.rule('css')
+    ;['vue-modules', 'vue', 'normal-modules', 'normal'].forEach(oneOfName => {
+      cssRule
+          .oneOf(oneOfName)
+          .use('strip-google-fonts-import-loader')
+          .loader(stripGoogleFontsLoader)
+          .before('css-loader')
+    })
+
     config.module
         .rule('vue')
         .use('vue-loader')
