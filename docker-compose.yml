@@ -28,7 +28,7 @@ services:
         http_proxy: ""
         https_proxy: ""
         all_proxy: ""
-        VUE_APP_API_BASE_URL: ${VUE_APP_API_BASE_URL:-http://localhost:8090/}
+        VUE_APP_API_BASE_URL: ${VUE_APP_API_BASE_URL:-/api/}
         VUE_APP_NAME: ${VUE_APP_NAME:-prod}
         VUE_APP_DEFAULT_LOGIN_USERNAME: ${VUE_APP_DEFAULT_LOGIN_USERNAME:-}
     ports:
@@ -47,8 +47,9 @@ services:
         http_proxy: ""
         https_proxy: ""
         all_proxy: ""
-        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-http://localhost:8090/admin/}
-        REACT_APP_SITE_URL: ${REACT_APP_SITE_URL:-http://localhost:8080}
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-/api/admin/}
+        REACT_APP_SITE_URL: ${REACT_APP_SITE_URL:-https://lpxz.work}
+        REACT_APP_ROUTER_BASENAME: ${REACT_APP_ROUTER_BASENAME:-/cms}
     ports:
       - "${CMS_PORT:-3000}:80"
     depends_on:

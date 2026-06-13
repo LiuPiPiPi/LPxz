@@ -5,7 +5,7 @@ import { message } from 'antd'
 const AUTH_ERROR_CODES = [401]
 
 const request = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8090/admin/',
+    baseURL: process.env.REACT_APP_API_BASE_URL || '/api/admin/',
     timeout: 10000
 })
 

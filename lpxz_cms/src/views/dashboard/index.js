@@ -14,7 +14,7 @@ const { Header, Content, Footer, Sider } = Layout
 export default function Dashboard() {
     const location = useLocation()
     const navigate = useNavigate()
-    const siteUrl = process.env.REACT_APP_SITE_URL || 'http://localhost:8080'
+    const siteUrl = process.env.REACT_APP_SITE_URL || 'https://lpxz.work'
 
     useEffect(() => {
 

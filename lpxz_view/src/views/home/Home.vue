@@ -1278,8 +1278,9 @@ export default {
 .updates-column {
 	position: relative;
 	z-index: 2;
-	width: 70%;
-	margin: -74px 0 0 clamp(120px, 11vw, 176px);
+	width: min(70%, calc(100% - 64px));
+	max-width: 1180px;
+	margin: -74px auto 0;
 	padding: 42px 0 0;
 	animation: feedSlideIn .6s ease .6s both;
 }
@@ -1364,6 +1365,7 @@ export default {
 
 	.updates-column {
 		width: auto;
+		max-width: none;
 		margin: -14px 20px 0;
 		padding: 30px 0 0;
 	}
@@ -1411,7 +1413,7 @@ export default {
 	}
 
 	.updates-column {
-		margin-left: 48px;
+		width: calc(100% - 96px);
 	}
 }
 

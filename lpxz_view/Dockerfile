@@ -2,7 +2,7 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-ARG VUE_APP_API_BASE_URL=http://localhost:8090/
+ARG VUE_APP_API_BASE_URL=/api/
 ARG VUE_APP_NAME=prod
 ARG VUE_APP_DEFAULT_LOGIN_USERNAME=
 
