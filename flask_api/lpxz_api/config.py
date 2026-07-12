@@ -41,6 +41,12 @@ class Config:
     SQLITE_BACKUP_DIR = _resolve_runtime_path(os.getenv("SQLITE_BACKUP_DIR"), "backups")
     FLASK_RUN_HOST = os.getenv("FLASK_RUN_HOST", "0.0.0.0")
     FLASK_RUN_PORT = int(os.getenv("FLASK_RUN_PORT", "8090"))
-    CORS_ALLOWED_ORIGINS = _parse_origins(os.getenv("CORS_ALLOWED_ORIGINS", "*"))
+    CORS_ALLOWED_ORIGINS = _parse_origins(
+        os.getenv(
+            "CORS_ALLOWED_ORIGINS",
+            "http://localhost:8080,http://localhost:3000,"
+            "https://lpxz.work,https://www.lpxz.work,https://admin.lpxz.work",
+        )
+    )
     ENABLE_SCHEDULER = _parse_bool(os.getenv("ENABLE_SCHEDULER"), default=True)
     JSON_AS_ASCII = False

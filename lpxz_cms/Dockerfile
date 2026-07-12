@@ -2,7 +2,7 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-ARG REACT_APP_API_BASE_URL=/api/admin/
+ARG REACT_APP_API_BASE_URL=https://api.lpxz.work/admin/
 ARG REACT_APP_SITE_URL=https://lpxz.work
 ARG REACT_APP_ROUTER_BASENAME=/cms
 ARG PUBLIC_URL=/cms
