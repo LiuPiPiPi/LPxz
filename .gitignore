@@ -58,3 +58,6 @@ lpxz_cms/build/
 # IDE
 .idea/
 .vscode/
+
+# ZCode internal (plans, scratch) — not part of the repo
+.zcode/
