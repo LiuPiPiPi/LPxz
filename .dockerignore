@@ -1,0 +1,31 @@
+.git
+.gitignore
+.DS_Store
+**/.DS_Store
+
+# 依赖（镜像内重新安装）
+**/node_modules/
+
+# 构建产物（镜像内重新构建）
+**/dist/
+**/build/
+
+# Python 缓存与虚拟环境
+**/__pycache__/
+**/venv/
+**/.venv/
+
+# 运行期数据（通过 volume 挂载，不入镜像）
+lpxz_api/instance/
+**/*.sqlite3
+**/*.sqlite3-*
+**/*.bak
+**/*.log
+
+# 环境变量文件（本地配置，不入镜像）
+**/.env*
+
+# 杂项
+docs/
+logo/
+deploy/

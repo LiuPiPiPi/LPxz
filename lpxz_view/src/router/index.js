@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import getPageTitle from '@/util/get-page-title'
 import { resolveScrollPosition, saveHomeScrollPosition } from './scroll-position'
+import store from '@/store'
+import { routeNameToSwitchKey, isModuleEnabled } from '@/util/moduleSwitch'
 
 
 const routes = [
@@ -78,6 +80,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	saveHomeScrollPosition(from, window.scrollY)
 	document.title = getPageTitle(to.meta.title)
+	// 若站点信息已加载，禁用的模块路由重定向回首页（首次直链访问由 Index.vue 兜底）
+	const siteInfo = store.state.siteInfo
+	if (siteInfo && typeof siteInfo === 'object') {
+		const switchKey = routeNameToSwitchKey(to.name)
+		if (switchKey && !isModuleEnabled(siteInfo[switchKey])) {
+			return next({ name: 'home' })
+		}
+	}
 	next()
 })
 

@@ -5,8 +5,12 @@ import bcrypt
 import jwt
 from flask import current_app, request
 
-from .db import fetch_one
+from .db import execute, fetch_one
 from .response import error
+
+
+def hash_password(password):
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def check_password(password, password_hash):
@@ -56,3 +60,16 @@ def require_admin(view):
         return view(*args, **kwargs)
 
     return wrapped
+
+
+def create_or_update_admin_user(username, password):
+    password_hash = hash_password(password)
+    existing = fetch_one("select id from user where username = ?", (username,))
+    if existing:
+        execute("update user set password = ?, role = 'ROLE_admin' where username = ?", (password_hash, username))
+        return False
+    execute(
+        "insert into user (username, password, role) values (?, ?, 'ROLE_admin')",
+        (username, password_hash),
+    )
+    return True

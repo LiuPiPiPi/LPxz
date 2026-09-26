@@ -1,11 +1,10 @@
-from flask import Blueprint, request
+from flask import request
 
-from ..db import fetch_one
-from ..log_service import save_login_log
-from ..response import error, ok
-from ..security import check_password, generate_token
-
-auth_bp = Blueprint("auth", __name__)
+from ..core.blueprints import auth_bp
+from ..core.db import fetch_one
+from ..core.response import error, ok
+from ..core.security import check_password, generate_token
+from ..logging import save_login_log
 
 
 @auth_bp.post("/admin/login")

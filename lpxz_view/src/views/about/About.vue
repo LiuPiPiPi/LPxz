@@ -93,7 +93,6 @@ export default {
 		return {
 			about: {
 				title: '',
-				musicId: '',
 				content: '',
 				commentEnabled: 'false'
 			}

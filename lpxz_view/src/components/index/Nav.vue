@@ -12,19 +12,19 @@
 					:class="{ 'active': $route.name === 'home' }">
 					首页
 				</router-link>
-				<router-link to="/moments" class="item nav-item"
+				<router-link v-if="moduleVisible.moment" to="/moments" class="item nav-item"
 					:class="{ 'active': $route.name === 'moments' }">
 					动态
 				</router-link>
-				<router-link to="/archives" class="item nav-item"
+				<router-link v-if="moduleVisible.archive" to="/archives" class="item nav-item"
 					:class="{ 'active': $route.name === 'archives' }">
 					归档
 				</router-link>
-				<router-link to="/friends" class="item nav-item"
+				<router-link v-if="moduleVisible.friend" to="/friends" class="item nav-item"
 					:class="{ 'active': $route.name === 'friends' }">
 					友链
 				</router-link>
-				<router-link to="/about" class="item nav-item"
+				<router-link v-if="moduleVisible.about" to="/about" class="item nav-item"
 					:class="{ 'active': $route.name === 'about' }">
 					关于
 				</router-link>
@@ -70,6 +70,7 @@
 <script>
 import { getSearchArticleList } from "@/api/article";
 import { mapState } from 'vuex'
+import { isModuleEnabled } from '@/util/moduleSwitch'
 
 export default {
 	name: "articleNav",
@@ -90,7 +91,16 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['clientSize']),
+		...mapState(['clientSize', 'siteInfo']),
+		moduleVisible() {
+			const info = this.siteInfo || {}
+			return {
+				moment: isModuleEnabled(info.momentModuleEnabled),
+				archive: isModuleEnabled(info.archiveModuleEnabled),
+				friend: isModuleEnabled(info.friendModuleEnabled),
+				about: isModuleEnabled(info.aboutModuleEnabled),
+			}
+		},
 		showSearchPanel() {
 			return this.searchFocused
 				&& (!this.mobileHide || this.clientSize.clientWidth > 767)

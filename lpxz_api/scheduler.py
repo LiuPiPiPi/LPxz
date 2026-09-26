@@ -6,9 +6,9 @@ from pathlib import Path
 
 from flask import current_app
 
-from .db import execute, fetch_all, fetch_one
-from .log_service import ensure_log_tables, save_job_log
-from .utils import now_text
+from .core.db import execute, fetch_all, fetch_one
+from .core.utils import now_text, parse_bool
+from .logging import ensure_log_tables, save_job_log
 
 
 _scheduler_app = None
@@ -33,14 +33,6 @@ def ensure_schedule_tables():
         )
         """
     )
-
-
-def parse_bool(value):
-    if isinstance(value, bool):
-        return value
-    if isinstance(value, int):
-        return value != 0
-    return str(value).lower() in ("1", "true", "yes", "on")
 
 
 def job_to_dict(row):
@@ -312,7 +304,7 @@ def scheduler_loop():
         if _scheduler_app is None:
             continue
         with _scheduler_app.app_context():
-            now = __import__("datetime").datetime.now()
+            now = datetime.now()
             rows = fetch_all(
                 """
                 select job_id, bean_name, method_name, params, cron, status, remark, gmt_create

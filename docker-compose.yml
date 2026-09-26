@@ -1,8 +1,11 @@
 services:
-  api:
+  app:
     build:
-      context: ./flask_api
+      context: .
+      dockerfile: Dockerfile
       args:
+        # 构建容器内无法访问宿主机代理（Clash @127.0.0.1:7890），
+        # 显式传空 build-arg 抹掉 Docker daemon 注入的代理。
         HTTP_PROXY: ""
         HTTPS_PROXY: ""
         ALL_PROXY: ""
@@ -11,47 +14,14 @@ services:
         all_proxy: ""
     env_file:
       - ./.env
+    environment:
+      # 容器内包位于 /app/lpxz_api/，但数据卷挂载到 /app/instance 与 /app/backups。
+      # 用绝对路径覆盖 .env 中的相对值，确保 SQLite 与备份落在持久化卷上。
+      SQLITE_DATABASE: /app/instance/lpxz.sqlite3
+      SQLITE_BACKUP_DIR: /app/backups
     ports:
-      - "127.0.0.1:${API_PORT:-8090}:8090"
+      - "${WEB_PORT:-8080}:80"
     volumes:
       - ${LPXZ_DATA_DIR:-/var/lib/lpxz}/instance:/app/instance
       - ${LPXZ_DATA_DIR:-/var/lib/lpxz}/backups:/app/backups
-    restart: unless-stopped
-
-  view:
-    build:
-      context: ./lpxz_view
-      args:
-        HTTP_PROXY: ""
-        HTTPS_PROXY: ""
-        ALL_PROXY: ""
-        http_proxy: ""
-        https_proxy: ""
-        all_proxy: ""
-        VUE_APP_API_BASE_URL: ${VUE_APP_API_BASE_URL:-https://api.lpxz.work/}
-        VUE_APP_NAME: ${VUE_APP_NAME:-prod}
-        VUE_APP_DEFAULT_LOGIN_USERNAME: ${VUE_APP_DEFAULT_LOGIN_USERNAME:-}
-    ports:
-      - "${VIEW_PORT:-8080}:80"
-    depends_on:
-      - api
-    restart: unless-stopped
-
-  cms:
-    build:
-      context: ./lpxz_cms
-      args:
-        HTTP_PROXY: ""
-        HTTPS_PROXY: ""
-        ALL_PROXY: ""
-        http_proxy: ""
-        https_proxy: ""
-        all_proxy: ""
-        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-https://api.lpxz.work/admin/}
-        REACT_APP_SITE_URL: ${REACT_APP_SITE_URL:-https://lpxz.work}
-        REACT_APP_ROUTER_BASENAME: ${REACT_APP_ROUTER_BASENAME:-/cms}
-    ports:
-      - "${CMS_PORT:-3000}:80"
-    depends_on:
-      - api
     restart: unless-stopped

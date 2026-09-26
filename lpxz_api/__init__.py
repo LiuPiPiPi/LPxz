@@ -1,16 +1,15 @@
-import bcrypt
-import click
 import os
+
+import click
 from flask import Flask, make_response, request
 from werkzeug.exceptions import HTTPException
 
 from .config import Config
-from .db import close_db, execute, fetch_one, init_db
-from .log_service import ensure_log_tables, mark_request_start, save_exception_log, save_operation_log, save_visit_log
-from .response import error
-from .routes.admin import admin_bp
-from .routes.auth import auth_bp
-from .routes.public import public_bp
+from .core.blueprints import admin_bp, auth_bp, public_bp
+from .core.db import close_db, ensure_site_defaults, init_db
+from .core.response import error
+from .core.security import create_or_update_admin_user
+from .logging import ensure_log_tables, mark_request_start, save_exception_log, save_operation_log, save_visit_log
 from .scheduler import start_scheduler
 
 
@@ -62,36 +61,25 @@ def create_app(config_object=Config):
         admin_username = os.getenv("ADMIN_USERNAME")
         admin_password = os.getenv("ADMIN_PASSWORD")
         if admin_username and admin_password:
-            existing = fetch_one("select id from user where username = ?", (admin_username,))
-            if not existing:
-                password_hash = bcrypt.hashpw(admin_password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-                execute(
-                    "insert into user (username, password, role) values (?, ?, 'ROLE_admin')",
-                    (admin_username, password_hash),
-                )
-                print(f"Created default admin user: {admin_username}")
+            created = create_or_update_admin_user(admin_username, admin_password)
+            print(f"{'Created' if created else 'Updated'} default admin user: {admin_username}")
 
     @app.cli.command("create-admin")
     @click.argument("username")
     @click.password_option()
     def create_admin_command(username, password):
-        password_hash = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-        existing = fetch_one("select id from user where username = ?", (username,))
-        if existing:
-            execute("update user set password = ?, role = 'ROLE_admin' where username = ?", (password_hash, username))
-            print(f"Updated admin user: {username}")
-        else:
-            execute(
-                "insert into user (username, password, role) values (?, ?, 'ROLE_admin')",
-                (username, password_hash),
-            )
-            print(f"Created admin user: {username}")
+        created = create_or_update_admin_user(username, password)
+        print(f"{'Created' if created else 'Updated'} admin user: {username}")
+
+    # 导入路由模块，触发蓝图路由注册
+    from . import routes  # noqa: F401
 
     app.register_blueprint(public_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     with app.app_context():
         ensure_log_tables()
+        ensure_site_defaults()
     if app.config.get("ENABLE_SCHEDULER"):
         start_scheduler(app)
     return app

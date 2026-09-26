@@ -43,9 +43,9 @@ function redirectToLogin(msg) {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('user')
 
-    if (window.location.pathname !== '/login') {
+    if (window.location.pathname !== '/cms/login') {
         message.warning(msg || '登录状态已失效，请重新登录')
-        window.location.replace('/login')
+        window.location.replace('/cms/login')
     }
 }
 

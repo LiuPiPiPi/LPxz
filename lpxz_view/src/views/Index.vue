@@ -26,10 +26,6 @@
 		<!--私密文章密码对话框-->
 		<ArticlePasswordDialog />
 
-		<!--APlayer-->
-		<div class="m-mobile-hide">
-			<MyAPlayer />
-		</div>
 		<!--回到顶部-->
 		<el-backtop class="backtop-custom" title="返回顶部" aria-label="返回顶部">
 			<i class="angle up icon"></i>
@@ -48,14 +44,14 @@ import Introduction from "@/components/sidebar/Introduction";
 import Tags from "@/components/sidebar/Tags";
 import Categories from "@/components/sidebar/Categories";
 import RandomArticle from "@/components/sidebar/RandomArticle";
-import MyAPlayer from "@/components/index/MyAPlayer";
 import ArticlePasswordDialog from "@/components/index/ArticlePasswordDialog";
 import { mapState } from 'vuex'
 import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, RESTORE_COMMENT_FORM } from "@/store/mutations-types";
+import { routeNameToSwitchKey, isModuleEnabled } from '@/util/moduleSwitch'
 
 export default {
 	name: "articleIndex",
-	components: { Header, ArticlePasswordDialog, MyAPlayer, RandomArticle, Tags, Categories, Nav, Footer, Introduction },
+	components: { Header, ArticlePasswordDialog, RandomArticle, Tags, Categories, Nav, Footer, Introduction },
 	data() {
 		return {
 			siteInfo: {
@@ -108,6 +104,12 @@ export default {
 					// this.randomArticleList = res.data.randomArticleList
 					this.$store.commit(SAVE_SITE_INFO, this.siteInfo)
 					this.$store.commit(SAVE_INTRODUCTION, res.data.introduction)
+					// 兜底：直链进入被关闭的模块时，回退到首页
+					const switchKey = routeNameToSwitchKey(this.$route.name)
+					if (switchKey && !isModuleEnabled(this.siteInfo[switchKey])) {
+						this.$router.replace({ name: 'home' })
+						return
+					}
 					document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
 				}
 			})
