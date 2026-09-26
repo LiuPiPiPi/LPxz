@@ -1,0 +1,20 @@
+# 生产环境：从 GHCR 拉取镜像运行（不在服务器上构建）。
+# 由 .github/workflows/deploy.yml 的 deploy job 调用，或首次上线手动：
+#   docker compose -f /root/lpxz-prod/docker-compose.prod.yml up -d
+# 无需 .env：WEB_PORT/LPXZ_DATA_DIR 的默认值即生产值（8080 / /var/lib/lpxz）。
+services:
+  app:
+    image: ghcr.io/liupipipi/lpxz:latest
+    container_name: lpxz
+    ports:
+      # 只绑回环，由宿主机 nginx 反代 127.0.0.1:8080 → 容器:80
+      - "127.0.0.1:${WEB_PORT:-8080}:80"
+    environment:
+      # 容器内包在 /app/lpxz_api/，数据卷挂到 /app/instance 与 /app/backups。
+      # 绝对路径覆盖，确保 SQLite 与备份落在持久卷上。
+      SQLITE_DATABASE: /app/instance/lpxz.sqlite3
+      SQLITE_BACKUP_DIR: /app/backups
+    volumes:
+      - ${LPXZ_DATA_DIR:-/var/lib/lpxz}/instance:/app/instance
+      - ${LPXZ_DATA_DIR:-/var/lib/lpxz}/backups:/app/backups
+    restart: unless-stopped

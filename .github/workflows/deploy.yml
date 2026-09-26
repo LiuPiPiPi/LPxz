@@ -1,0 +1,66 @@
+name: deploy
+
+# push 到 main 自动构建并推送镜像到 GHCR（amd64 原生，无需 QEMU）。
+# deploy job 需配好 repo secrets + DEPLOY_ENABLED=true 才会跑；首次上线可手动拉镜像+切 nginx。
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build amd64 image
+        run: |
+          docker build \
+            -t ghcr.io/liupipipi/lpxz:latest \
+            -t ghcr.io/liupipipi/lpxz:sha-${GITHUB_SHA::7} \
+            .
+
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: docker push --all-tags ghcr.io/liupipipi/lpxz
+
+  deploy:
+    needs: build
+    # 默认不跑：需在 repo Settings → Secrets and variables → Actions 里
+    # 加 SERVER_HOST/SERVER_USER/SERVER_SSH_KEY/SERVER_PORT，并设 variable DEPLOY_ENABLED=true
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy prod compose to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: docker-compose.prod.yml
+          target: /root/lpxz-prod
+          overwrite: true
+
+      - name: Pull image and restart container
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            docker pull ghcr.io/liupipipi/lpxz:latest
+            docker compose -f /root/lpxz-prod/docker-compose.prod.yml up -d
+            docker image prune -f || true
