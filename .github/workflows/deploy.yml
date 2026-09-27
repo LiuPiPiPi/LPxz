@@ -1,8 +1,7 @@
 name: deploy
 
-# 构建 amd64 镜像 → docker save 打包成 .tar.gz → scp 直传服务器 → docker load + 重启容器。
-# 不走 GHCR pull（ghcr.io→国内拉取极慢），改为单流 bulk 传输，更快更稳。
-# deploy 步骤需配好 repo secrets + DEPLOY_ENABLED=true 才会跑；build/save 每次都跑。
+# 构建 amd64 镜像 → 推 GHCR → 服务器 docker pull 拉取（经本机 mihomo 代理，国内拉取快）。
+# deploy job 需配好 repo secrets + DEPLOY_ENABLED=true 才会跑。
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
@@ -13,10 +12,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
@@ -27,27 +27,33 @@ jobs:
             -t ghcr.io/liupipipi/lpxz:sha-${GITHUB_SHA::7} \
             .
 
-      - name: Save image to compressed tarball
-        run: docker save ghcr.io/liupipipi/lpxz:latest | gzip > lpxz-image.tar.gz
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Show tarball size
-        run: ls -lh lpxz-image.tar.gz
+      - name: Push image
+        run: docker push --all-tags ghcr.io/liupipipi/lpxz
 
-      - name: Copy compose + image tarball to server
-        if: ${{ vars.DEPLOY_ENABLED == 'true' }}
+  deploy:
+    needs: build
+    # 默认不跑：需 repo secrets SERVER_HOST/SERVER_USER/SERVER_SSH_KEY/SERVER_PORT
+    # + repo variable DEPLOY_ENABLED=true
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy prod compose to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "docker-compose.prod.yml,lpxz-image.tar.gz"
+          source: docker-compose.prod.yml
           target: /root/lpxz-prod
           overwrite: true
-          timeout: 600s
 
-      - name: Load image and restart container
-        if: ${{ vars.DEPLOY_ENABLED == 'true' }}
+      - name: Pull image and restart container
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -56,7 +62,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           command_timeout: 10m
           script: |
-            docker load < /root/lpxz-prod/lpxz-image.tar.gz
+            docker pull ghcr.io/liupipipi/lpxz:latest
             docker compose -f /root/lpxz-prod/docker-compose.prod.yml up -d
-            rm -f /root/lpxz-prod/lpxz-image.tar.gz
             docker image prune -f || true
