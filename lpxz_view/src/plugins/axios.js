@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 const request = axios.create({
-	baseURL: process.env.VUE_APP_API_BASE_URL || process.env.VUE_APP_URL || 'https://api.lpxz.work/',
+	baseURL: process.env.VUE_APP_API_BASE_URL || process.env.VUE_APP_URL || '/api/',
 	timeout: 10000,
 })
 

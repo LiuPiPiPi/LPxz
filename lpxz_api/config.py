@@ -45,7 +45,7 @@ class Config:
         os.getenv(
             "CORS_ALLOWED_ORIGINS",
             "http://localhost:8080,http://localhost:3000,"
-            "https://lpxz.work,https://www.lpxz.work,https://admin.lpxz.work",
+            "https://lpxz.work,https://www.lpxz.work",
         )
     )
     ENABLE_SCHEDULER = _parse_bool(os.getenv("ENABLE_SCHEDULER"), default=True)

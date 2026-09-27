@@ -142,13 +142,14 @@ docker compose up --build
 - SQLite 数据目录通过 `docker-compose.yml` 从 `${LPXZ_DATA_DIR}/instance` 挂载；生产环境默认路径为 `/var/lib/lpxz/instance`，与源码目录隔离。
 - SQLite 备份目录从 `${LPXZ_DATA_DIR}/backups` 挂载；生产环境默认路径为 `/var/lib/lpxz/backups`，每周一 08:00 会自动生成一份带时间戳的备份文件。
 
-### 生产 API 域名
+### 生产 API 路径
 
-生产环境的前台和 CMS 均调用 `https://api.lpxz.work/`：公开接口位于根路径（例如 `/site`），管理接口位于 `/admin/`。
+生产环境为单容器同源部署：前台、CMS 静态资源、公开 API 与管理 API 全部由 `https://lpxz.work/` 同源提供。
 
-- 将 [`deploy/nginx/api.lpxz.work.conf`](deploy/nginx/api.lpxz.work.conf) 安装为 Nginx 虚拟主机，并为 `api.lpxz.work` 签发证书。
-- API 容器仅监听 `127.0.0.1:8090`，由该虚拟主机反代；不应再将 8090 直接暴露公网。
-- 域名切换完成后，移除主站和 CMS 虚拟主机中旧的 `/api/` 反代配置，避免保留两个公开入口。
+- 前台调用 `https://lpxz.work/api/`（公开接口，例如 `/api/site`）。
+- CMS 调用 `https://lpxz.work/admin/`（管理接口，含登录）。
+- 容器内 Flask 仅监听 `127.0.0.1:8090`，由容器内 Nginx 反代至 `/api/` 与 `/admin/`；宿主机 Nginx 再将 `https://lpxz.work` 反代到容器 `127.0.0.1:8080`，不应再将 8090 直接暴露公网。
+- `api.lpxz.work` 与 `admin.lpxz.work` 子域名已退役，不再使用。
 
 ## 开发说明
 

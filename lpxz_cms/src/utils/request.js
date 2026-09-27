@@ -5,7 +5,7 @@ import { message } from 'antd'
 const AUTH_ERROR_CODES = [401]
 
 const request = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL || 'https://api.lpxz.work/admin/',
+    baseURL: process.env.REACT_APP_API_BASE_URL || '/admin/',
     timeout: 10000
 })
 
