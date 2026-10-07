@@ -103,6 +103,7 @@ export default {
 					this.tagList = res.data.tagList
 					// this.randomArticleList = res.data.randomArticleList
 					this.$store.commit(SAVE_SITE_INFO, this.siteInfo)
+					try { window.localStorage.setItem('siteInfo', JSON.stringify(this.siteInfo)) } catch (e) { /* 忽略 */ }
 					this.$store.commit(SAVE_INTRODUCTION, res.data.introduction)
 					// 兜底：直链进入被关闭的模块时，回退到首页
 					const switchKey = routeNameToSwitchKey(this.$route.name)

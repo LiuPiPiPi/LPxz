@@ -1,5 +1,14 @@
+function loadCachedSiteInfo() {
+	try {
+		const raw = window.localStorage.getItem('siteInfo')
+		return raw ? JSON.parse(raw) : ''
+	} catch (e) {
+		return ''
+	}
+}
+
 export default {
-	siteInfo: '',
+	siteInfo: loadCachedSiteInfo(),
 	introduction: {
 		avatar: '',
 		name: '',

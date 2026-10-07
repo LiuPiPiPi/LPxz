@@ -93,7 +93,11 @@ export default {
 	computed: {
 		...mapState(['clientSize', 'siteInfo']),
 		moduleVisible() {
-			const info = this.siteInfo || {}
+			const info = this.siteInfo
+			const loaded = info && typeof info === 'object'
+			if (!loaded) {
+				return { moment: false, archive: false, friend: false, about: false }
+			}
 			return {
 				moment: isModuleEnabled(info.momentModuleEnabled),
 				archive: isModuleEnabled(info.archiveModuleEnabled),
