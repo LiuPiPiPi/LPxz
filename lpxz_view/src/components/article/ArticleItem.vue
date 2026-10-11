@@ -4,21 +4,21 @@
 			<div class="article-timeline">
 				<span class="timeline-dot"></span>
 				<time class="article-date" :datetime="dateFormat(item.gmtCreate, 'YYYY-MM-DD')">
-					{{ englishDate(item.gmtCreate) }}
+					{{ dateFormat(item.gmtCreate, 'YYYY-MM-DD') }}
 				</time>
 			</div>
 
 			<div class="article-body">
 				<div class="article-meta">
-					<span class="pinned-label" v-if="item.top">Pinned</span>
+					<span class="pinned-label" v-if="item.top">置顶</span>
 					<router-link :to="`/category/${item.category.name}`" class="category-link">
 						{{ item.category.name }}
 					</router-link>
-					<span class="views-label">{{ item.views }} views</span>
+					<span class="views-label">{{ item.views }} 次浏览</span>
 				</div>
 
 				<h2 class="article-title">
-					<a href="javascript:;" @click.prevent="toArticle(item)">
+					<a :href="articleHref(item)" @click.prevent="toArticle(item)">
 						{{ item.title }}
 					</a>
 				</h2>
@@ -32,7 +32,7 @@
 							{{ tag.name }}
 						</router-link>
 					</div>
-					<a href="javascript:;" class="read-more" @click.prevent="toArticle(item)">Read more &rarr;</a>
+					<a :href="articleHref(item)" class="read-more" @click.prevent="toArticle(item)">阅读全文</a>
 				</div>
 			</div>
 		</article>
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import { dateFormat } from "@/util/dateTimeFormatUtils";
 
 export default {
@@ -59,11 +58,12 @@ export default {
 		toArticle(article) {
 			this.$store.dispatch('goArticlePage', article)
 		},
-		englishDate(value) {
-			if (!value) {
-				return ''
+		articleHref(article) {
+			// 密码保护文章先走密码弹窗,不输出真实地址,避免中键/长按新开标签绕过校验
+			if (article.privacy) {
+				return undefined
 			}
-			return moment(value).locale('en').format('MMMM D, YYYY')
+			return `/article/${article.id}`
 		},
 		dateFormat: dateFormat
 	}
@@ -187,7 +187,7 @@ export default {
 	margin: 0;
 	font-family: "Noto Serif SC", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	font-size: 24px;
-	font-weight: 800;
+	font-weight: 700;
 	line-height: 1.3;
 	letter-spacing: 0;
 }
@@ -258,7 +258,7 @@ export default {
 .read-more {
 	flex: 0 0 auto;
 	font-size: 13px;
-	font-weight: 800;
+	font-weight: 700;
 	text-decoration: none;
 	background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
 	-webkit-background-clip: text;

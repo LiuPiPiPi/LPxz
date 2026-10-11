@@ -60,8 +60,8 @@
 				</div>
 			</div>
 
-			<button class="ui menu icon button nav-toggle m-mobile-show" :class="{ 'is-open': !mobileHide }" @click="toggle" aria-label="展开菜单">
-				<i class="sidebar icon"></i>
+			<button class="ui menu icon button nav-toggle m-mobile-show" :class="{ 'is-open': !mobileHide }" @click="toggle" aria-label="展开菜单" aria-expanded="false">
+				<i class="sidebar icon" aria-hidden="true"></i>
 			</button>
 		</div>
 	</div>

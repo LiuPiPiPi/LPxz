@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 // 自定义css
+import './assets/css/fonts.css'
 import './assets/css/base.css'
 import './assets/css/layout.css'
 import './assets/css/article.css'

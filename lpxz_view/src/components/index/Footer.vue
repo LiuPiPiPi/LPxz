@@ -13,11 +13,11 @@
 			</p>
 
 			<div class="footer-badges" v-for="(item, index) in badges" :key="index">
-				<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title"
-					class="badge-link">
-					<span class="badge-subject">{{ item.subject }}</span>
-					<span class="badge-value" :class="`bg-${item.color}`">{{ item.value }}</span>
-				</a>
+<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title"
+						class="badge-link">
+						<span class="badge-subject">{{ item.subject }}</span><span class="badge-value"
+							:class="`bg-${item.color}`">{{ item.value }}</span>
+					</a>
 			</div>
 		</div>
 	</footer>
@@ -101,7 +101,6 @@ export default {
 }
 
 .badge-link {
-	color: #fff;
 	text-decoration: none;
 }
 

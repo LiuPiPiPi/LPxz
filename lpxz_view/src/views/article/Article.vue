@@ -13,21 +13,22 @@
 					</div>
 				</div>
 				<div class="article-meta">
-					<span class="meta-item">
-						<i class="calendar icon"></i>{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD') }}
-					</span>
-					<span class="meta-item">
-						<i class="eye icon"></i>{{ article.views }}
-					</span>
-					<span class="meta-item">
-						<i class="pencil alternate icon"></i>{{ article.words }} 字
-					</span>
-					<span class="meta-item">
-						<i class="clock icon"></i>{{ article.readTime }} min
-					</span>
-					<button class="meta-item meta-toggle" @click.prevent="bigFontSize = !bigFontSize" title="切换字体大小">
-						<i class="font icon"></i>
-					</button>
+<span class="meta-item">
+					<i class="calendar icon" aria-hidden="true"></i>{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD') }}
+				</span>
+				<span class="meta-item">
+					<i class="eye icon" aria-hidden="true"></i>{{ article.views }}
+				</span>
+				<span class="meta-item">
+					<i class="pencil alternate icon" aria-hidden="true"></i>{{ article.words }} 字
+				</span>
+				<span class="meta-item">
+					<i class="clock icon" aria-hidden="true"></i>{{ article.readTime }} min
+				</span>
+				<button class="meta-item meta-toggle" @click.prevent="bigFontSize = !bigFontSize"
+					:aria-label="bigFontSize ? '恢复默认字体大小' : '切换为大字号'" :aria-pressed="bigFontSize">
+					<i class="font icon" aria-hidden="true"></i>
+				</button>
 				</div>
 				<router-link :to="`/category/${article.category.name}`" class="article-category"
 					v-if="article.category">
