@@ -169,7 +169,7 @@
     padding: 0 16px 16px;
 }
 
-.cms-settings .ant-form {
+.cms-settings .ant-form:not(.cms-footer-settings) {
     max-width: 780px;
 }
 
@@ -182,6 +182,52 @@
     margin-bottom: 12px;
     border: 1px solid var(--cms-border);
     border-radius: 8px;
+}
+
+.cms-footer-settings {
+    container: footer-settings / inline-size;
+}
+
+.cms-settings .cms-footer-badge {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    grid-template-areas:
+        "title title url url"
+        "subject value color action";
+    gap: 10px 12px;
+}
+
+.cms-footer-badge .ant-form-item {
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.cms-badge-title { grid-area: title; }
+.cms-badge-url { grid-area: url; }
+.cms-badge-subject { grid-area: subject; }
+.cms-badge-value { grid-area: value; }
+.cms-badge-color { grid-area: color; }
+.cms-badge-action {
+    grid-area: action;
+    justify-self: end;
+}
+
+@container footer-settings (min-width: 980px) {
+    .cms-settings .cms-footer-badge {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr) minmax(0, 1fr)
+            minmax(0, 1.1fr) minmax(0, 0.8fr) auto;
+        grid-template-areas: "title url subject value color action";
+    }
+}
+
+@container footer-settings (max-width: 500px) {
+    .cms-settings .cms-footer-badge {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "title title"
+            "url url"
+            "subject value"
+            "color action";
+    }
 }
 
 .cms-settings .cms-setting-row {

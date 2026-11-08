@@ -17,7 +17,7 @@ const MODULE_NAMES = new Set(MODULE_CONFIG.map(item => item.nameEn))
 const CUSTOM_SETTING = { nameEn: 'favorite', nameZh: '自定义', type: 3 }
 const BADGE_SETTING = { nameEn: 'badge', nameZh: '徽标', type: 2 }
 const BADGE_FIELDS = [
-    ['title', '标题'], ['url', 'URL'], ['subject', 'Subject'], ['value', 'Value'], ['color', '颜色'],
+    ['title', '标题'], ['url', '链接地址'], ['subject', '左侧文字'], ['value', '右侧文字'], ['color', '颜色'],
 ]
 
 const EMPTY_BADGE = Object.fromEntries(BADGE_FIELDS.map(([field]) => [field, '']))
@@ -181,7 +181,8 @@ export default function SiteSetting() {
         {
             key: 'footer', label: '页脚徽标', forceRender: true,
             children: (
-                <Form form={footerForm} name="footer_settings" layout="vertical" disabled={disabled}
+                <Form form={footerForm} name="footer_settings" className="cms-footer-settings"
+                    layout="vertical" disabled={disabled}
                     onFinish={({ badges = [] }) => save('footer', badges.map(({ id, ...value }) => ({
                         ...BADGE_SETTING, id, value: JSON.stringify(value),
                     })), removedIds(rows.footer, badges))}>
@@ -189,13 +190,18 @@ export default function SiteSetting() {
                         {(fields, { add, remove }) => (
                             <>
                                 {fields.map(({ key, name }) => (
-                                    <div className="cms-settings-badge" key={key}>
+                                    <div className="cms-settings-badge cms-footer-badge" key={key}>
                                         <Form.Item name={[name, 'id']} hidden><Input /></Form.Item>
                                         {BADGE_FIELDS.map(([field, label]) => (
-                                            <Form.Item key={field} name={[name, field]} label={label}><Input /></Form.Item>
+                                            <Form.Item key={field} name={[name, field]} label={label}
+                                                className={`cms-badge-${field}`}>
+                                                <Input />
+                                            </Form.Item>
                                         ))}
-                                        <Form.Item><Button danger icon={<MinusCircleOutlined />}
-                                            onClick={() => remove(name)}>删除</Button></Form.Item>
+                                        <Button className="cms-badge-action" type="text" danger
+                                            icon={<MinusCircleOutlined />}
+                                            aria-label={`删除第 ${name + 1} 个徽标`}
+                                            onClick={() => remove(name)}>删除</Button>
                                     </div>
                                 ))}
                                 <div className="cms-editor-actions">
