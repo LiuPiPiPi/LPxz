@@ -1,32 +1,292 @@
-.logo {
-    width: 60px;
-    height: 60px;
-    float: left;
+.cms-shell {
+    --cms-canvas: #f5f7fa;
+    --cms-surface: #fff;
+    --cms-ink: #171f2d;
+    --cms-muted: #596679;
+    --cms-border: #dfe5ee;
+    display: grid;
+    grid-template-columns: 224px minmax(0, 1fr);
+    min-height: 100vh;
+    background: var(--cms-canvas);
+    color: var(--cms-ink);
 }
 
-.logo img {
-    width: 100%;
-    height: 100%;
+.cms-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--cms-surface);
+    border-right: 1px solid var(--cms-border);
+    padding: 0 12px 12px;
+}
+
+.cms-brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    min-height: 64px;
+    padding: 0 10px;
+    color: var(--cms-ink);
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.cms-brand img {
+    width: 38px;
+    height: 38px;
     object-fit: contain;
-    cursor: pointer;
 }
 
-.title {
-    color: whitesmoke;
-    font-weight: bold;
-    margin: 0 20px;
-    font-size: 1.5em;
+.cms-brand small {
+    display: block;
+    color: var(--cms-muted);
+    font-size: 11px;
+    font-weight: 500;
 }
 
-.avatar {
-    width: 46px;
-    height: 70%;
-    float: right;
-    cursor: pointer;
+.cms-navigation .ant-menu {
+    border-inline-end: 0 !important;
 }
 
-.avatar img {
+.cms-navigation .ant-menu-item-group-title {
+    font-size: 12px;
+    color: #596679;
+}
+
+.cms-site-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    margin-top: 12px;
+    border-top: 1px solid #dfe5ee;
+    color: #344054;
+    text-decoration: none;
+}
+
+.cms-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 8px 28px;
+    background: var(--cms-surface);
+    border-bottom: 1px solid var(--cms-border);
+}
+
+.cms-topbar .cms-menu-trigger {
+    display: none;
+}
+
+.cms-topbar .cms-account {
+    display: inline-flex;
+    align-items: center;
+    margin-inline-start: auto;
+}
+
+.cms-main {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 24px 28px 32px;
+    min-width: 0;
+}
+
+.cms-page-heading, .cms-toolbar, .cms-editor-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cms-page-heading h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.cms-page-heading p {
+    margin: 6px 0 0;
+    color: var(--cms-muted);
+}
+
+.cms-panel {
+    min-width: 0;
+    padding: 16px;
+    background: var(--cms-surface);
+    border: 1px solid var(--cms-border);
+    border-radius: 10px;
+}
+
+.cms-toolbar {
+    justify-content: flex-start;
+    padding-bottom: 14px;
+}
+
+.cms-toolbar .ant-form-item {
+    margin-inline-end: 0;
+}
+
+.cms-toolbar .ant-picker {
+    max-width: 100%;
+}
+
+.cms-panel .ant-table-pagination.ant-pagination {
+    margin-bottom: 0;
+}
+
+.cms-editor-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
+    align-items: start;
+    gap: 16px;
+}
+
+.cms-editor-grid .ant-card {
+    min-width: 0;
+}
+
+.cms-editor-grid .ant-picker,
+.cms-editor-grid .ant-input-number {
     width: 100%;
-    height: 100%;
-    border-radius: 100%;
+}
+
+.cms-editor-grid .rc-md-editor {
+    border-radius: 8px;
+}
+
+.cms-editor-actions {
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+.cms-settings {
+    padding: 0 16px 16px;
+}
+
+.cms-settings .ant-form {
+    max-width: 780px;
+}
+
+.cms-settings .cms-settings-badge {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    align-items: end;
+    gap: 0 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--cms-border);
+    border-radius: 8px;
+}
+
+.cms-settings .cms-setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cms-border);
+}
+
+.cms-settings .cms-setting-row small {
+    display: block;
+    color: var(--cms-muted);
+    margin-top: 3px;
+}
+
+.cms-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 2fr);
+    gap: 16px;
+}
+
+.cms-overview h2 {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+
+.cms-overview section + section {
+    border-inline-start: 1px solid var(--cms-border);
+    padding-inline-start: 16px;
+}
+
+.cms-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+}
+
+.cms-metrics .ant-statistic-content {
+    font-weight: 700;
+}
+
+.cms-metrics > * {
+    flex: 1 0 auto;
+    font-variant-numeric: tabular-nums;
+}
+
+.cms-charts {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+.cms-chart {
+    position: relative;
+    height: 230px;
+}
+
+.cms-dashboard {
+    display: grid;
+    gap: 16px;
+}
+
+.cms-log-error {
+    max-height: 50vh;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding: 12px;
+    background: #f5f7fa;
+    border-radius: 8px;
+}
+
+@media (max-width: 1100px) {
+    .cms-shell { grid-template-columns: 196px minmax(0, 1fr); }
+    .cms-main, .cms-topbar { padding-inline: 18px; }
+    .cms-overview { grid-template-columns: 1fr; }
+    .cms-overview section + section {
+        border-inline-start: 0;
+        border-top: 1px solid var(--cms-border);
+        padding: 12px 0 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .cms-shell { grid-template-columns: minmax(0, 1fr); }
+    .cms-sidebar { display: none; }
+    .cms-topbar .cms-menu-trigger { display: inline-flex; }
+}
+
+@media (max-width: 640px) {
+    .cms-main, .cms-topbar { padding-inline: 12px; }
+    .cms-editor-grid, .cms-charts { grid-template-columns: minmax(0, 1fr); }
+    .cms-page-heading h1 { font-size: 25px; }
+    .cms-topbar .cms-account span:not(.ant-avatar):not(.anticon) { display: none; }
+}
+
+.cms-friends-intro {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--cms-border);
+}
+
+.cms-friends-intro h2 {
+    margin: 0 0 12px;
+    font-size: 17px;
 }

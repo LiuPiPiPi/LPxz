@@ -20,7 +20,6 @@ import formatTime from 'utils/format-time'
 const mdParser = new MarkdownIt(/* Markdown-it options */)
 
 const Friends = () => {
-    const [form] = Form.useForm()
     const [modalForm] = Form.useForm()
 
     const [modalOpen, setModalOpen] = useState(false)
@@ -219,7 +218,7 @@ const Friends = () => {
             width: '150px',
             render: (_, row) => (
                 <>
-                    <Button size='small' type='primary' onClick={() => handleOpenModal(row)}>编辑</Button>
+                    <Button size='small' type='link' onClick={() => handleOpenModal(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -228,7 +227,7 @@ const Friends = () => {
                         okText="删除"
                         okType="danger"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </>
             )
@@ -236,14 +235,12 @@ const Friends = () => {
     ]
 
     return (
-        <>
-            <Space size='large'>
+        <div className="cms-panel">
+            <Space className="cms-toolbar" wrap>
                 <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenModal(null)}>添加友链</Button>
-                <><span>页面评论</span><Switch key={commentChecked} defaultChecked={commentChecked} onChange={handleChangeComment} /></>
+                <Space><span>页面评论</span><Switch aria-label="友链页面评论" key={commentChecked} defaultChecked={commentChecked} onChange={handleChangeComment} /></Space>
             </Space>
-            <br />
-            <br />
-            <Table columns={columns} dataSource={friendList} rowKey={row => row.id}
+            <Table scroll={{ x: 940 }} columns={columns} dataSource={friendList} rowKey={row => row.id}
                 pagination={{
                     defaultCurrent: 1,
                     total: total,
@@ -251,15 +248,18 @@ const Friends = () => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
-            <br />
-            <MdEditor style={{ height: '300px' }} value={content} renderHTML={text => mdParser.render(text)}
-                onChange={({ html, text }) => setContent(text)} />
-            <br />
-            <Button type='primary' onClick={handleSubmit}>保存</Button>
+            <section className="cms-friends-intro" aria-labelledby="cms-friends-intro">
+                <h2 id="cms-friends-intro">友链页面介绍</h2>
+                <MdEditor style={{ height: 300 }} value={content} renderHTML={text => mdParser.render(text)}
+                    onChange={({ text }) => setContent(text)} />
+                <div className="cms-editor-actions">
+                    <Button type="primary" onClick={handleSubmit}>保存介绍</Button>
+                </div>
+            </section>
             <Modal
                 open={modalOpen}
-                title="添加友链"
-                width="40%"
+                title={friend ? "编辑友链" : "添加友链"}
+                width={480}
                 onOk={handleModalSubmit}
                 onCancel={handleClose}
                 forceRender
@@ -289,7 +289,7 @@ const Friends = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-        </>
+        </div>
     )
 }
 

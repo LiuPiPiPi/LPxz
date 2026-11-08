@@ -55,6 +55,7 @@ export default function VisitTrendChart({ data }) {
             dataSource={data}
             rowKey={r => r.id || r.uuid}
             pagination={{ pageSize: 10, size: 'small' }}
+            scroll={{ x: 780 }}
             size="small"
         />
     )

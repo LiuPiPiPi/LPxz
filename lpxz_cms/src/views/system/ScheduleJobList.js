@@ -222,7 +222,7 @@ const ScheduleJobList = () => {
                         <Button size='small'>执行一次</Button>
                     </Popconfirm>
                     <br /><br />
-                    <Button type='primary' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
+                    <Button type='link' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -231,7 +231,7 @@ const ScheduleJobList = () => {
                         okText="删除"
                         okType="danger"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </>
             )
@@ -239,17 +239,15 @@ const ScheduleJobList = () => {
     ]
 
     return (
-        <>
-            <>
-                <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加</Button>
-                <Divider type='vertical' />
-                <Button icon={<FileDoneOutlined />} onClick={() => { navigate('logs/scheduleJob') }}>日志</Button>
-            </>
-            <Divider type='horizontal' />
+        <div className="cms-panel">
+            <div className="cms-toolbar">
+                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加任务</Button>
+                <Button icon={<FileDoneOutlined />} onClick={() => navigate('/log/scheduleJobLog')}>任务日志</Button>
+            </div>
             <Modal
                 title={`${dialogType === 'add' ? '添加' : '编辑'}定时任务`}
                 open={openDialog}
-                width="50%"
+                width={480}
                 okText="确定"
                 cancelText="取消"
                 onOk={handleDialogSubmit}
@@ -260,8 +258,7 @@ const ScheduleJobList = () => {
                 <Form
                     name="edit_schedule_job"
                     form={form}
-                    layout="horizontal"
-                    labelCol={{ span: 3 }}
+                    layout="vertical"
                 >
                     <Form.Item name="beanName" label="Bean" required>
                         <Input />
@@ -280,7 +277,7 @@ const ScheduleJobList = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={scheduleJobList} rowKey={row => row.jobId}
+            <Table scroll={{ x: 970 }} columns={columns} dataSource={scheduleJobList} rowKey={row => row.jobId}
                 pagination={{
                     defaultCurrent: 1,
                     total: total,
@@ -288,7 +285,7 @@ const ScheduleJobList = () => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
-        </>
+        </div>
     )
 }
 

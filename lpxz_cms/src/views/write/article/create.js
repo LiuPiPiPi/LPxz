@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { Form, DatePicker, Row, Col, Button, message, Input, Select } from 'antd'
+import { Form, DatePicker, Card, Button, message, Input, Select } from 'antd'
 import dayjs from 'dayjs'
 // import react-markdown-editor-lite, and a markdown parser you like
 import MarkdownIt from 'markdown-it'
@@ -103,80 +103,50 @@ const CreateArticle = () => {
                     cover: ''
                 }}
             >
-                <Row>
-                    <Col span={9}>
+                <div className="cms-editor-grid">
+                    <Card title="正文">
                         <Form.Item name="title" label="文章标题" required>
-                            <Input />
+                            <Input placeholder="请输入文章标题" />
                         </Form.Item>
-                    </Col>
-                    <Col span={9} offset={3}>
+                        <Form.Item name="content" label="文章正文">
+                            <MdEditor style={{ height: 480 }} renderHTML={text => mdParser.render(text)}
+                                onChange={({ text }) => form.setFieldValue('content', text)} />
+                        </Form.Item>
+                    </Card>
+                    <Card title="文章属性">
+                        <Form.Item name="cate" label="分类" required>
+                            <Select options={categoryList.map(({ name, id }) => ({ label: name, value: id }))}
+                                placeholder="选择分类" allowClear />
+                        </Form.Item>
+                        <Form.Item name="tagList" label="标签" required>
+                            <Select mode="tags" options={tagList.map(({ name, id }) => ({ label: name, value: id }))}
+                                placeholder="选择或输入标签" allowClear />
+                        </Form.Item>
                         <Form.Item name="cover" label="文章封面 URL">
                             <Input />
                         </Form.Item>
-                    </Col>
-                </Row>
-                <Form.Item name="description" label="文章描述">
-                    <MdEditor style={{ height: '200px' }} renderHTML={text => mdParser.render(text)}
-                        onChange={({ html, text }) => form.setFieldValue('description', text)} />
-                </Form.Item>
-                <Form.Item name="content" label="文章正文">
-                    <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)}
-                        onChange={({ html, text }) => form.setFieldValue('content', text)} />
-                </Form.Item>
-                <Row>
-                    <Col span={6}>
-                        <Form.Item name="cate" label="分类" required>
-                            <Select
-                                options={categoryList.map(ele => {
-                                    return { label: ele.name, value: ele.id }
-                                })}
-                                placeholder="选择分类"
-                                allowClear
-                            />
+                        <Form.Item name="description" label="文章描述">
+                            <MdEditor style={{ height: 160 }} renderHTML={text => mdParser.render(text)}
+                                onChange={({ text }) => form.setFieldValue('description', text)} />
                         </Form.Item>
-                    </Col>
-                    <Col span={6} offset={2}>
-                        <Form.Item name="tagList" label="标签" required>
-                            <Select
-                                mode="tags"
-                                showArrow
-                                options={tagList.map(ele => {
-                                    return { label: ele.name, value: ele.id }
-                                })}
-                                placeholder="选择标签（输入可添加新标签）"
-                                allowClear
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={6} offset={2}>
                         <Form.Item name="gmtCreate" label="创建时间">
                             <DatePicker showTime />
                         </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={6}>
                         <Form.Item name="words" label="字数" required>
-                            <Input type='number' placeholder='请输入文章字数（自动计算阅读时长）'
+                            <Input type="number"
                                 onChange={() => form.setFieldValue('readTime', Math.round(form.getFieldValue('words') / 200))} />
                         </Form.Item>
-                    </Col>
-                    <Col span={6} offset={2}>
                         <Form.Item name="readTime" label="阅读时长（分钟）">
-                            <Input type='number' placeholder='请输入阅读时长（可选）默认 Math.round(字数 / 200)' />
+                            <Input type="number" placeholder="默认按字数计算" />
                         </Form.Item>
-                    </Col>
-                    <Col span={6} offset={2}>
                         <Form.Item name="views" label="浏览次数">
-                            <Input type='number' placeholder='请输入浏览次数（可选）默认为 0' />
+                            <Input type="number" />
                         </Form.Item>
-                    </Col>
-                </Row>
-                <Form.Item>
-                    <Button htmlType="submit" type="primary" onClick={() => modalRef.current.handleOpen()}>
-                        保存
-                    </Button>
-                </Form.Item>
+                    </Card>
+                </div>
+                <div className="cms-editor-actions">
+                    <Button type="primary" onClick={() => modalRef.current.handleOpen()}>保存</Button>
+                </div>
             </Form>
             <ArticleVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmit} />
         </>

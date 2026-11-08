@@ -109,7 +109,7 @@ const Article = () => {
             title: '标题',
             dataIndex: 'title',
             key: 'title',
-            align: 'center'
+            ellipsis: true
         },
         {
             title: '分类',
@@ -189,7 +189,7 @@ const Article = () => {
             width: '150px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleEditArticle(row.id)}>编辑</Button>
+                    <Button type='link' size='small' onClick={() => handleEditArticle(row.id)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -199,7 +199,7 @@ const Article = () => {
                         okType="danger"
                         cancelText="取消"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </span>
             )
@@ -207,19 +207,16 @@ const Article = () => {
     ]
 
     return (
-        <>
+        <div className="cms-panel">
             <Form
                 name="search_article"
                 form={searchForm}
                 layout="inline"
-                onFinish={() => {
-                    searchForm.validateFields().then(values => {
-                        setFormData({ ...formData, ...values })
-                    })
-                }}
+                className="cms-toolbar"
+                onFinish={values => setFormData(previous => ({ ...previous, ...values, pageNum: 1 }))}
             >
                 <Form.Item name="title">
-                    <Input placeholder="文章标题" allowClear />
+                    <Input aria-label="文章标题" placeholder="文章标题" allowClear />
                 </Form.Item>
                 <Form.Item name="categoryId" style={{ minWidth: 180 }}>
                     <Select
@@ -229,25 +226,30 @@ const Article = () => {
                                 value: ele.id
                             }
                         })}
+                        aria-label="文章分类"
                         placeholder="文章分类"
                         allowClear
                     />
                 </Form.Item>
                 <Form.Item shouldUpdate>
-                    <Button type="primary" htmlType="submit"><SearchOutlined /></Button>
+                    <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>查询</Button>
                 </Form.Item>
+                <Button onClick={() => {
+                    searchForm.resetFields()
+                    setFormData(previous => ({ ...previous, title: '', categoryId: null, pageNum: 1 }))
+                }}>重置</Button>
             </Form>
-            <br />
-            <Table columns={columns} dataSource={articleList} rowKey={row => row.id}
+            <Table scroll={{ x: 1020 }} columns={columns} dataSource={articleList} rowKey={row => row.id}
                 pagination={{
-                    defaultCurrent: 1,
+                    current: formData.pageNum,
+                    pageSize: formData.pageSize,
                     total: total,
                     onChange: (pageNum, pageSize) => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
             <ArticleVisibleModal ref={modalRef} article={article} handleSubmit={handleSubmitVisible} />
-        </>
+        </div>
     )
 }
 

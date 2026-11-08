@@ -46,8 +46,10 @@ const ArticleVisibleModal = memo(forwardRef((props, ref) => {
 
     return (
         <Modal
+            title="文章可见性"
             open={modalOpen}
             okText="保存"
+            cancelText="取消"
             onOk={handleSubmit}
             onCancel={handleClose}
             forceRender

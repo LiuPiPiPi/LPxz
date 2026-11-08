@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Divider, Tag, Table, Button, message, Popconfirm, Form, DatePicker } from 'antd'
+import { Tag, Table, Button, message, Popconfirm, Form, DatePicker } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
@@ -56,9 +56,9 @@ const OperationLog = () => {
         searchForm.validateFields().then(values => {
             let { date } = values
             if (date && date.length === 2) {
-                date = formatTime(date[0]) + ',' + formatTime(date[1])
+                date = formatTime(date[0].startOf('day')) + ',' + formatTime(date[1].endOf('day'))
             }
-            setFormData({ formData, date })
+            setFormData(previous => ({ ...previous, pageNum: 1, date }))
         })
     }
 
@@ -147,7 +147,7 @@ const OperationLog = () => {
                         okText="删除"
                         okType="danger"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </>
             )
@@ -155,11 +155,12 @@ const OperationLog = () => {
     ]
 
     return (
-        <>
+        <div className="cms-panel">
             <Form
                 name="search_schedule_job_log"
                 form={searchForm}
                 layout="inline"
+                className="cms-toolbar"
                 onFinish={handleSearch}
             >
                 <Form.Item label="操作时间" name="date">
@@ -172,11 +173,14 @@ const OperationLog = () => {
                     />
                 </Form.Item>
                 <Form.Item shouldUpdate>
-                    <Button type="primary" htmlType="submit"><SearchOutlined /></Button>
+                    <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>查询</Button>
                 </Form.Item>
+                <Button onClick={() => {
+                    searchForm.resetFields()
+                    handleSearch()
+                }}>重置</Button>
             </Form>
-            <Divider type="horizontal" />
-            <Table columns={columns} dataSource={logList} rowKey={row => row.id}
+            <Table scroll={{ x: 1140 }} columns={columns} dataSource={logList} rowKey={row => row.id}
                 expandable={{
                     expandedRowRender: record => (
                         <>
@@ -186,13 +190,14 @@ const OperationLog = () => {
                     )
                 }}
                 pagination={{
-                    defaultCurrent: 1,
+                    current: formData.pageNum,
+                    pageSize: formData.pageSize,
                     total: total,
                     onChange: (pageNum, pageSize) => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
-        </>
+        </div>
     )
 }
 

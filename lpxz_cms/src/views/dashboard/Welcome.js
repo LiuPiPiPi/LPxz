@@ -1,13 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Row, Col, Card, Statistic, Typography, message, Spin, Tag } from 'antd'
-import {
-    FileMarkdownOutlined,
-    MessageOutlined,
-    TeamOutlined,
-    TagsOutlined,
-    UserOutlined
-} from '@ant-design/icons'
-
+import { Card, Statistic, message, Spin } from 'antd'
 import { getDataByQuery, getCategoryAndTag } from 'api/article'
 import { getMomentListByQuery } from 'api/moment'
 import { getFriendsByQuery } from 'api/friend'
@@ -16,8 +8,6 @@ import { getVisitorList } from 'api/visitor'
 import ArticleCategoryChart from './ArticleCategoryChart'
 import VisitTrendChart from './VisitTrendChart'
 import ArticlePublishChart from './ArticlePublishChart'
-
-const { Title } = Typography
 
 export default function Welcome() {
     const [loading, setLoading] = useState(true)
@@ -102,64 +92,40 @@ export default function Welcome() {
 
     return (
         <Spin spinning={loading}>
-            <Title level={4} style={{ marginBottom: 24 }}>仪表盘</Title>
+            <div className="cms-dashboard">
+                <div className="cms-panel cms-overview">
+                    <section>
+                        <h2>内容资产</h2>
+                        <div className="cms-metrics">
+                            <Statistic title="文章总数" value={articleCount} />
+                            <Statistic title="已发布" value={publishedCount} />
+                            <Statistic title="动态数" value={momentCount} />
+                            <Statistic title="标签数" value={tagCount} />
+                            <Statistic title="友链数" value={friendCount} />
+                        </div>
+                    </section>
+                    <section>
+                        <h2>访问概况</h2>
+                        <div className="cms-metrics">
+                            <Statistic title="访客数" value={uvTotal} />
+                            <Statistic title="PV" value={pvTotal} />
+                        </div>
+                    </section>
+                </div>
 
-            <Row gutter={[16, 16]}>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="文章总数" value={articleCount} prefix={<FileMarkdownOutlined />} />
-                    </Card>
-                </Col>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="已发布" value={publishedCount}
-                            valueStyle={{ color: '#3f8600' }}
-                            prefix={<FileMarkdownOutlined />} />
-                    </Card>
-                </Col>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="动态数" value={momentCount} prefix={<MessageOutlined />} />
-                    </Card>
-                </Col>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="友链数" value={friendCount} prefix={<TeamOutlined />} />
-                    </Card>
-                </Col>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="标签数" value={tagCount} prefix={<TagsOutlined />} />
-                    </Card>
-                </Col>
-                <Col span={4}>
-                    <Card>
-                        <Statistic title="访客数" value={uvTotal} prefix={<UserOutlined />}
-                            suffix={<Tag color="blue" style={{ marginLeft: 8 }}>PV {pvTotal}</Tag>} />
-                    </Card>
-                </Col>
-            </Row>
-
-            <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
-                <Col span={12}>
-                    <Card title="文章分类分布" bordered={false}>
-                        <ArticleCategoryChart data={categoryData} />
-                    </Card>
-                </Col>
-                <Col span={12}>
-                    <Card title="文章发布趋势" bordered={false}>
+                <div className="cms-charts">
+                    <Card title="文章发布趋势">
                         <ArticlePublishChart data={publishData} />
                     </Card>
-                </Col>
-            </Row>
-
-            <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
-                <Col span={24}>
-                    <Card title="访客统计" bordered={false}>
-                        <VisitTrendChart data={visitData} />
+                    <Card title="文章分类分布">
+                        <ArticleCategoryChart data={categoryData} />
                     </Card>
-                </Col>
-            </Row>
+                </div>
+
+                <Card title="访客统计">
+                    <VisitTrendChart data={visitData} />
+                </Card>
+            </div>
         </Spin>
     )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Divider, Tag, Table, Button, message, Popconfirm, Modal, Form, DatePicker } from 'antd'
+import { Divider, Table, Button, message, Popconfirm, Modal, Descriptions, Form, DatePicker } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
@@ -57,7 +57,6 @@ const ExceptionLog = () => {
 
     const handleOpenDialog = (row) => {
         setExceptionLog(row)
-        searchForm.setFieldsValue(row)
         setOpenDialog(true)
     }
 
@@ -69,9 +68,9 @@ const ExceptionLog = () => {
         searchForm.validateFields().then(values => {
             let { date } = values
             if (date && date.length === 2) {
-                date = formatTime(date[0]) + ',' + formatTime(date[1])
+                date = formatTime(date[0].startOf('day')) + ',' + formatTime(date[1].endOf('day'))
             }
-            setFormData({ formData, date })
+            setFormData(previous => ({ ...previous, pageNum: 1, date }))
         })
     }
 
@@ -138,7 +137,7 @@ const ExceptionLog = () => {
             width: '150px',
             render: (_, row) => (
                 <>
-                    <Button size='small' type='primary' onClick={() => handleOpenDialog(row)}>详情</Button>
+                    <Button size='small' type='link' onClick={() => handleOpenDialog(row)}>详情</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -147,7 +146,7 @@ const ExceptionLog = () => {
                         okText="删除"
                         okType="danger"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </>
             )
@@ -155,11 +154,12 @@ const ExceptionLog = () => {
     ]
 
     return (
-        <>
+        <div className="cms-panel">
             <Form
                 name="search_schedule_job_log"
                 form={searchForm}
                 layout="inline"
+                className="cms-toolbar"
                 onFinish={handleSearch}
             >
                 <Form.Item label="操作时间" name="date">
@@ -172,11 +172,14 @@ const ExceptionLog = () => {
                     />
                 </Form.Item>
                 <Form.Item shouldUpdate>
-                    <Button type="primary" htmlType="submit"><SearchOutlined /></Button>
+                    <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>查询</Button>
                 </Form.Item>
+                <Button onClick={() => {
+                    searchForm.resetFields()
+                    handleSearch()
+                }}>重置</Button>
             </Form>
-            <Divider type="horizontal" />
-            <Table columns={columns} dataSource={logList} rowKey={row => row.id}
+            <Table scroll={{ x: 980 }} columns={columns} dataSource={logList} rowKey={row => row.id}
                 expandable={{
                     expandedRowRender: record => (
                         <>
@@ -186,7 +189,8 @@ const ExceptionLog = () => {
                     )
                 }}
                 pagination={{
-                    defaultCurrent: 1,
+                    current: formData.pageNum,
+                    pageSize: formData.pageSize,
                     total: total,
                     onChange: (pageNum, pageSize) => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
@@ -194,16 +198,20 @@ const ExceptionLog = () => {
                 }} />
             <Modal
                 open={openDialog}
-                width='70%'
-                title='报错详情'
+                width={720}
+                title='异常日志详情'
                 footer={null}
                 onCancel={handleCloseDialog}
                 forceRender
                 destroyOnClose
             >
-                <code>{exceptionLog.error || ''}</code>
+                <Descriptions column={1} size="small" items={[
+                    { key: 'uri', label: '请求接口', children: exceptionLog.uri || '—' },
+                    { key: 'param', label: '请求参数', children: exceptionLog.param || '—' },
+                ]} />
+                <pre className="cms-log-error">{exceptionLog.error || '暂无异常信息'}</pre>
             </Modal>
-        </>
+        </div>
     )
 }
 

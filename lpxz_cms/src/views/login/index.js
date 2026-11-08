@@ -13,7 +13,6 @@ const Login = () => {
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
-    const [phone, setPhone] = useState("")
     const [btnDisable, setBtnDisable] = useState(false)
     const [btnContent, setBtnContent] = useState("发送验证码")
 
@@ -144,7 +143,6 @@ const Login = () => {
                                             </Select>
                                         </Form.Item>
                                     }
-                                    onChange={(e) => { setPhone(e.target.value) }}
                                 />
                             </Form.Item>
                             <Input.Group compact>

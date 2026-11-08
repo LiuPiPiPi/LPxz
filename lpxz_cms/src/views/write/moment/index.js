@@ -129,7 +129,7 @@ const Moment = () => {
             width: '180px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleEditMoment(row.id)}>编辑</Button>
+                    <Button type='link' size='small' onClick={() => handleEditMoment(row.id)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -139,7 +139,7 @@ const Moment = () => {
                         okType="danger"
                         cancelText="取消"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </span>
             )
@@ -147,14 +147,16 @@ const Moment = () => {
     ]
 
     return (
-        <Table columns={columns} dataSource={momentList} rowKey={row => row.id}
-            pagination={{
-                defaultCurrent: 1,
-                total: total,
-                onChange: (pageNum, pageSize) => {
-                    setFormData({ ...formData, ...{ pageNum, pageSize } })
-                }
-            }} />
+        <div className="cms-panel">
+            <Table scroll={{ x: 660 }} columns={columns} dataSource={momentList} rowKey={row => row.id}
+                pagination={{
+                    defaultCurrent: 1,
+                    total: total,
+                    onChange: (pageNum, pageSize) => {
+                        setFormData({ ...formData, ...{ pageNum, pageSize } })
+                    }
+                }} />
+        </div>
     )
 }
 

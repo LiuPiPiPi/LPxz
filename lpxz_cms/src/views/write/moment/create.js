@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { Form, DatePicker, Row, Col, Button, message, InputNumber } from 'antd'
+import { Form, DatePicker, Card, Button, message, InputNumber } from 'antd'
 import dayjs from 'dayjs'
 // import react-markdown-editor-lite, and a markdown parser you like
 import MarkdownIt from 'markdown-it'
@@ -76,30 +76,26 @@ const CreateMoment = () => {
                 }}
                 onFinish={() => handleSubmit(true)}
             >
-                <Form.Item name="content" label="动态内容">
-                    <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)}
-                        onChange={({ html, text }) => form.setFieldValue('content', text)} />
-                </Form.Item>
-                <Row>
-                    <Col span={9}>
+                <div className="cms-editor-grid">
+                    <Card title="动态内容">
+                        <Form.Item name="content" label="正文">
+                            <MdEditor style={{ height: 340 }} renderHTML={text => mdParser.render(text)}
+                                onChange={({ text }) => form.setFieldValue('content', text)} />
+                        </Form.Item>
+                    </Card>
+                    <Card title="发布信息">
                         <Form.Item name="likes" label="点赞数" required>
                             <InputNumber min={0} />
                         </Form.Item>
-                    </Col>
-                    <Col span={9} offset={3}>
                         <Form.Item name="gmtCreate" label="创建时间">
                             <DatePicker showTime />
                         </Form.Item>
-                    </Col>
-                </Row>
-                <Form.Item>
-                    <Button htmlType="button" onClick={() => handleSubmit(false)}>
-                        保存草稿
-                    </Button>
-                    <Button htmlType="submit" type="primary" style={{ margin: '0 8px' }}>
-                        发布动态
-                    </Button>
-                </Form.Item>
+                    </Card>
+                </div>
+                <div className="cms-editor-actions">
+                    <Button onClick={() => handleSubmit(false)}>保存草稿</Button>
+                    <Button htmlType="submit" type="primary">发布动态</Button>
+                </div>
             </Form>
         </>
     )

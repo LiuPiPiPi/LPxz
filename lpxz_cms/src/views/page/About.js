@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { Form, Input, Button, message, Switch } from 'antd'
+import { Form, Input, Button, Card, message, Switch } from 'antd'
 // import react-markdown-editor-lite, and a markdown parser you like
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
@@ -42,19 +42,26 @@ const About = () => {
                 layout="vertical"
                 onFinish={handleSubmit}
             >
-                <Form.Item name="title" label="标题" required>
-                    <Input placeholder="请输入标题" />
-                </Form.Item>
-                <Form.Item name="commentEnabled" label="评论开关（点击保存按钮）" valuePropName='checked'>
-                    <Switch />
-                </Form.Item>
-                <Form.Item name="content" label="正文">
-                    <MdEditor style={{ height: '800px' }} renderHTML={text => mdParser.render(text)}
-                        onChange={({ html, text }) => form.setFieldValue('content', text)} />
-                </Form.Item>
-                <Form.Item>
-                    <Button htmlType='submit' type='primary'>保存</Button>
-                </Form.Item>
+                <div className="cms-editor-grid">
+                    <Card title="页面内容">
+                        <Form.Item name="title" label="标题" required>
+                            <Input placeholder="请输入标题" />
+                        </Form.Item>
+                        <Form.Item name="content" label="正文">
+                            <MdEditor style={{ height: 460 }} renderHTML={text => mdParser.render(text)}
+                                onChange={({ text }) => form.setFieldValue('content', text)} />
+                        </Form.Item>
+                    </Card>
+                    <Card title="页面设置">
+                        <Form.Item name="commentEnabled" label="允许评论" valuePropName="checked"
+                            extra="保存后应用到前台页面。">
+                            <Switch aria-label="允许评论" />
+                        </Form.Item>
+                    </Card>
+                </div>
+                <div className="cms-editor-actions">
+                    <Button htmlType="submit" type="primary">保存</Button>
+                </div>
             </Form>
         </>
     )

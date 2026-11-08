@@ -135,7 +135,7 @@ const Tag = () => {
             width: '200px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
+                    <Button type='link' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -145,7 +145,7 @@ const Tag = () => {
                         okType="danger"
                         cancelText="取消"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </span>
             )
@@ -169,15 +169,14 @@ const Tag = () => {
     ]
 
     return (
-        <>
-            <>
+        <div className="cms-panel">
+            <div className="cms-toolbar">
                 <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加标签</Button>
-            </>
-            <Divider type='horizontal' />
+            </div>
             <Modal
                 title={`${dialogType === 'add' ? '添加' : '编辑'}标签`}
                 open={openDialog}
-                width="50%"
+                width={480}
                 okText="确定"
                 cancelText="取消"
                 onOk={handleDialogSubmit}
@@ -188,8 +187,7 @@ const Tag = () => {
                 <Form
                     name="edit_tag"
                     form={form}
-                    layout="horizontal"
-                    labelCol={{ span: 3 }}
+                    layout="vertical"
                 >
                     <Form.Item name="name" label="标签名称" required>
                         <Input />
@@ -208,7 +206,7 @@ const Tag = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={tagList} rowKey={row => row.id}
+            <Table scroll={{ x: 460 }} columns={columns} dataSource={tagList} rowKey={row => row.id}
                 pagination={{
                     defaultCurrent: 1,
                     total: total,
@@ -216,7 +214,7 @@ const Tag = () => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
-        </>
+        </div>
     )
 }
 

@@ -41,6 +41,7 @@ ENV HTTP_PROXY="" \
     all_proxy=""
 
 COPY lpxz_cms/package.json lpxz_cms/package-lock.json ./
+COPY lpxz_cms/patches/ ./patches/
 RUN unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy && npm ci
 
 COPY lpxz_cms/ ./

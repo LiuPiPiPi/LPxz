@@ -123,7 +123,7 @@ const Category = () => {
             width: '200px',
             render: (_, row) => (
                 <span>
-                    <Button type='primary' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
+                    <Button type='link' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
                     <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
@@ -133,7 +133,7 @@ const Category = () => {
                         okType="danger"
                         cancelText="取消"
                     >
-                        <Button danger size='small'>删除</Button>
+                        <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
                 </span>
             )
@@ -141,15 +141,14 @@ const Category = () => {
     ]
 
     return (
-        <>
-            <>
+        <div className="cms-panel">
+            <div className="cms-toolbar">
                 <Button type='primary' icon={<PlusOutlined />} onClick={() => handleOpenDialog(null)}>添加分类</Button>
-            </>
-            <Divider type='horizontal' />
+            </div>
             <Modal
                 title={`${dialogType === 'add' ? '添加' : '编辑'}分类`}
                 open={openDialog}
-                width="50%"
+                width={480}
                 okText="确定"
                 cancelText="取消"
                 onOk={handleDialogSubmit}
@@ -160,15 +159,14 @@ const Category = () => {
                 <Form
                     name="edit_category"
                     form={form}
-                    layout="horizontal"
-                    labelCol={{ span: 3 }}
+                    layout="vertical"
                 >
                     <Form.Item name="name" label="分类名称" required>
                         <Input />
                     </Form.Item>
                 </Form>
             </Modal>
-            <Table columns={columns} dataSource={categoryList} rowKey={row => row.id}
+            <Table scroll={{ x: 440 }} columns={columns} dataSource={categoryList} rowKey={row => row.id}
                 pagination={{
                     defaultCurrent: 1,
                     total: total,
@@ -176,7 +174,7 @@ const Category = () => {
                         setFormData({ ...formData, ...{ pageNum, pageSize } })
                     }
                 }} />
-        </>
+        </div>
     )
 }
 
