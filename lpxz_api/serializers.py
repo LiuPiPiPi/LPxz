@@ -46,7 +46,7 @@ def page_payload(total, page_num, page_size, items):
 
 def page_result(total, page_size, items):
     total_page = (total + page_size - 1) // page_size
-    return {"totalPage": total_page, "pages": total_page, "list": items}
+    return {"total": total, "totalPage": total_page, "pages": total_page, "list": items}
 
 
 def empty_page(page_num, page_size):

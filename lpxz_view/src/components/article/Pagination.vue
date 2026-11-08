@@ -1,7 +1,7 @@
 <template>
 	<div class="article-pagination">
 		<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
-			layout="prev, pager, next" hide-on-single-page>
+			:pager-count="clientSize.clientWidth < 768 ? 5 : 7" layout="prev, pager, next" hide-on-single-page>
 		</el-pagination>
 	</div>
 </template>
@@ -43,7 +43,9 @@ export default {
 		handleCurrentChange(newPage) {
 			//如果是首页，则滚动至Header下方
 			if (this.$route.name === 'home') {
-				window.scrollTo({ top: this.clientSize.clientHeight, behavior: 'smooth' })
+				const feed = this.$el.closest('.updates-column')
+				const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+				feed?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
 			} else {
 				//其它页面（分类和标签页）滚动至顶部
 				this.scrollToTop()

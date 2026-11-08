@@ -1,5 +1,5 @@
 <template>
-	<div ref="nav" class="ui stackable menu site-nav" :class="{ 'transparent': clientSize.clientWidth > 768 }">
+	<div class="ui menu site-nav">
 		<div class="ui container nav-shell">
 			<router-link to="/" class="brand-link" aria-label="LPxz Home">
 				<span class="brand-mark" aria-hidden="true">
@@ -7,7 +7,8 @@
 				</span>
 			</router-link>
 
-			<nav class="nav-links" :class="{ 'is-collapsed': mobileHide }" aria-label="主导航">
+			<nav id="site-navigation" class="nav-links" :class="{ 'is-collapsed': mobileHide }" aria-label="主导航"
+				@click="mobileHide = true">
 				<router-link to="/home" class="item nav-item"
 					:class="{ 'active': $route.name === 'home' }">
 					首页
@@ -30,37 +31,50 @@
 				</router-link>
 			</nav>
 
-			<div ref="searchBox" class="nav-actions" :class="{ 'is-collapsed': mobileHide }">
-				<div class="nav-search" :class="{ 'is-open': showSearchPanel }">
-					<el-input v-model="queryString" placeholder="搜索文章" clearable
-						@input="handleSearchInput" @focus="openSearchPanel" @clear="clearSearch"
-						@keydown.enter.prevent="goFirstResult">
-					</el-input>
-					<transition name="search-panel">
-						<div v-if="showSearchPanel" class="search-panel">
-							<div class="search-panel-head">
-								<span>搜索文章</span>
-								<small v-if="queryString.trim()">按标题优先排序</small>
-							</div>
-							<div v-if="searchLoading" class="search-panel-state">正在搜索...</div>
-							<div v-else-if="!queryString.trim()" class="search-panel-state">输入关键词搜索标题和内容</div>
-							<div v-else-if="queryResult.length === 0" class="search-panel-state">没有找到相关文章</div>
-							<div v-else class="search-result-list">
-								<button v-for="item in queryResult" :key="item.id" class="search-result-item"
-									@mousedown.prevent="handleSelect(item)">
-									<span class="title-row">
-										<span class="title">{{ item.title }}</span>
-										<span class="match-type" :class="`is-${item.matchType}`">{{ item.matchType === 'title' ? '标题' : '内容' }}</span>
-									</span>
-									<span class="content" v-if="item.content">{{ item.content }}</span>
-								</button>
+			<button ref="searchToggle" class="nav-search-toggle m-mobile-show" type="button"
+				:aria-expanded="searchOpen" aria-controls="site-search"
+				@click="searchOpen ? closeSearch(true) : openMobileSearch()">
+				<i class="search icon" aria-hidden="true"></i>搜索
+			</button>
+			<div id="site-search" ref="searchBox" class="nav-actions" :class="{ 'is-search-open': searchOpen }"
+				role="search" aria-label="搜索文章">
+				<div class="nav-search">
+					<div class="search-input-row">
+						<input ref="searchInput" v-model="queryString" class="search-input" type="search"
+							placeholder="搜索文章" aria-label="搜索文章" role="combobox" autocomplete="off"
+							:aria-expanded="showResults" :aria-controls="showResults ? 'article-search-results' : undefined"
+							:aria-activedescendant="activeResultId"
+							@focus="searchOpen = true" @click="searchOpen = true" @keydown="handleSearchKey">
+						<button type="button" class="search-close m-mobile-show" @click="closeSearch(true)">关闭</button>
+					</div>
+					<div v-if="searchOpen" class="search-panel">
+						<div class="search-panel-head">
+							<span>搜索结果</span>
+							<small v-if="showResults">标题优先</small>
+						</div>
+						<div v-if="searchMessage" class="search-panel-state" role="status">{{ searchMessage }}</div>
+						<div v-if="showResults" id="article-search-results" class="search-result-list" role="listbox"
+							aria-label="文章搜索结果">
+							<div v-for="(item, index) in queryResult" :id="`article-result-${item.id}`" :key="item.id"
+								class="search-result-item" role="option" :aria-selected="index === activeIndex"
+								@mousedown.prevent @click="handleSelect(item)">
+								<span class="title-row">
+									<span class="title"><template v-for="(part, i) in item.titleParts" :key="i"><mark
+										v-if="i === 1">{{ part }}</mark><template v-else>{{ part }}</template></template></span>
+									<span class="match-type">{{ item.matchType === 'title' ? '标题' : '正文' }}</span>
+								</span>
+								<span v-if="item.contentParts[0] || item.contentParts[1]" class="content"><template
+									v-for="(part, i) in item.contentParts" :key="i"><mark
+										v-if="i === 1">{{ part }}</mark><template v-else>{{ part }}</template></template></span>
 							</div>
 						</div>
-					</transition>
+					</div>
 				</div>
 			</div>
 
-			<button class="ui menu icon button nav-toggle m-mobile-show" :class="{ 'is-open': !mobileHide }" @click="toggle" aria-label="展开菜单" aria-expanded="false">
+			<button class="ui menu icon button nav-toggle m-mobile-show" type="button" :class="{ 'is-open': !mobileHide }"
+				@click="toggleMenu" :aria-label="mobileHide ? '展开菜单' : '收起菜单'" :aria-expanded="!mobileHide"
+				aria-controls="site-navigation">
 				<i class="sidebar icon" aria-hidden="true"></i>
 			</button>
 		</div>
@@ -68,169 +82,163 @@
 </template>
 
 <script>
-import { getSearchArticleList } from "@/api/article";
+import { getSearchArticleList } from "@/api/article"
 import { mapState } from 'vuex'
 import { isModuleEnabled } from '@/util/moduleSwitch'
 
+function highlightMatch(text = '', query) {
+	const index = text.toLowerCase().indexOf(query.toLowerCase())
+	if (index < 0) return [text]
+	return [text.slice(0, index), text.slice(index, index + query.length), text.slice(index + query.length)]
+}
+
 export default {
 	name: "articleNav",
-	props: {
-		categoryList: {
-			type: Array,
-			required: true
-		},
-	},
 	data() {
 		return {
 			mobileHide: true,
 			queryString: '',
 			queryResult: [],
 			timer: null,
-			searchFocused: false,
-			searchLoading: false
+			requestId: 0,
+			searchOpen: false,
+			searchLoading: false,
+			searchError: '',
+			activeIndex: -1
 		}
 	},
 	computed: {
-		...mapState(['clientSize', 'siteInfo']),
+		...mapState(['siteInfo']),
 		moduleVisible() {
 			const info = this.siteInfo
-			const loaded = info && typeof info === 'object'
-			if (!loaded) {
-				return { moment: false, archive: false, friend: false, about: false }
-			}
 			return {
-				moment: isModuleEnabled(info.momentModuleEnabled),
-				archive: isModuleEnabled(info.archiveModuleEnabled),
-				friend: isModuleEnabled(info.friendModuleEnabled),
-				about: isModuleEnabled(info.aboutModuleEnabled),
+				moment: !!info && isModuleEnabled(info.momentModuleEnabled),
+				archive: !!info && isModuleEnabled(info.archiveModuleEnabled),
+				friend: !!info && isModuleEnabled(info.friendModuleEnabled),
+				about: !!info && isModuleEnabled(info.aboutModuleEnabled)
 			}
 		},
-		showSearchPanel() {
-			return this.searchFocused
-				&& (!this.mobileHide || this.clientSize.clientWidth > 767)
-				&& (this.queryString.trim() !== '' || this.searchLoading || this.queryResult.length > 0)
+		showResults() {
+			return this.searchOpen && this.queryResult.length > 0
+		},
+		activeResultId() {
+			const item = this.queryResult[this.activeIndex]
+			return this.showResults && item ? `article-result-${item.id}` : undefined
+		},
+		searchMessage() {
+			if (this.searchLoading) return '正在搜索…'
+			if (this.searchError) return this.searchError
+			if (!this.queryString.trim()) return '输入关键词搜索标题和正文'
+			if (!this.queryResult.length) return '没有找到相关文章，试试其他关键词'
+			return ''
 		}
 	},
 	watch: {
-		// 路由改变时，收起导航栏
 		'$route.path'() {
 			this.mobileHide = true
+			this.closeSearch()
+		},
+		queryString(value) {
+			clearTimeout(this.timer)
+			const requestId = ++this.requestId
+			this.queryResult = []
+			this.activeIndex = -1
+			this.searchLoading = false
+			this.searchError = ''
+			this.searchOpen = true
+
+			const query = value.trim()
+			if (!query) return
+			if (query.length > 20 || /[%_[#*]/.test(query)) {
+				this.searchError = '请输入 20 字以内的关键词，去掉 %、_、[、# 或 * 后重试'
+				return
+			}
+
+			this.searchLoading = true
+			this.timer = setTimeout(() => this.search(query, requestId), 360)
 		}
 	},
 	mounted() {
-		//监听页面滚动位置，改变导航栏的显示
-		window.addEventListener('scroll', () => {
-			//首页且不是移动端
-			if (this.clientSize.clientWidth > 768) {
-				if (window.scrollY > this.clientSize.clientHeight / 2) {
-					this.$refs.nav.classList.remove('transparent')
-				} else {
-					this.$refs.nav.classList.add('transparent')
-				}
-			}
-			})
-		document.addEventListener('click', this.handleDocumentClick)
-		//监听点击事件，收起导航菜单
-		// document.addEventListener('click', (e) => {
-		// 	//遍历冒泡
-		// 	let flag = e.path.some(item => {
-		// 		if (item === this.$refs.nav) return true
-		// 	})
-		// 	//如果导航栏是打开状态，且点击的元素不是Nav的子元素，则收起菜单
-		// 	if (!this.mobileHide && !flag) {
-		// 		this.mobileHide = true
-		// 	}
-		// })
+		document.addEventListener('click', this.closeSearchOutside)
+		document.addEventListener('focusin', this.closeSearchOutside)
 	},
 	beforeUnmount() {
-		document.removeEventListener('click', this.handleDocumentClick)
+		clearTimeout(this.timer)
+		this.requestId++
+		document.removeEventListener('click', this.closeSearchOutside)
+		document.removeEventListener('focusin', this.closeSearchOutside)
 	},
 	methods: {
-		toggle() {
+		toggleMenu() {
+			this.closeSearch()
 			this.mobileHide = !this.mobileHide
 		},
-		openSearchPanel() {
-			this.searchFocused = true
+		openMobileSearch() {
+			this.mobileHide = true
+			this.searchOpen = true
+			this.$nextTick(() => this.$refs.searchInput.focus())
 		},
-		handleDocumentClick(e) {
-			if (this.$refs.searchBox && !this.$refs.searchBox.contains(e.target)) {
-				this.searchFocused = false
+		closeSearch(restoreFocus = false) {
+			this.searchOpen = false
+			this.activeIndex = -1
+			if (restoreFocus && window.matchMedia('(max-width: 767px)').matches) {
+				this.$refs.searchToggle.focus()
 			}
 		},
-		handleSearchInput(value) {
-			this.searchFocused = true
-			this.timer && clearTimeout(this.timer)
-			if (value == null || value.trim() === '') {
-				this.queryResult = []
-				this.searchLoading = false
-				return
+		closeSearchOutside(event) {
+			if (this.searchOpen && !this.$refs.searchBox.contains(event.target) && !this.$refs.searchToggle.contains(event.target)) {
+				this.closeSearch()
 			}
-			this.searchLoading = true
-			this.timer = setTimeout(() => this.querySearchAsync(value), 360)
 		},
-		clearSearch() {
-			this.timer && clearTimeout(this.timer)
-			this.queryString = ''
-			this.queryResult = []
-			this.searchLoading = false
-			this.searchFocused = true
-		},
-		debounceQuery(queryString, callback) {
-			this.timer && clearTimeout(this.timer)
-			this.timer = setTimeout(() => this.querySearchAsync(queryString, callback), 1000)
-		},
-		querySearchAsync(queryString, callback) {
-			if (queryString == null
-				|| queryString.trim() === ''
-				|| queryString.indexOf('%') !== -1
-				|| queryString.indexOf('_') !== -1
-				|| queryString.indexOf('[') !== -1
-				|| queryString.indexOf('#') !== -1
-				|| queryString.indexOf('*') !== -1
-				|| queryString.trim().length > 20) {
-				this.queryResult = []
-				this.searchLoading = false
-				callback && callback([])
-				return
-			}
-			const normalizedQuery = queryString.trim().toLowerCase()
-			getSearchArticleList(queryString.trim()).then(res => {
-				if (res.code === 200) {
-					this.queryResult = (res.data || [])
-						.map(item => {
-							const title = item.title || ''
-							const content = item.content || ''
-							const isTitleMatch = title.toLowerCase().indexOf(normalizedQuery) !== -1
-							return {
-								...item,
-								content,
-								value: title,
-								matchType: item.matchType || (isTitleMatch ? 'title' : 'content'),
-								_matchRank: isTitleMatch ? 0 : 1
-							}
-						})
-						.sort((a, b) => a._matchRank - b._matchRank)
-					callback && callback(this.queryResult)
+		async search(query, requestId) {
+			try {
+				const response = await getSearchArticleList(query)
+				if (requestId !== this.requestId) return
+				if (response.code !== 200) {
+					this.searchError = '搜索失败，请重新输入关键词'
+					return
 				}
-			}).catch(() => {
-				this.msgError("请求失败")
-				this.queryResult = []
-				callback && callback([])
-			}).finally(() => {
-				this.searchLoading = false
-			})
+				this.queryResult = (response.data || []).map(item => {
+					const titleParts = highlightMatch(item.title || '', query)
+					return {
+						...item,
+						titleParts,
+						contentParts: highlightMatch(item.content || '', query),
+						matchType: item.matchType || (titleParts.length > 1 ? 'title' : 'content')
+					}
+				}).sort((a, b) => Number(b.matchType === 'title') - Number(a.matchType === 'title'))
+			} catch {
+				if (requestId === this.requestId) this.searchError = '搜索失败，请重新输入关键词'
+			} finally {
+				if (requestId === this.requestId) this.searchLoading = false
+			}
 		},
-		goFirstResult() {
-			if (this.queryResult.length > 0) {
-				this.handleSelect(this.queryResult[0])
+		// Keep focus on the input while arrow keys move through the result list.
+		// https://www.w3.org/WAI/ARIA/apg/patterns/combobox/#keyboard-interaction
+		handleSearchKey(event) {
+			if (event.isComposing) return
+			if (event.key === 'Escape' && this.searchOpen) {
+				event.preventDefault()
+				this.closeSearch(true)
+				return
+			}
+			const direction = { ArrowDown: 1, ArrowUp: -1 }[event.key]
+			if (direction && this.queryResult.length) {
+				event.preventDefault()
+				this.searchOpen = true
+				const count = this.queryResult.length
+				const start = this.activeIndex < 0 && direction < 0 ? 0 : this.activeIndex
+				this.activeIndex = (start + direction + count) % count
+				this.$nextTick(() => document.getElementById(this.activeResultId)?.scrollIntoView({ block: 'nearest' }))
+			}
+			if (event.key === 'Enter' && this.showResults) {
+				event.preventDefault()
+				this.handleSelect(this.queryResult[Math.max(0, this.activeIndex)])
 			}
 		},
 		handleSelect(item) {
-			if (item.id) {
-				this.queryString = item.title
-				this.searchFocused = false
-				this.$router.push(`/article/${item.id}`)
-			}
+			this.closeSearch()
+			this.$store.dispatch('goArticlePage', item)
 		}
 	}
 }
@@ -259,11 +267,6 @@ export default {
 
 .site-nav :deep(.item::before) {
 	display: none !important;
-}
-
-.site-nav.transparent {
-	background: rgba(255, 255, 255, .94) !important;
-	box-shadow: none;
 }
 
 .ui.menu .nav-shell {
@@ -362,222 +365,157 @@ export default {
 .nav-search {
 	position: relative;
 	width: 210px;
-	margin-left: 0;
 }
 
-.nav-search :deep(.el-input__wrapper) {
-	border-radius: 999px;
-	background: rgba(15, 23, 42, .03);
-	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .08);
-	transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
-}
-
-.nav-search :deep(.el-input__wrapper:hover) {
-	background: rgba(15, 23, 42, .05);
-	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .12);
-}
-
-.nav-search :deep(.el-input__wrapper.is-focus) {
-	background: #fff;
-	box-shadow: inset 0 0 0 2px rgba(14, 165, 233, .22);
-	transform: none;
-}
-
-.nav-search :deep(.el-input__inner) {
-	height: 32px;
-	color: #202532;
-	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 500;
-}
-
-.nav-search :deep(.el-input__inner::placeholder) {
-	color: #7b8496;
-}
-
-.nav-search :deep(.el-input__prefix) {
-	left: 15px;
-	display: inline-flex;
+.search-input-row {
+	display: flex;
 	align-items: center;
-	height: 100%;
+	gap: 12px;
 }
 
-.nav-search :deep(.el-input__prefix-inner) {
-	display: inline-flex;
-	align-items: center;
-	height: 100%;
-}
-
-.search-icon {
-	position: relative;
-	width: 14px;
-	height: 14px;
-	display: inline-block;
-	border: 2px solid #7b8496;
-	border-radius: 50%;
-	box-sizing: border-box;
-}
-
-.search-icon::after {
-	content: "";
-	position: absolute;
-	width: 7px;
-	height: 2px;
-	right: -6px;
-	bottom: -3px;
+.search-input {
+	width: 100%;
+	min-width: 0;
+	height: 36px;
+	padding: 0 14px;
+	border: 1px solid #cbd5e1;
 	border-radius: 999px;
-	background: #7b8496;
-	transform: rotate(45deg);
-	transform-origin: left center;
+	background: #f8fafc;
+	color: #0f172a;
+	font: inherit;
+	font-size: 14px;
+}
+
+.search-input::placeholder {
+	color: #475569;
 }
 
 .search-panel {
 	position: absolute;
 	top: calc(100% + 12px);
 	right: 0;
-	width: min(560px, calc(100vw - 32px));
-	padding: 10px;
-	border: 1px solid rgba(22, 32, 51, 0.08);
-	border-radius: 8px;
-	background: rgba(255, 255, 255, 0.98);
-	box-shadow: 0 24px 64px rgba(20, 26, 45, 0.18);
-	backdrop-filter: blur(18px) saturate(140%);
-	z-index: 1200;
+	width: min(540px, calc(100vw - 32px));
+	padding: 8px;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 16px 40px rgba(15, 23, 42, .15);
 }
 
 .search-panel-head {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	padding: 8px 10px 10px;
-	border-bottom: 1px solid rgba(22, 32, 51, 0.08);
-	font-family: 'Microsoft Yahei', Arial, sans-serif;
+	padding: 8px 10px 12px;
+	border-bottom: 1px solid #e2e8f0;
+	font-weight: 700;
 }
 
-.search-panel-head span {
-	color: #151b2d;
+.search-panel-head small,
+.search-panel-state {
+	color: #475569;
 	font-size: 13px;
-	font-weight: 800;
-}
-
-.search-panel-head small {
-	color: #7b8496;
-	font-size: 12px;
+	font-weight: 400;
 }
 
 .search-panel-state {
-	padding: 22px 10px;
-	color: #7b8496;
-	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 13px;
-	text-align: center;
+	padding: 16px 10px;
 }
 
 .search-result-list {
 	display: grid;
 	gap: 4px;
-	max-height: min(420px, calc(100vh - 150px));
+	max-height: min(440px, calc(100vh - 150px));
 	overflow-y: auto;
-	padding-top: 8px;
+	padding-top: 4px;
 }
 
 .search-result-item {
 	display: grid;
-	gap: 7px;
-	width: 100%;
-	padding: 12px 10px;
-	border: 0;
-	border-radius: 8px;
-	background: transparent;
-	text-align: left;
-	cursor: pointer;
-	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	transition: background .18s ease, transform .18s ease;
-}
-
-.search-result-item:hover {
-	background: rgba(58, 122, 254, 0.08);
-	transform: translateY(-1px);
-}
-
-.search-result-item .title-row {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+	gap: 6px;
 	min-width: 0;
-}
-
-.search-result-item .title {
-	flex: 1 1 auto;
-	min-width: 0;
-	overflow: hidden;
-	color: #151b2d;
-	font-size: 14px;
-	font-weight: 800;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.search-result-item .match-type {
-	flex: 0 0 auto;
-	padding: 2px 6px;
+	padding: 10px;
 	border-radius: 6px;
-	font-size: 12px;
-	font-weight: 800;
+	cursor: pointer;
 }
 
-.search-result-item .match-type.is-title {
-	background: rgba(124, 92, 255, 0.12);
-	color: #6b4cf6;
+.search-result-item:hover,
+.search-result-item[aria-selected="true"] {
+	background: #e0f2fe;
 }
 
-.search-result-item .match-type.is-content {
-	background: rgba(25, 194, 167, 0.12);
-	color: #109b85;
+.search-result-item[aria-selected="true"] {
+	box-shadow: inset 3px 0 var(--site-link);
 }
 
-.search-result-item .content {
+.title-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.title,
+.content {
+	display: -webkit-box;
 	overflow: hidden;
-	color: #687386;
+	overflow-wrap: anywhere;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+.title {
+	flex: 1;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.content {
+	color: #475569;
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.match-type {
+	padding: 2px 6px;
+	border-radius: 4px;
+	background: #f1f5f9;
+	color: #334155;
 	font-size: 12px;
-	line-height: 1.55;
-	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-.search-panel-enter-active,
-.search-panel-leave-active {
-	transition: opacity .18s ease, transform .18s ease;
+.search-result-item mark {
+	background: #fef3c7;
+	color: #78350f;
 }
 
-.search-panel-enter-from,
-.search-panel-leave-to {
-	opacity: 0;
-	transform: translateY(-6px);
+.nav-toggle,
+.nav-search-toggle,
+.search-close {
+	min-width: 44px;
+	min-height: 44px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #fff;
+	color: #0f172a;
+	font: inherit;
+	cursor: pointer;
 }
 
 .nav-toggle {
-	position: absolute;
-	top: 9px;
-	right: 16px;
-	width: 38px;
-	height: 38px;
+	margin: 0 !important;
 	padding: 0 !important;
-	border-radius: 8px !important;
-	background: #121827 !important;
+	background: #0f172a !important;
 	color: #fff !important;
-	box-shadow: 0 10px 24px rgba(18, 24, 39, 0.24) !important;
 }
 
 .nav-toggle.is-open {
-	background: #5d4df1 !important;
+	background: var(--site-link) !important;
 }
 
-@media screen and (min-width: 768px) and (max-width: 980px) {
+@media (min-width: 768px) and (max-width: 980px) {
 	.ui.menu .nav-shell {
-		padding-left: 210px;
-		padding-right: 210px;
+		padding-inline: 210px;
 	}
 
 	.nav-links {
@@ -585,8 +523,7 @@ export default {
 	}
 
 	.nav-links :deep(.nav-item) {
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-inline: 12px;
 	}
 
 	.nav-search {
@@ -594,113 +531,79 @@ export default {
 	}
 }
 
-@media screen and (max-width: 767px) {
-	.site-nav {
-		position: fixed;
-		background: rgba(255, 255, 255, 0.94) !important;
-	}
-
+@media (max-width: 767px) {
 	.ui.menu .nav-shell {
-		width: 100% !important;
-		display: flex !important;
-		flex-direction: row !important;
-		min-height: 56px;
-		padding: 8px 68px 8px 16px;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: flex-start;
-		gap: 12px;
+		margin: 0 !important;
+		justify-content: flex-end;
+		gap: 8px;
+		padding: 6px 16px;
 	}
 
-	.brand-link,
-	.nav-actions {
-		position: static;
-		transform: none;
+	.brand-link {
+		left: 16px;
 	}
 
 	.nav-links,
 	.nav-actions {
-		width: 100%;
-		flex-basis: 100%;
+		position: absolute;
+		inset: 100% 0 auto;
+		transform: none;
+		border-bottom: 1px solid #e2e8f0;
+		background: #fff;
+		box-shadow: 0 12px 24px rgba(15, 23, 42, .12);
 	}
 
 	.nav-links {
-		order: 3;
-		display: grid;
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-		column-gap: 18px;
-		row-gap: 8px;
-	}
-
-	.nav-actions {
-		order: 4;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		gap: 6px;
+		padding: 12px 16px;
 	}
 
 	.nav-links.is-collapsed,
-	.nav-actions.is-collapsed {
+	.nav-actions:not(.is-search-open) {
 		display: none;
 	}
 
-	.ui.inverted.menu .nav-item {
-		justify-content: center;
-		min-width: 0;
-		margin: 0 !important;
-		padding: 8px 12px !important;
-		border-radius: 8px;
-		font-size: 14px;
-		text-align: center;
+	.nav-links :deep(.nav-item) {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 8px 12px;
+		white-space: nowrap;
+	}
+
+	.nav-actions {
+		display: block;
+		padding: 12px 16px;
 	}
 
 	.nav-search {
-		width: 100% !important;
-		flex: 1 1 auto;
-		min-width: 0;
+		width: 100%;
 	}
 
 	.search-panel {
-		left: 0;
-		right: auto;
+		position: static;
 		width: 100%;
+		margin-top: 8px;
+		padding: 0;
+		border: 0;
+		box-shadow: none;
 	}
-}
-</style>
 
-<style>
-.site-nav .nav-search .el-input__wrapper {
-	border-radius: 999px !important;
-	background: rgba(15, 23, 42, .03) !important;
-	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .08) !important;
-	transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
-}
+	.search-result-list {
+		max-height: min(440px, max(96px, calc(100dvh - 200px)));
+	}
 
-.site-nav .nav-search .el-input__wrapper:hover {
-	background: rgba(15, 23, 42, .05) !important;
-	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .12) !important;
-}
+	.search-close,
+	.nav-search-toggle {
+		padding: 0 10px;
+		white-space: nowrap;
+	}
 
-.site-nav .nav-search .el-input__wrapper.is-focus {
-	background: #fff !important;
-	box-shadow: inset 0 0 0 2px rgba(14, 165, 233, .22) !important;
-	transform: none;
-}
-
-.site-nav .nav-search .el-input__inner {
-	height: 32px;
-	color: #202532;
-	font-family: 'Microsoft Yahei', Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 500;
-}
-
-.site-nav .nav-search .el-input__inner::placeholder {
-	color: #7b8496;
-}
-
-@media screen and (max-width: 767px) {
-	.site-nav .nav-actions .nav-search {
-		width: 100% !important;
-		flex: 1 1 auto;
-		min-width: 0;
+	.search-input {
+		height: 44px;
+		font-size: 16px;
 	}
 }
 </style>

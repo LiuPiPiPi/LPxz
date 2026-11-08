@@ -1,4 +1,5 @@
 .site {
+	--site-link: #075985;
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
@@ -183,4 +184,10 @@
 		width: 42px !important;
 		height: 42px !important;
 	}
+}
+
+
+.site :is(a, button, input, select, summary, [tabindex]):focus-visible {
+	outline: 2px solid var(--site-link);
+	outline-offset: 3px;
 }

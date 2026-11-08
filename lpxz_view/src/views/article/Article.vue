@@ -13,7 +13,7 @@
 					</div>
 				</div>
 				<div class="article-meta">
-<span class="meta-item">
+				<span class="meta-item">
 					<i class="calendar icon" aria-hidden="true"></i>{{ dateFormat(article.gmtCreate, 'YYYY-MM-DD') }}
 				</span>
 				<span class="meta-item">
@@ -38,6 +38,9 @@
 		</div>
 
 		<div class="article-content-row" :class="{ 'no-toc': !hasToc }">
+			<div class="article-toc" v-if="hasToc">
+				<Tocbot />
+			</div>
 			<div class="article-body">
 				<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" id="content"
 					v-viewer :class="{ 'm-big-fontsize': bigFontSize }" v-html="article.content"></div>
@@ -61,10 +64,6 @@
 					<router-link :to="`/tag/${tag.name}`" class="article-tag-pill"
 						v-for="(tag, index) in article.tags" :key="index">{{ tag.name }}</router-link>
 				</div>
-			</div>
-
-			<div class="article-toc" v-if="hasToc">
-				<Tocbot />
 			</div>
 		</div>
 
@@ -117,7 +116,7 @@ export default {
 		},
 		hasToc() {
 			if (!this.article.content) return false
-			return /<h[1-4]/i.test(this.article.content)
+			return /<h[1-4](?:\s|>)/i.test(this.article.content)
 		},
 		...mapState(['siteInfo', 'focusMode'])
 	},
@@ -138,17 +137,17 @@ export default {
 	},
 	beforeRouteLeave(to, from, next) {
 		this.$store.commit(SET_FOCUS_MODE, false)
-		tocbot.destroy()
+		window.tocbot?.destroy()
 		next()
 	},
 	beforeRouteUpdate(to, from, next) {
 		if (to.path !== from.path) {
 			this.$store.commit(SET_FOCUS_MODE, false)
-			tocbot.destroy()
+			window.tocbot?.destroy()
 			this.getArticle(to.params.id)
 			this.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, false)
-			next()
 		}
+		next()
 	},
 	created() {
 		this.getArticle()
@@ -164,7 +163,7 @@ export default {
 					this.article = res.data
 					document.title = this.article.title + this.siteInfo.webTitleSuffix
 					this.$nextTick(() => {
-						Prism.highlightAll()
+						window.Prism?.highlightAll()
 						this.$store.commit(SET_IS_ARTICLE_RENDER_COMPLETE, true)
 					})
 				} else {

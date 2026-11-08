@@ -37,13 +37,13 @@ const routes = [
 			{
 				path: '/tag/:name',
 				name: 'tag',
-				component: () => import('@/views/tag/Tag'),
+				component: () => import('@/views/topic/Topic'),
 				meta: { title: '标签' }
 			},
 			{
 				path: '/category/:name',
 				name: 'category',
-				component: () => import('@/views/category/Category'),
+				component: () => import('@/views/topic/Topic'),
 				meta: { title: '分类' }
 			},
 			{

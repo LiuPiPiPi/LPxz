@@ -1,14 +1,14 @@
 <template>
 	<div class="site">
 		<!--顶部导航-->
-		<Nav :categoryList="categoryList" />
+		<Nav />
 
 		<div class="main" :class="mainClass">
 			<div class="main-inner">
 				<div class="main-content">
 					<router-view v-slot="{ Component }">
-						<keep-alive include="Home,articleArchives">
-							<component :is="Component" />
+						<keep-alive include="BlogHome,articleArchives">
+							<component :is="Component" v-bind="topicProps" />
 						</keep-alive>
 					</router-view>
 				</div>
@@ -67,6 +67,12 @@ export default {
 	},
 	computed: {
 		...mapState(['focusMode']),
+		topicProps() {
+			const name = this.$route.name
+			return name === 'category' || name === 'tag'
+				? { categoryList: this.categoryList, tagList: this.tagList }
+				: {}
+		},
 		mainClass() {
 			const name = this.$route.name
 			return {

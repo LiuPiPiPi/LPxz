@@ -35,7 +35,7 @@ import ArticleList from "@/components/article/ArticleList";
 import { getArticleList } from "@/api/home";
 
 export default {
-	name: "Home",
+	name: "BlogHome",
 	components: { ArticleList },
 	data() {
 		return {
@@ -94,26 +94,8 @@ export default {
 	padding: 0 0 96px;
 	color: #0f172a;
 	font-family: "LXGW WenKai TC", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	background:
-		linear-gradient(180deg, rgba(240, 249, 255, .95) 0%, rgba(248, 250, 252, .98) 42%, #ffffff 100%),
-		linear-gradient(115deg, transparent 0 58%, rgba(139, 92, 246, .07) 58% 70%, transparent 70%),
-		linear-gradient(24deg, transparent 0 22%, rgba(14, 165, 233, .06) 22% 34%, transparent 34%);
+	background: #fff;
 	overflow: hidden;
-}
-
-.home-feed::before {
-	content: "";
-	position: absolute;
-	top: 420px;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: -1;
-	background-image:
-		linear-gradient(rgba(14, 165, 233, .035) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(14, 165, 233, .035) 1px, transparent 1px);
-	background-size: 36px 36px;
-	mask-image: linear-gradient(180deg, transparent 0, black 16%, black 72%, transparent 100%);
 }
 
 .home-hero {
@@ -289,12 +271,12 @@ export default {
 }
 
 .updates-column {
+	scroll-margin-top: 56px;
 	position: relative;
 	z-index: 2;
-	width: min(70%, calc(100% - 64px));
-	max-width: 1180px;
-	margin: -74px auto 0;
-	padding: 42px 0 0;
+	width: min(840px, calc(100% - 64px));
+	margin: 0 auto;
+	padding: 4px 0 0;
 	animation: feedSlideIn .6s ease .6s both;
 }
 
@@ -302,24 +284,10 @@ export default {
 	content: "";
 	position: absolute;
 	top: 0;
-	left: -40px;
-	right: -40px;
+	left: 0;
+	right: 0;
 	height: 1px;
 	background: linear-gradient(90deg, rgba(14, 165, 233, .34), rgba(139, 92, 246, .16), transparent);
-}
-
-.updates-column::after {
-	content: "";
-	position: absolute;
-	top: -72px;
-	left: -80px;
-	right: -360px;
-	height: 220px;
-	z-index: -1;
-	background:
-		linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .74) 42%, rgba(255, 255, 255, 0) 100%),
-		linear-gradient(98deg, rgba(14, 165, 233, .08), transparent 58%);
-	mask-image: linear-gradient(180deg, transparent 0, black 28%, black 88%, transparent 100%);
 }
 
 @keyframes feedSlideIn {
@@ -375,8 +343,7 @@ export default {
 	.updates-column {
 		width: auto;
 		max-width: none;
-		margin: -14px 20px 0;
-		padding: 30px 0 0;
+		margin: 0 20px;
 	}
 }
 
@@ -422,7 +389,7 @@ export default {
 	}
 
 	.updates-column {
-		width: calc(100% - 96px);
+		width: min(840px, calc(100% - 96px));
 	}
 }
 
@@ -439,6 +406,15 @@ export default {
 
 	.insight-panel {
 		display: none;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.hero-accent,
+	.portrait-panel,
+	.home-copy h1,
+	.home-summary,
+	.updates-column {
+		animation: none;
 	}
 }
 </style>

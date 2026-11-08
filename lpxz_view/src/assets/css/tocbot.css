@@ -95,3 +95,32 @@
 .toc-wrapper .is-active-link::before {
 	background-color: #0ea5e9;
 }
+
+.toc-toggle {
+	width: 100%;
+	min-height: 44px;
+	border: 0;
+	background: #f8fafc;
+	text-align: left;
+	cursor: pointer;
+}
+
+@media (max-width: 767px) {
+	.toc-body:not(.is-expanded) {
+		display: none;
+	}
+
+	.toc-body {
+		max-height: min(45vh, 320px);
+		overflow: auto;
+	}
+
+	.toc-wrapper .toc-list li a {
+		padding: 8px 2px;
+		overflow-wrap: anywhere;
+	}
+
+	.toc-wrapper .is-collapsible {
+		max-height: none;
+	}
+}

@@ -11,7 +11,7 @@
 				<div class="hero-copy">
 					<p class="hero-kicker">Archives</p>
 					<div class="hero-title-row">
-						<h2>文章归档</h2>
+						<h1>文章归档</h1>
 						<div class="hero-stats" v-if="count > 0">
 							<div class="stat-pill">
 								<span class="stat-dot"></span>
@@ -34,55 +34,27 @@
 		</section>
 
 		<section class="archives-feed">
-			<div class="feed-layout">
-				<div class="feed-main">
-					<div v-if="!hasArchives" class="empty-state">
-						<div class="empty-icon">
-							<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-								<circle cx="24" cy="24" r="22" stroke="#e2e8f0" stroke-width="2" />
-								<path d="M16 24h16M24 16v16" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
-							</svg>
-						</div>
-						<p>暂无归档文章</p>
-					</div>
-
-					<div class="archive-timeline" v-else>
-						<div class="timeline-rail"></div>
-
-						<div class="archive-group" :class="colorObj[index % 5]"
-							v-for="(value, key, index) in articleMap" :key="key"
-							:style="{ animationDelay: `${index * 0.15}s` }">
-							<div class="group-marker">
-								<div class="marker-dot"></div>
-								<div class="marker-card">
-									<span class="marker-month">{{ key }}</span>
-									<span class="marker-count">{{ value.length }} 篇</span>
-								</div>
-							</div>
-							<div class="group-articles">
-								<a class="article-entry" href="javascript:;" v-for="article in value" :key="article.id"
-									@click.prevent="toArticle(article)">
-									<span class="entry-date">{{ formatArchiveDate(key, article.day) }}</span>
-									<span class="entry-title">{{ article.title }}</span>
-									<span class="entry-arrow">&rarr;</span>
-								</a>
-							</div>
-						</div>
-
-						<div class="timeline-end">
-							<div class="end-dot"></div>
-							<span class="end-label">从这里开始</span>
-						</div>
-					</div>
+			<div class="feed-layout" :class="{ 'has-topics': hasTopics && topicsOpen }">
+				<div v-if="archiveYears.length || hasTopics" class="archive-controls">
+					<label v-if="archiveYears.length" class="archive-year">
+						<span>跳到年份</span>
+						<select :value="''" @change="jumpToYear">
+							<option value="">选择年份</option>
+							<option v-for="year in archiveYears" :key="year" :value="year">{{ year }} 年</option>
+						</select>
+					</label>
+					<button v-if="hasTopics" type="button" class="archive-topics-toggle"
+						aria-controls="archive-topics" :aria-expanded="topicsOpen" @click="topicsOpen = !topicsOpen">
+						{{ topicsOpen ? '收起主题' : '按主题浏览' }}
+					</button>
 				</div>
-
-				<div class="feed-sidebar" v-if="tagList.length || categoryList.length">
+				<div id="archive-topics" class="feed-sidebar" v-if="hasTopics" v-show="topicsOpen">
 					<div class="sidebar-card" v-if="categoryList.length">
 						<div class="sidebar-title">
 							<i class="folder open icon"></i>分类
 						</div>
 						<div class="sidebar-categories">
-							<router-link v-for="(cat, i) in categoryList" :key="i" :to="`/category/${cat.name}`" class="sidebar-category">
+							<router-link v-for="(cat, i) in categoryList" :key="i" :to="{ name: 'category', params: { name: cat.name } }" class="sidebar-category">
 								<span class="sidebar-cat-name">{{ cat.name }}</span>
 								<span class="sidebar-cat-count" v-if="categoryNumList[i]">{{ categoryNumList[i] }}</span>
 							</router-link>
@@ -93,10 +65,54 @@
 							<i class="tags icon"></i>标签
 						</div>
 						<div class="sidebar-tags">
-							<router-link v-for="(tag, i) in tagList" :key="i" :to="`/tag/${tag.name}`" class="sidebar-tag">{{ tag.name }}</router-link>
+							<router-link v-for="(tag, i) in tagList" :key="i" :to="{ name: 'tag', params: { name: tag.name } }" class="sidebar-tag">{{ tag.name }}</router-link>
 						</div>
 					</div>
 				</div>
+				<div class="feed-main">
+					<div v-if="!hasArchives" class="empty-state" role="status">
+						<div class="empty-icon">
+							<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+								<circle cx="24" cy="24" r="22" stroke="#e2e8f0" stroke-width="2" />
+								<path d="M16 24h16M24 16v16" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+							</svg>
+						</div>
+						<p>{{ loading ? '正在加载归档…' : archiveError || '暂无归档文章' }}</p>
+					</div>
+
+					<div class="archive-timeline" v-else>
+						<div class="timeline-rail"></div>
+
+						<div v-for="([month, articles], index) in archiveMonths" :id="`archive-month-${month}`"
+							:key="month" class="archive-group" :class="colorObj[index % 5]"
+							:style="{ animationDelay: `${Math.min(index, 3) * 0.12}s` }">
+							<div class="group-marker">
+								<div class="marker-dot"></div>
+								<div class="marker-card">
+									<h2 class="marker-month" tabindex="-1">{{ month || '日期未标注' }}</h2>
+									<span class="marker-count">{{ articles.length }} 篇</span>
+								</div>
+							</div>
+							<div class="group-articles">
+								<component :is="article.privacy ? 'button' : 'router-link'"
+									v-for="article in articles" :key="article.id" class="article-entry"
+									:to="article.privacy ? undefined : `/article/${article.id}`"
+									:type="article.privacy ? 'button' : undefined" @click="article.privacy && toArticle(article)">
+									<span class="entry-date">{{ formatArchiveDate(month, article.day) }}</span>
+									<span class="entry-title">{{ article.title }}</span>
+									<span class="entry-arrow" aria-hidden="true">&rarr;</span>
+								</component>
+							</div>
+						</div>
+
+						<div class="timeline-end">
+							<div class="end-dot"></div>
+							<span class="end-label">归档结束</span>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</section>
 	</div>
@@ -112,6 +128,9 @@ export default {
 		return {
 			articleMap: {},
 			count: 0,
+			topicsOpen: true,
+			loading: false,
+			archiveError: '',
 			tagList: [],
 			categoryList: [],
 			categoryNumList: [],
@@ -126,11 +145,22 @@ export default {
 		}
 	},
 	computed: {
+		archiveMonths() {
+			return Object.entries(this.articleMap).sort(([a], [b]) => b.localeCompare(a))
+		},
+		archiveYears() {
+			const years = this.archiveMonths.map(([month]) => month.slice(0, 4))
+			return [...new Set(years.filter(year => /^\d{4}$/.test(year)))]
+		},
 		hasArchives() {
-			return Object.keys(this.articleMap).length > 0
+			return this.archiveMonths.length > 0
+		},
+		hasTopics() {
+			return this.categoryList.length > 0 || this.tagList.length > 0
 		}
 	},
 	created() {
+		this.topicsOpen = !window.matchMedia('(max-width: 767px)').matches
 		this.getArchives()
 		this.getSiteData()
 	},
@@ -146,16 +176,30 @@ export default {
 		this.hasPlayedEntrance = true
 	},
 	methods: {
+		jumpToYear(event) {
+			const select = event.target
+			const month = this.archiveMonths.find(([month]) => month.startsWith(select.value + '-'))?.[0]
+			select.value = ''
+			if (!month) return
+			const group = document.getElementById(`archive-month-${month}`)
+			group.querySelector('h2').focus({ preventScroll: true })
+			group.scrollIntoView({ block: 'start' })
+		},
 		getArchives() {
+			if (this.loading) return
+			this.loading = true
+			this.archiveError = ''
 			getArchives().then(res => {
 				if (res.code === 200) {
 					this.articleMap = res.data.articleMap
 					this.count = res.data.count
 				} else {
-					this.msgError(res.msg);
+					this.archiveError = res.msg
 				}
 			}).catch(() => {
-				this.msgError("请求失败");
+				this.archiveError = '归档加载失败，请刷新后重试'
+			}).finally(() => {
+				this.loading = false
 			})
 		},
 		getSiteData() {
@@ -287,7 +331,7 @@ export default {
 	animation: fadeSlideIn .5s ease .08s both;
 }
 
-.hero-copy h2 {
+.hero-copy h1 {
 	margin: 0;
 	color: #020617;
 	font-family: "Noto Serif SC", serif;
@@ -319,7 +363,7 @@ export default {
 
 .archives-page-restored .hero-kicker,
 .archives-page-restored .hero-title-row,
-.archives-page-restored .hero-copy h2,
+.archives-page-restored .hero-copy h1,
 .archives-page-restored .hero-desc,
 .archives-page-restored .feed-sidebar,
 .archives-page-restored .empty-state,
@@ -472,27 +516,62 @@ export default {
 }
 
 .feed-layout {
-	display: flex;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 260px;
 	max-width: 1080px;
 	margin: -36px auto 0;
 	padding: 0 32px 64px;
-	gap: 32px;
+	gap: 16px 32px;
+}
+
+.feed-layout:not(.has-topics) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.archive-controls {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 16px;
+}
+
+.archive-year {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #334155;
+}
+
+.archive-year select,
+.archive-topics-toggle {
+	min-height: 44px;
+	padding: 0 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #fff;
+	color: var(--site-link);
+	font: inherit;
+	cursor: pointer;
+}
+
+.archive-group {
+	scroll-margin-top: 72px;
 }
 
 .feed-main {
-	flex: 1 1 0;
+	grid-column: 1;
 	min-width: 0;
 }
 
 .feed-sidebar {
-	flex: 0 0 260px;
-	align-self: flex-start;
-	position: sticky;
-	top: 76px;
+	grid-column: 2;
+	grid-row: 2;
+	min-width: 0;
+	align-self: start;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	animation: fadeSlideIn .5s ease .3s both;
 }
 
 .sidebar-card {
@@ -658,14 +737,15 @@ export default {
 }
 
 .marker-month {
-	color: var(--tl-color);
+	margin: 0;
+	color: #334155;
 	font-size: 15px;
 	font-weight: 800;
 	line-height: 1.2;
 }
 
 .marker-count {
-	color: #94a3b8;
+	color: #475569;
 	font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 	font-size: 11px;
 	font-weight: 700;
@@ -678,6 +758,10 @@ export default {
 }
 
 .article-entry {
+	width: 100%;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
 	display: grid;
 	grid-template-columns: 58px minmax(0, 1fr) 20px;
 	align-items: center;
@@ -704,7 +788,7 @@ export default {
 	display: inline-flex;
 	align-items: center;
 	justify-content: flex-start;
-	color: #94a3b8;
+	color: #475569;
 	font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 	font-size: 12px;
 	font-weight: 700;
@@ -788,7 +872,7 @@ export default {
 		display: none;
 	}
 
-	.hero-copy h2 {
+	.hero-copy h1 {
 		font-size: 32px;
 	}
 
@@ -801,19 +885,16 @@ export default {
 	}
 
 	.feed-layout {
+		display: flex;
 		flex-direction: column;
-		margin: -20px auto 0;
+		margin: -12px auto 0;
 		padding: 0 16px 48px;
-		gap: 0;
+		gap: 16px;
 	}
 
 	.feed-sidebar {
-		flex: 0 0 auto;
-		position: static;
-		display: flex;
-		flex-direction: row;
-		gap: 16px;
-		animation-delay: 0s;
+		width: 100%;
+		gap: 12px;
 	}
 
 	.sidebar-card {
@@ -846,6 +927,7 @@ export default {
 	}
 
 	.entry-title {
+		overflow-wrap: anywhere;
 		white-space: normal;
 	}
 
@@ -871,6 +953,11 @@ export default {
 
 	.feed-sidebar {
 		flex: 0 0 220px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.archives-page :deep(*) {
+		animation: none !important;
 	}
 }
 </style>
