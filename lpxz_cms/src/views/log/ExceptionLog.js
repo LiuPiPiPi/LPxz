@@ -162,7 +162,7 @@ const ExceptionLog = () => {
                 className="cms-toolbar"
                 onFinish={handleSearch}
             >
-                <Form.Item label="操作时间" name="date">
+                <Form.Item label="操作时间" name="date" className="cms-filter-field">
                     <RangePicker
                         ranges={{
                             '今天': [dayjs().startOf('day'), dayjs().endOf('day')],
@@ -171,13 +171,13 @@ const ExceptionLog = () => {
                         }}
                     />
                 </Form.Item>
-                <Form.Item shouldUpdate>
+                <div className="cms-filter-actions">
                     <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>查询</Button>
-                </Form.Item>
-                <Button onClick={() => {
-                    searchForm.resetFields()
-                    handleSearch()
-                }}>重置</Button>
+                    <Button onClick={() => {
+                        searchForm.resetFields()
+                        handleSearch()
+                    }}>重置</Button>
+                </div>
             </Form>
             <Table scroll={{ x: 980 }} columns={columns} dataSource={logList} rowKey={row => row.id}
                 expandable={{

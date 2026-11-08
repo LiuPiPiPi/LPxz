@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Divider, Switch, Table, Button, message, Popconfirm, Modal, Form, Input } from 'antd'
+import { Switch, Table, Button, message, Popconfirm, Modal, Form, Input } from 'antd'
 import { CheckOutlined, CloseOutlined, PlusOutlined, FileDoneOutlined } from '@ant-design/icons'
 
 // project imports
@@ -209,9 +209,9 @@ const ScheduleJobList = () => {
             title: '操作',
             key: 'operate',
             align: 'center',
-            width: '150px',
+            width: 188,
             render: (_, row) => (
-                <>
+                <div className="cms-row-actions">
                     <Popconfirm
                         placement="topRight"
                         title="确认要立即执行一次该任务吗？"
@@ -221,9 +221,7 @@ const ScheduleJobList = () => {
                     >
                         <Button size='small'>执行一次</Button>
                     </Popconfirm>
-                    <br /><br />
                     <Button type='link' size='small' onClick={() => handleOpenDialog(row)}>编辑</Button>
-                    <Divider type='vertical' />
                     <Popconfirm
                         placement="topRight"
                         title="确认删除吗？"
@@ -233,7 +231,7 @@ const ScheduleJobList = () => {
                     >
                         <Button type='text' danger size='small'>删除</Button>
                     </Popconfirm>
-                </>
+                </div>
             )
         }
     ]

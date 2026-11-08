@@ -215,10 +215,10 @@ const Article = () => {
                 className="cms-toolbar"
                 onFinish={values => setFormData(previous => ({ ...previous, ...values, pageNum: 1 }))}
             >
-                <Form.Item name="title">
+                <Form.Item name="title" className="cms-filter-field cms-filter-title">
                     <Input aria-label="文章标题" placeholder="文章标题" allowClear />
                 </Form.Item>
-                <Form.Item name="categoryId" style={{ minWidth: 180 }}>
+                <Form.Item name="categoryId" className="cms-filter-field cms-filter-category">
                     <Select
                         options={categoryList.map(ele => {
                             return {
@@ -231,13 +231,13 @@ const Article = () => {
                         allowClear
                     />
                 </Form.Item>
-                <Form.Item shouldUpdate>
+                <div className="cms-filter-actions">
                     <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>查询</Button>
-                </Form.Item>
-                <Button onClick={() => {
-                    searchForm.resetFields()
-                    setFormData(previous => ({ ...previous, title: '', categoryId: null, pageNum: 1 }))
-                }}>重置</Button>
+                    <Button onClick={() => {
+                        searchForm.resetFields()
+                        setFormData(previous => ({ ...previous, title: '', categoryId: null, pageNum: 1 }))
+                    }}>重置</Button>
+                </div>
             </Form>
             <Table scroll={{ x: 1020 }} columns={columns} dataSource={articleList} rowKey={row => row.id}
                 pagination={{

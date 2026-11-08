@@ -88,6 +88,7 @@
 }
 
 .cms-main {
+    container: cms-content / inline-size;
     display: grid;
     align-content: start;
     gap: 18px;
@@ -136,6 +137,28 @@
     max-width: 100%;
 }
 
+.cms-filter-field {
+    min-width: 0;
+}
+
+.cms-filter-title {
+    flex: 0 1 280px;
+}
+
+.cms-filter-category {
+    flex: 0 1 180px;
+}
+
+.cms-filter-actions, .cms-row-actions {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.cms-row-actions {
+    align-items: center;
+    white-space: nowrap;
+}
+
 .cms-panel .ant-table-pagination.ant-pagination {
     margin-bottom: 0;
 }
@@ -169,13 +192,19 @@
     padding: 0 16px 16px;
 }
 
-.cms-settings .ant-form:not(.cms-footer-settings) {
+.cms-settings #module_settings {
     max-width: 780px;
+}
+
+.cms-settings-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    column-gap: 16px;
 }
 
 .cms-settings .cms-settings-badge {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
     gap: 0 12px;
     padding: 12px;
@@ -196,7 +225,7 @@
     gap: 10px 12px;
 }
 
-.cms-footer-badge .ant-form-item {
+.cms-settings-badge .ant-form-item {
     min-width: 0;
     margin-bottom: 0;
 }
@@ -319,11 +348,33 @@
     .cms-topbar .cms-menu-trigger { display: inline-flex; }
 }
 
+@container cms-content (max-width: 740px) {
+    .cms-editor-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 @media (max-width: 640px) {
     .cms-main, .cms-topbar { padding-inline: 12px; }
     .cms-editor-grid, .cms-charts { grid-template-columns: minmax(0, 1fr); }
     .cms-page-heading h1 { font-size: 25px; }
     .cms-topbar .cms-account span:not(.ant-avatar):not(.anticon) { display: none; }
+    .cms-toolbar > .cms-filter-field {
+        flex: 1 1 100%;
+    }
+    .cms-filter-field .ant-form-item-row {
+        display: block;
+    }
+    .cms-filter-field .ant-form-item-label {
+        text-align: start;
+    }
+    .cms-filter-field .ant-form-item-label > label {
+        height: auto;
+        margin-bottom: 6px;
+    }
+    .cms-filter-field .ant-picker {
+        width: 100%;
+    }
 }
 
 .cms-friends-intro {

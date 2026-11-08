@@ -123,7 +123,7 @@ export default function SiteSetting() {
             children: (
                 <Form form={baseForm} name="base_settings" layout="vertical" disabled={disabled}
                     onFinish={values => save('base', updatedRows(rows.base, values))}>
-                    {settingsFields(rows.base)}
+                    <div className="cms-settings-fields">{settingsFields(rows.base)}</div>
                     <div className="cms-editor-actions">{saveButton}</div>
                 </Form>
             ),
@@ -136,7 +136,7 @@ export default function SiteSetting() {
                         ...updatedRows(rows.info, values),
                         ...custom.map(value => ({ ...CUSTOM_SETTING, ...value })),
                     ], removedIds(rows.custom, custom))}>
-                    {settingsFields(rows.info)}
+                    <div className="cms-settings-fields">{settingsFields(rows.info)}</div>
                     <Form.List name="custom">
                         {(fields, { add, remove }) => (
                             <>
@@ -144,8 +144,9 @@ export default function SiteSetting() {
                                     <div className="cms-settings-badge" key={key}>
                                         <Form.Item name={[name, 'id']} hidden><Input /></Form.Item>
                                         <Form.Item name={[name, 'value']} label="自定义"><Input /></Form.Item>
-                                        <Form.Item><Button danger icon={<MinusCircleOutlined />}
-                                            onClick={() => remove(name)}>删除</Button></Form.Item>
+                                        <Button type="text" danger icon={<MinusCircleOutlined />}
+                                            aria-label={`删除第 ${name + 1} 个自定义项`}
+                                            onClick={() => remove(name)}>删除</Button>
                                     </div>
                                 ))}
                                 <div className="cms-editor-actions">
