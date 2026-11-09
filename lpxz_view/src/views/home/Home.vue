@@ -100,7 +100,7 @@ export default {
 	width: 100%;
 	padding: 0 0 96px;
 	color: #0f172a;
-	font-family: "LXGW WenKai TC", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family: var(--site-body-font);
 	background: #fff;
 	overflow: hidden;
 }

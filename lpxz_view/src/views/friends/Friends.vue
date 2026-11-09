@@ -137,7 +137,7 @@ export default {
 	position: relative;
 	isolation: isolate;
 	color: #0f172a;
-	font-family: "LXGW WenKai TC", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-family: var(--site-body-font);
 	overflow: hidden;
 	background:
 		linear-gradient(180deg, rgba(240, 249, 255, .95) 0%, rgba(248, 250, 252, .98) 42%, #ffffff 100%),

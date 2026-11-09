@@ -193,7 +193,7 @@
 		margin: 5px 0 16px;
 		color: #0f172a;
 		font-weight: 600;
-		font-family: "LXGW WenKai TC", Inter, ui-sans-serif, system-ui, sans-serif;
+		font-family: var(--site-body-font);
 		font-size: 16px;
 	}
 
