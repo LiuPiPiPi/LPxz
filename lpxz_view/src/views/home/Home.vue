@@ -17,26 +17,25 @@
 					<img class="hero-portrait" src="/img/hero/lpxz-neon-lines.png" alt="">
 				</div>
 			</div>
-			
 		</section>
-		<div class="updates-column">
-			<ArticleList
-				:getArticleList="getArticleList"
-				:articleList="articleList"
-				:totalPage="totalPage"
-				:disableEntranceAnimation="hasPlayedEntrance"
-			/>
+		<div class="updates-column" :class="{ 'has-pinned': pinnedArticles.length }">
+			<aside v-if="pinnedArticles.length" class="pinned-articles" aria-label="置顶">
+				<ArticleItem :articleList="pinnedArticles" v-viewer />
+			</aside>
+			<ArticleItem class="latest-articles" :articleList="latestArticles" v-viewer />
+			<Pagination :getArticleList="getArticleList" :totalPage="totalPage" />
 		</div>
 	</div>
 </template>
 
 <script>
-import ArticleList from "@/components/article/ArticleList";
+import ArticleItem from "@/components/article/ArticleItem";
+import Pagination from "@/components/article/Pagination";
 import { getArticleList } from "@/api/home";
 
 export default {
 	name: "BlogHome",
-	components: { ArticleList },
+	components: { ArticleItem, Pagination },
 	data() {
 		return {
 			articleList: [],
@@ -44,6 +43,14 @@ export default {
 			getArticleListFinish: false,
 			hasPlayedEntrance: false
 		}
+	},
+	computed: {
+		latestArticles() {
+			return this.articleList.filter(article => !article.top)
+		},
+		pinnedArticles() {
+			return this.articleList.filter(article => article.top)
+		},
 	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => {
@@ -100,9 +107,8 @@ export default {
 
 .home-hero {
 	position: relative;
-	min-height: 500px;
-	margin-bottom: 0;
-	overflow: visible;
+	width: min(1440px, calc(100% - 6vw));
+	margin: 0 auto;
 }
 
 .hero-bg {
@@ -173,25 +179,21 @@ export default {
 .hero-inner {
 	position: relative;
 	z-index: 1;
-	max-width: 1536px;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 32px;
+	min-height: 320px;
+	width: min(1280px, 88vw);
 	margin: 0 auto;
-	padding: 92px 80px 88px;
-}
-
-.home-copy {
-	position: relative;
-	z-index: 2;
-	width: min(100%, calc(100vw - min(28vw, 340px) - clamp(180px, 20vw, 300px)));
-	max-width: 800px;
-	padding-top: 24px;
+	padding: 24px clamp(16px, 2vw, 28px);
 }
 
 .home-copy h1 {
 	margin: 0;
-	padding: 12px 0;
 	color: #020617;
 	font-family: "Noto Serif SC", serif;
-	font-size: clamp(48px, 5vw, 76px);
+	font-size: clamp(40px, 4.6vw, 68px);
 	font-weight: 900;
 	line-height: 1.08;
 	letter-spacing: 0;
@@ -216,7 +218,7 @@ export default {
 
 .home-summary {
 	max-width: 560px;
-	margin: 28px 0 0;
+	margin: 20px 0 0;
 	color: #475569;
 	font-size: 18px;
 	font-weight: 500;
@@ -232,16 +234,10 @@ export default {
 }
 
 .insight-panel {
-	position: absolute;
-	top: 86px;
-	right: clamp(84px, 10vw, 150px);
-	z-index: 1;
-	width: min(28vw, 340px);
+	position: relative;
+	width: clamp(160px, 20vw, 300px);
 	aspect-ratio: 1 / 1;
-	height: auto;
 	pointer-events: none;
-	color: #0f172a;
-	filter: none;
 }
 
 .portrait-panel {
@@ -271,23 +267,57 @@ export default {
 }
 
 .updates-column {
-	scroll-margin-top: 56px;
-	position: relative;
-	z-index: 2;
-	width: min(840px, calc(100% - 64px));
-	margin: 0 auto;
-	padding: 4px 0 0;
+	scroll-margin-top: 72px;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	width: min(1280px, calc(100% - 12vw));
+	margin: 40px auto 0;
 	animation: feedSlideIn .6s ease .6s both;
 }
 
-.updates-column::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 1px;
-	background: linear-gradient(90deg, rgba(14, 165, 233, .34), rgba(139, 92, 246, .16), transparent);
+.updates-column:not(.has-pinned) {
+	max-width: 840px;
+}
+
+.latest-articles :deep(.article-update:first-child) {
+	padding-top: 0;
+}
+
+.pinned-articles {
+	min-width: 0;
+	padding: 4px 24px;
+	border-radius: 12px;
+	background: #eaf4fc;
+}
+
+.pinned-articles :deep(.article-update:last-child) {
+	border-bottom: 0;
+}
+
+@media screen and (min-width: 961px) {
+	.updates-column.has-pinned {
+		grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+		column-gap: clamp(32px, 4vw, 56px);
+	}
+
+	.pinned-articles {
+		grid-area: 1 / 2 / span 2;
+	}
+
+	.latest-articles :deep(.article-update) {
+		padding-block: 32px;
+	}
+
+	.latest-articles :deep(.feed-title) {
+		font-size: clamp(24px, 2.35vw, 34px);
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.pinned-articles + .latest-articles:not(:empty) {
+		margin-top: 24px;
+	}
 }
 
 @keyframes feedSlideIn {
@@ -307,22 +337,18 @@ export default {
 	}
 
 	.home-hero {
-		min-height: auto;
-		margin-bottom: 0;
+		width: 100%;
 	}
 
 	.hero-inner {
-		padding: 56px 20px 52px;
+		display: block;
+		min-height: auto;
+		width: auto;
+		padding: 40px 20px 36px;
 	}
 
 	.hero-accent {
 		display: none;
-	}
-
-	.home-copy {
-		width: 100%;
-		max-width: 100%;
-		padding-top: 0;
 	}
 
 	.home-copy h1 {
@@ -341,71 +367,14 @@ export default {
 	}
 
 	.updates-column {
-		width: auto;
-		max-width: none;
-		margin: 0 20px;
-	}
-}
-
-@media screen and (min-width: 1121px) and (max-width: 1320px) {
-	.home-copy {
-		width: min(100%, calc(100vw - min(26vw, 300px) - 230px));
-	}
-
-	.insight-panel {
-		top: 94px;
-		right: clamp(48px, 6vw, 84px);
-		width: min(26vw, 300px);
-	}
-}
-
-@media screen and (min-width: 961px) and (max-width: 1120px) {
-	.home-copy {
-		width: min(100%, calc(100vw - 280px));
-		max-width: 720px;
-	}
-
-	.home-copy h1 {
-		font-size: clamp(48px, 6vw, 64px);
-		line-height: 1.1;
-	}
-
-	.insight-panel {
-		top: 108px;
-		right: 28px;
-		width: 240px;
-		opacity: .72;
-	}
-}
-
-@media screen and (min-width: 768px) and (max-width: 1120px) {
-	.hero-inner {
-		padding-left: 32px;
-		padding-right: 32px;
-	}
-
-	.insight-panel {
-		transform-origin: top right;
-	}
-
-	.updates-column {
-		width: min(840px, calc(100% - 96px));
+		width: calc(100% - 40px);
+		margin-top: 28px;
 	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 960px) {
-	.home-copy {
-		width: 100%;
-		max-width: 760px;
-	}
-
-	.home-copy h1 {
-		font-size: clamp(42px, 8vw, 58px);
-		line-height: 1.12;
-	}
-
-	.insight-panel {
-		display: none;
+	.hero-inner {
+		min-height: 260px;
 	}
 }
 @media (prefers-reduced-motion: reduce) {

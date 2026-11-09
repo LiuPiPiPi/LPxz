@@ -1,5 +1,5 @@
 <template>
-	<div class="ui menu site-nav">
+	<div class="ui menu site-nav" :class="{ 'is-home-nav': $route.name === 'home' }">
 		<div class="ui container nav-shell">
 			<router-link to="/" class="brand-link" aria-label="LPxz Home">
 				<span class="brand-mark" aria-hidden="true">
@@ -511,6 +511,25 @@ export default {
 
 .nav-toggle.is-open {
 	background: var(--site-link) !important;
+}
+
+@media (min-width: 961px) {
+	.is-home-nav.ui.menu .nav-shell {
+		width: min(1280px, calc(100% - 12vw)) !important;
+		justify-content: flex-start;
+		gap: 36px;
+		padding: 0;
+	}
+
+	.is-home-nav .brand-link,
+	.is-home-nav .nav-actions {
+		position: static;
+		transform: none;
+	}
+
+	.is-home-nav .nav-actions {
+		margin-left: auto;
+	}
 }
 
 @media (min-width: 768px) and (max-width: 980px) {
