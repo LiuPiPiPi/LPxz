@@ -4,7 +4,7 @@
 # 无需 .env：WEB_PORT/LPXZ_DATA_DIR 的默认值即生产值（8080 / /var/lib/lpxz）。
 services:
   app:
-    image: ghcr.io/liupipipi/lpxz:latest
+    image: ghcr.io/winstonlpxz/lpxz:latest
     container_name: lpxz
     ports:
       # 只绑回环，由宿主机 nginx 反代 127.0.0.1:8080 → 容器:80

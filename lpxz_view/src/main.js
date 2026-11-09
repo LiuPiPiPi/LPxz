@@ -28,7 +28,7 @@ import Viewer from 'v-viewer'
 import './util/directive'
 
 console.log(
-    '%c LPxzSite %c By LPxz %c https://github.com/LiuPiPiPi/LPxz',
+    '%c LPxzSite %c By LPxz %c https://github.com/winstonlpxz/LPxz',
     'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
     'background:#41b883 ; padding: 1px; border-radius: 0 3px 3px 0;  color: #000',
     'background:transparent'

@@ -17,7 +17,7 @@
 #   - 回滚见 deploy/README.md（注意：轮询会自动拉最新，回滚前须先停掉 cron）。
 set -euo pipefail
 
-IMAGE="${IMAGE:-ghcr.io/liupipipi/lpxz}"
+IMAGE="${IMAGE:-ghcr.io/winstonlpxz/lpxz}"
 TAG="${TAG:-latest}"
 COMPOSE_FILE="${COMPOSE_FILE:-/root/lpxz-prod/docker-compose.prod.yml}"
 

@@ -7,7 +7,7 @@ CI 的境外 IP 不再 SSH 登录云服务器,云安全告警随之消失。
 ## 部署架构
 
 ```
-GitHub Actions (build+push)  →  ghcr.io/liupipipi/lpxz
+GitHub Actions (build+push)  →  ghcr.io/winstonlpxz/lpxz
                                            ↑ 服务器主动出站 (cron 每 5 分钟)
 服务器: poll-update.sh → docker pull → ID 变化? → compose up -d
 ```
@@ -41,8 +41,8 @@ crontab -e
 
 ```bash
 crontab -e   # 注释掉 poll-update.sh 那一行
-docker pull ghcr.io/liupipipi/lpxz:sha-<旧提交hash>
-docker tag ghcr.io/liupipipi/lpxz:sha-<旧提交hash> ghcr.io/liupipipi/lpxz:latest
+docker pull ghcr.io/winstonlpxz/lpxz:sha-<旧提交hash>
+docker tag ghcr.io/winstonlpxz/lpxz:sha-<旧提交hash> ghcr.io/winstonlpxz/lpxz:latest
 docker compose -f /root/lpxz-prod/docker-compose.prod.yml up -d
 ```
 
