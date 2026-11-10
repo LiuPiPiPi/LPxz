@@ -191,6 +191,7 @@ export default {
 
 .home-copy h1 {
 	margin: 0;
+	padding-bottom: .12em;
 	color: #020617;
 	font-family: "Noto Serif SC", serif;
 	font-size: clamp(40px, 4.6vw, 68px);
