@@ -94,6 +94,16 @@ export default {
 </script>
 
 <style scoped>
+/* 仅包含「热爱生活，从容面对」，文案变更时由完整思源宋体兜底。 */
+@font-face {
+	font-family: "Noto Serif SC Home";
+	font-style: normal;
+	font-weight: 900;
+	font-display: swap;
+	src: url("../../assets/fonts/noto-serif-sc-home-title-900.woff2") format("woff2");
+	unicode-range: U+4ECE, U+5BB9, U+5BF9, U+6D3B, U+70ED, U+7231, U+751F, U+9762, U+FF0C;
+}
+
 .home-feed {
 	position: relative;
 	isolation: isolate;
@@ -193,7 +203,7 @@ export default {
 	margin: 0;
 	padding-bottom: .12em;
 	color: #020617;
-	font-family: "Noto Serif SC", serif;
+	font-family: "Noto Serif SC Home", "Noto Serif SC", serif;
 	font-size: clamp(40px, 4.6vw, 68px);
 	font-weight: 900;
 	line-height: 1.08;

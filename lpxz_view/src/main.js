@@ -6,6 +6,7 @@ import store from './store'
 // 自定义css
 import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
 import '@fontsource/noto-sans-sc/400.css'
+import '@fontsource/noto-serif-sc/700.css'
 import './assets/css/fonts.css'
 import './assets/css/base.css'
 import './assets/css/layout.css'
