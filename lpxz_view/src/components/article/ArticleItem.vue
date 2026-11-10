@@ -16,7 +16,8 @@
 				<span v-if="item.top" class="pinned-label">置顶</span>
 				<span>{{ item.views }} 次浏览</span>
 			</div>
-			<div v-if="item.description" class="article-description typo" v-html="item.description" />
+			<div v-if="item.description" class="article-description typo"
+				v-body-font="$route.name === 'home' ? item.description : null" v-html="item.description" />
 			<div class="article-tags" v-if="item.tags && item.tags.length">
 				<router-link v-for="tag in item.tags" :key="tag.name"
 					:to="{ name: 'tag', params: { name: tag.name } }" class="tag-link">
@@ -29,9 +30,11 @@
 
 <script>
 import { dateFormat } from "@/util/dateTimeFormatUtils";
+import bodyFont from "@/util/body-font";
 
 export default {
 	name: "articleItem",
+	directives: { bodyFont },
 	props: {
 		articleList: {
 			type: Array,

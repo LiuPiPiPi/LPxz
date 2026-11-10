@@ -43,7 +43,8 @@
 			</div>
 			<div class="article-body">
 				<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" id="content"
-					v-viewer :class="{ 'm-big-fontsize': bigFontSize }" v-html="article.content"></div>
+					v-viewer v-body-font="article.content" :class="{ 'm-big-fontsize': bigFontSize }"
+					v-html="article.content"></div>
 
 				<div class="article-appreciation" v-if="article.appreciation">
 					<el-popover placement="top" width="220" trigger="click">
@@ -100,10 +101,12 @@ import { SET_FOCUS_MODE, SET_IS_ARTICLE_RENDER_COMPLETE } from '@/store/mutation
 import { dateFormat } from "@/util/dateTimeFormatUtils"
 import MathJax from '@/plugins/MathJax'
 import { getArticleToken } from '@/util/localStorageToken'
+import bodyFont from '@/util/body-font'
 
 export default {
 	name: "articleArticle",
 	components: { CommentList, Tocbot },
+	directives: { bodyFont },
 	data() {
 		return {
 			article: {},
